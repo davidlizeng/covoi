@@ -9,9 +9,14 @@ Covoi::Application.routes.draw do
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
+  match 'login' => 'sessions#new', :as => :new_session 
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+  resource :home, :only => [:show] 
+  resource :contact_us, :only => [:show]
+  resources :sessions, :only => [:new]
+  #resources :users
 
   # Sample resource route with options:
   #   resources :products do
@@ -48,7 +53,7 @@ Covoi::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'home#show'
 
   # See how all your routes lay out with "rake routes"
 
