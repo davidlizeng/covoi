@@ -1,7 +1,7 @@
 Covoi::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
-
+  # default_url_options :host => "localhost:3000"
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
@@ -9,14 +9,13 @@ Covoi::Application.routes.draw do
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
-  match 'login' => 'sessions#new', :as => :new_session 
-
+  match '/' => 'sessions#new', :as => :new_session 
+  match '/confirmation/new' => 'confirmation#new'
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  resource :home, :only => [:show] 
   resource :contact_us, :only => [:show]
-  resources :sessions, :only => [:new]
-  #resources :users
+  resource :sessions, :only => [:new, :create, :destroy]
+  resources :users, :only => [:new, :create, :show, :edit, :update]
 
   # Sample resource route with options:
   #   resources :products do
@@ -53,7 +52,7 @@ Covoi::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'home#show'
+  root :to => 'sessions#new'
 
   # See how all your routes lay out with "rake routes"
 

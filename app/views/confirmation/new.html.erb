@@ -1,0 +1,7 @@
+<h1>Validate Your Registration & Create Your Password</h1>
+<%= form_for(:user, url: user_path(@id), :method => "put") do |f| %>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <%= f.submit "Create Password and Validate" %>
+<% end %> 
+

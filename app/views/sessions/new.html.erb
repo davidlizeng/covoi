@@ -1,1 +1,12 @@
-<h1>login form</h1>
+<h1>Welcome to Covoi</h1>
+<%= form_for(:session, url: sessions_path) do |f| %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <%= f.submit "Login" %>
+<% end %> 
+<div>
+  Not a User? &nbsp;
+  <%= link_to "Register Here!", new_user_path %>
+</div> 
