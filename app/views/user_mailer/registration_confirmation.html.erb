@@ -2,4 +2,4 @@
 
 <p>Thank you for registering with Covoi! To validate your registration and create your password for your account, follow the link below:</p>
 
-<p><%= link_to "Confirm Registration", "http://localhost:3000/confirmation/new?id=#{@user.account_id}&amp;otp=#{@user.one_time_password}"%></p> 
+<p><%= link_to "Confirm Registration", "http://covoi.herokuapp.com/confirmation/new?id=#{@user.account_id}&amp;otp=#{@user.one_time_password}"%></p> 
