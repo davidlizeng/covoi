@@ -9,15 +9,17 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:session][:email].downcase)
     if user && user.confirmed && user.authenticate(params[:session][:password])
       login(user)
-      redirect_to user#users_path(user.account_id)
+      flash[:notice] = "You have logged in."
+      redirect_to user_path(user.account_id)
     else
-      flash[:error] = "Wrong email/pw combo"
+      flash[:error] = "Wrong email or password"
       redirect_to root_url
     end
   end
 
   def destroy
     logout
+    flash[:notice] = "You have logged out."
     redirect_to root_url    
   end
 end
