@@ -19,9 +19,11 @@ class UsersController < ApplicationController
     end while User.find_by_account_id(user.account_id) != nil
     if user.save
       UserMailer.registration_confirmation(user).deliver
+      flash[:notice] = "Thanks for registering with Covoi! Check that inbox!"
       redirect_to root_url
     else
-      redirect_to root_url
+      flash[:error] = user.errors.full_messages.to_sentence
+      redirect_to new_user_path
     end 
   end
  
