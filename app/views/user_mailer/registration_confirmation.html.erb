@@ -1,9 +1,11 @@
-<p><%= @user.first_name %>,</p>
+<p>Hi <%= @user.first_name %>,</p>
 
 <p>Thank you for registering with Covoi!</p> 
 <p>You have been assigned a random temporary password:
   <%= @user.one_time_password %>
 </p>
 <p>Please use the following link to confirm your registration: 
-  <%= link_to "Confirm Registration", "http://covoi.herokuapp.com/confirmation/new?id=#{@user.account_id}&auth_token=#{Digest::SHA1.hexdigest(@user.account_id.to_s + @user.password_salt)}"%>
+  <%= link_to "Confirm Registration", "http://localhost:3000/confirmation/new?id=#{@user.id}&auth_token=#{Digest::SHA2.hexdigest(@user.id.to_s + @user.password_salt)}"%>
 </p>
+
+<p>The Covoi Team</p>

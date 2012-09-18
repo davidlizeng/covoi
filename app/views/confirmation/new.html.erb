@@ -1,11 +1,27 @@
-<h1>Validate Your Registration & Create Your Password</h1>
+<div class="box">
+<div class="box_title">Validate Account</div>
 <%= form_for(:user, url: user_path(@id), :method => "put") do |f| %>
-  <%= f.label :temporary_password %>
-  <%= f.password_field :temporary_password %>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %>
-  <%= f.submit "Create Password and Validate" %>
-<% end %> 
+  <div>
+    <%= f.label :temporary_password %>
+  </div>
+  <div>
+    <%= f.password_field :temporary_password %>
+  </div>
+  <div>  
+    <%= f.label :password %>
+  </div>
+  <div>  
+    <%= f.password_field :password %>
+  </div>
+  <div>  
+    <%= f.label :password_confirmation %>
+  </div>
+  <div>  
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div>  
+    <%= f.submit "Validate" %>
+  </div>
+<% end %>
+</div>
 

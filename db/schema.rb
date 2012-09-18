@@ -11,16 +11,32 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120810043332) do
+ActiveRecord::Schema.define(:version => 20120907043823) do
 
-  create_table "users", :primary_key => "account_id", :force => true do |t|
-    t.string  "first_name"
-    t.string  "last_name"
-    t.string  "email"
-    t.string  "password_digest"
-    t.string  "password_salt"
-    t.boolean "confirmed"
-    t.string  "one_time_password"
+  create_table "matches", :force => true do |t|
+    t.integer  "user_id",      :limit => 8
+    t.integer  "trip_id",      :limit => 8
+    t.boolean  "is_creator"
+    t.datetime "time_created"
+  end
+
+  create_table "trips", :id => false, :force => true do |t|
+    t.integer "id",          :limit => 8, :null => false
+    t.integer "origin",      :limit => 2
+    t.integer "destination", :limit => 2
+  end
+
+  create_table "users", :id => false, :force => true do |t|
+    t.integer  "id",                :limit => 8, :null => false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "password_salt"
+    t.boolean  "confirmed"
+    t.string   "one_time_password"
+    t.datetime "time_created"
+    t.datetime "last_login"
   end
 
 end

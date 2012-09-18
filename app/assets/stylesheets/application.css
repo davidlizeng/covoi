@@ -11,3 +11,106 @@
  *= require_self
  *= require_tree .
  */
+
+@font-face {
+  font-family: 'Arvo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arvo'), url(http://themes.googleusercontent.com/static/fonts/arvo/v5/BM-nqL-L5PgjKPDNaleWB_esZW2xOQ-xsNqO47m55DA.woff) format('woff');
+}
+
+body {
+  margin: 0;
+  font-family: 'Arvo';
+}
+
+.header {
+  background-color: #c0c0c0;
+  padding-left: 60px;
+  border-bottom: 1px solid #f4a342;
+}
+
+.header_border {
+  width: 270px;
+  border-left: 2px solid #f4a342;
+  border-right: 2px solid #f4a342;
+}
+
+.header_icon {
+  height: 81px;
+  width: 250px;
+  border: 10px solid #ffffff;
+  background: no-repeat url(/images/ridegrouped_logo_big.png);
+  background-color: #ffffff;
+}
+
+.footer {
+}
+
+.main {
+  background-color: #ffffff;
+  padding: 0 20px;
+}
+
+.main h1 {
+  margin: 0;
+}
+
+.main p {
+  margin: 0;
+}
+
+.box a:link,
+.box a:visited {
+  color: #808080;
+}
+
+.box a:hover,
+.box a:focus {
+  color: #e39231;
+  outline: none;
+}
+
+input[type=text],
+input[type=password] {
+  line-height: 20px;
+  padding: 4px 8px;
+  border: 1px solid #c0c0c0;
+  margin: 0;
+  margin-bottom: 20px;
+  outline: none;
+  width: 200px;
+}
+
+input[type=text]:focus,
+input[type=password]:focus {
+  border: 1px solid #f4a342;
+  outline: none;
+  box-shadow: inset 0 0 3px #c0c0c0;
+}
+
+input[type=submit] {
+  font-family: 'Arvo';
+  cursor: pointer;
+  border: 1px solid #e39231;
+  outline: none;
+  background-color: #f4a342;
+  color: #ffffff;
+  height: 30px;
+  width: 90px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.box {
+  border: 1px solid #c0c0c0;
+  background: #ffffff;
+  padding: 20px; 
+}
+
+.box_title {
+  font-size: 24px;
+  color: #808080;
+  border-bottom: 1px solid #e39231;
+  margin-bottom: 30px;
+} 

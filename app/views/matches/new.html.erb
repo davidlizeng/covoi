@@ -1,0 +1,15 @@
+<div class="box match_box">
+<div class="box_title">Pick your ride!</div>
+<%= form_for(:trip, url: user_matches_path(current_user)) do |f| %>
+  <div>
+    <%= radio_button_tag :trip_id, "0" %> 
+    <%= label_tag :trip_id_0, "#{@trip.origin} #{@trip.destination}" %>
+  </div>
+  <%= f.hidden_field :origin, :value => @trip.origin %>
+  <%= f.hidden_field :destination, :value => @trip.destination %>
+  <div>
+    <%= f.submit "Next" %>
+  </div>
+<% end %>
+</div>
+

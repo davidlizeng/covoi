@@ -4,16 +4,28 @@
 <title>Covoi</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+  <script type="text/javascript">
+    Stripe.setPublishableKey('<%= STRIPE_PUBLIC_KEY %>'); 
+  </script>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <% if flash[:notice] %>
-    <p class="notice"><%= flash[:notice] %></p>
-  <% end %>
-  <% if flash[:error] %>
-    <p class="error"><%= flash[:error] %></p>
-  <% end %>
-<%= yield %>
-
+  <div class="header">
+    <div class="header_border">
+      <div class="header_icon">
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <% if flash[:notice] %>
+      <p class="notice"><%= flash[:notice] %></p>
+    <% end %>
+    <% if flash[:error] %>
+      <p class="error"><%= flash[:error] %></p>
+    <% end %>
+    <%= yield %>
+  </div>
+  <div class="footer"></div>
 </body>
 </html>

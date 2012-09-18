@@ -1,12 +1,30 @@
-<h1>Welcome to Covoi</h1>
-<%= form_for(:session, url: sessions_path) do |f| %>
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-  <%= f.submit "Login" %>
-<% end %> 
-<div>
-  Not a User? &nbsp;
-  <%= link_to "Register Here!", new_user_path %>
-</div> 
+<div class="login_header"></div>
+<div class="agg">
+<div class="box about_box">
+  <div class="box_title">How It Works</div>
+</div>
+<div class="box login_box">
+  <div class="box_title">Login</div>
+  <%= form_for(:session, url: sessions_path) do |f| %>
+    <div>
+      <%= f.label :email %>
+    </div>
+    <div>
+      <%= f.text_field :email %>
+    </div>
+    <div>
+      <%= f.label :password %>
+    </div>
+    <div>
+      <%= f.password_field :password %>
+    </div>
+    <div>
+      <%= f.submit "Login" %>
+    </div>
+  <% end %>
+  <div>
+    Not a User? &nbsp;
+    <%= link_to "Register Here!", new_user_path %>
+  </div> 
+</div>
+</div>

@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     if user && user.confirmed && user.authenticate(params[:session][:password])
       login(user)
       flash[:notice] = "You have logged in."
-      redirect_to user_path(user.account_id)
+      redirect_to user_path(user.id)
     else
       flash[:error] = "Wrong email or password"
       redirect_to root_url

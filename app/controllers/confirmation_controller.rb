@@ -5,5 +5,6 @@ class ConfirmationController < ApplicationController
       redirect_to root_url
     end
     @id = params[:id]
-  end 
+  end
+
 end

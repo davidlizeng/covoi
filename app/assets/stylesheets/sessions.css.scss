@@ -1,3 +1,26 @@
 // Place all the styles related to the sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.login_header {
+}
+
+.agg {
+  width: 1000px;
+}
+
+.login_box {
+  display: inline-block;
+  vertical-align: top;
+  width: 300px;
+  margin-top: 80px;
+}
+
+.about_box {
+  display: inline-block;
+  vertical-align: top;
+  width: 450px;
+  height: 500px;
+  margin: 40px;
+  margin-right: 60px;
+}

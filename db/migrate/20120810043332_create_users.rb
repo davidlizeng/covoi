@@ -1,18 +1,17 @@
 class CreateUsers < ActiveRecord::Migration
-  def up
-    create_table :users, {:primary_key => :account_id} do |t|
-      t.column :first_name, :string
-      t.column :last_name, :string
-      t.column :email, :string
-      t.column :account_id, :integer
-      t.column :password_digest, :string
-      t.column :password_salt, :string
-      t.column :confirmed, :boolean
-      t.column :one_time_password, :string
+  def change
+    create_table :users, {:id => false} do |t|
+      t.integer :id, :limit => 8
+      t.string :first_name
+      t.string :last_name
+      t.string :email
+      t.string :password_digest
+      t.string :password_salt
+      t.boolean :confirmed
+      t.string :one_time_password
+      t.timestamp :time_created
+      t.timestamp :last_login
     end
-  end
-
-  def down
-    drop_table :users
+    execute "ALTER TABLE users ADD PRIMARY KEY (id);"
   end
 end

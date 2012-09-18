@@ -1,0 +1,30 @@
+<div class="box match_box">
+<div class="box_title">Confirm and Pay!</div>
+<%= form_for :trip, url: user_payments_path(current_user), :html => {:id => "payment_form"} do |f| %>
+  <div>
+    <%= "Origin: #{@trip.origin}" %>
+  </div>
+  <div>
+    <%= "Destination: #{@trip.destination}" %>
+  </div>
+  <%= f.hidden_field :origin, :value => @trip.origin %>
+  <%= f.hidden_field :destination, :value => @trip.destination %>
+  <div>
+    <%= label_tag :card_number, "Credit Card Number" %>
+    <%= text_field_tag :card_number, nil, name: nil %>
+  </div>
+  <div> 
+    <%= label_tag :card_code, "Security Code on Card (CVC)" %>
+    <%= text_field_tag :card_code, nil, name: nil %>
+  </div>
+  <div>
+    <%= label_tag :card_month, "Card Expiration" %>
+    <%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"} %>
+    <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+8}, {name: nil, id: "card_year"} %>
+  </div>
+  <%= f.hidden_field :card_token %>
+  <div>
+    <%= f.submit "Finish!" %>
+  </div>
+<% end %>
+</div>

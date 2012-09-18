@@ -1,0 +1,10 @@
+<div class="box plan_box">
+<div class="box_title">Need a Ride?</div>
+<%= form_for(:trip, url: user_trips_path(current_user)) do |f| %>
+  <%= render "info", :f => f %>
+  <div> 
+    <%= f.submit "Plan!" %>
+  </div>
+<% end %>
+</div>
+

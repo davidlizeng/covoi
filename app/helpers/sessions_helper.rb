@@ -2,7 +2,7 @@ module SessionsHelper
 
   def login(user)
     cookies.signed[:id] = {
-        :value => user.account_id,
+        :value => user.id,
         :expires => 60.minutes.from_now
     }
     self.current_user = user
@@ -35,7 +35,7 @@ module SessionsHelper
   end
   
   def current_user
-    @current_user ||= User.find_by_account_id(cookies.signed[:id])
+    @current_user ||= User.find_by_id(cookies.signed[:id])
   end
 
 end
