@@ -13,8 +13,8 @@ class PaymentsController < ApplicationController
         :card => params[:trip][:card_token]
     )
     @trip = Trip.new
-    @trip.origin = params[:trip][:origin]
-    @trip.destination = params[:trip][:destination]
+    @trip.origin_id = params[:trip][:origin_id]
+    @trip.airport_id = params[:trip][:airport_id]
     begin
       @trip.id = SecureRandom.random_number(90000000000000) + 10000000000000
     end while Trip.find_by_id(@trip.id) != nil
@@ -26,8 +26,8 @@ class PaymentsController < ApplicationController
     redirect_to user_path(current_user.id)
   rescue Stripe::InvalidRequestError => e  
     @trip = Trip.new
-    @trip.origin = params[:trip][:origin]
-    @trip.destination = params[:trip][:destination]
+    @trip.origin_id = params[:trip][:origin_id]
+    @trip.airport_id = params[:trip][:airport_id]
     flash[:error] = e.message
     render :new
   end

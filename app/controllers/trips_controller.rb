@@ -3,7 +3,9 @@ class TripsController < ApplicationController
   end
 
   def create
-    @trip = Trip.new(params[:trip])
+    @trip = Trip.new
+    @trip.origin_id = params[:trip][:origin_id]
+    @trip.airport_id = params[:trip][:airport_id]
     render "matches/new"
   end
 end

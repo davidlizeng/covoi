@@ -3,10 +3,10 @@
 <%= form_for(:trip, url: user_matches_path(current_user)) do |f| %>
   <div>
     <%= radio_button_tag :trip_id, "0" %> 
-    <%= label_tag :trip_id_0, "#{@trip.origin} #{@trip.destination}" %>
+    <%= label_tag :trip_id_0, "#{@trip.origin_id} #{@trip.airport_id}" %>
   </div>
-  <%= f.hidden_field :origin, :value => @trip.origin %>
-  <%= f.hidden_field :destination, :value => @trip.destination %>
+  <%= f.hidden_field :origin_id, :value => @trip.origin_id %>
+  <%= f.hidden_field :airport_id, :value => @trip.airport_id %>
   <div>
     <%= f.submit "Next" %>
   </div>

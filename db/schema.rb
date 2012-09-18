@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120907043823) do
+ActiveRecord::Schema.define(:version => 20120918035559) do
+
+  create_table "airports", :force => true do |t|
+    t.string "code"
+    t.string "city"
+    t.string "state"
+    t.string "terminal"
+  end
 
   create_table "matches", :force => true do |t|
     t.integer  "user_id",      :limit => 8
@@ -20,10 +27,21 @@ ActiveRecord::Schema.define(:version => 20120907043823) do
     t.datetime "time_created"
   end
 
+  create_table "origins", :force => true do |t|
+    t.string "name"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+  end
+
   create_table "trips", :id => false, :force => true do |t|
-    t.integer "id",          :limit => 8, :null => false
-    t.integer "origin",      :limit => 2
-    t.integer "destination", :limit => 2
+    t.integer  "id",           :limit => 8, :null => false
+    t.datetime "trip_time"
+    t.integer  "origin_id",    :limit => 2
+    t.integer  "airport_id",   :limit => 2
+    t.integer  "airline",      :limit => 2
+    t.datetime "time_created"
   end
 
   create_table "users", :id => false, :force => true do |t|

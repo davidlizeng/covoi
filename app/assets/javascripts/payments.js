@@ -24,20 +24,22 @@ $(document).ready(function() {
     });
     circle.play();
     $('.main').append(circle.canvas);
+    
+    var removeLoadingAnimation = function() {
+      circle.stop();
+      $('.main').remove('canvas');
+    }    
+
     var stripeResponseHandler = function(status, response) {
       if (response.error){
         alert(response.error.message);
-        circle.stop();
-        $('.main').remove('canvas');
+        removeLoadingAnimation();
         $('input[type=submit]').removeAttr('disabled');
       } else {
         $('#trip_card_token').val(response['id']);
-        circle.stop();
-        $('.main').remove('canvas');
-        $('form')[0].submit();
+        $('#payment_form').submit();
       }
     };
-     
     Stripe.createToken({
       number: $('#card_number').val(),
       cvc: $('#card_code').val(),

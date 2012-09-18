@@ -1,7 +1,7 @@
 class Trip < ActiveRecord::Base
-  attr_accessible :id, :origin, :destination
-  has_many :users, :through => :matches 
-  set_primary_key :id 
-
   attr_accessor :card_token
+  has_many :users, :through => :matches
+  has_one :origin
+  has_one :airport 
+  set_primary_key :id 
 end

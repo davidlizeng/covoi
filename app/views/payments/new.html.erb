@@ -2,13 +2,13 @@
 <div class="box_title">Confirm and Pay!</div>
 <%= form_for :trip, url: user_payments_path(current_user), :html => {:id => "payment_form"} do |f| %>
   <div>
-    <%= "Origin: #{@trip.origin}" %>
+    <%= "Origin: #{@trip.origin_id}" %>
   </div>
   <div>
-    <%= "Destination: #{@trip.destination}" %>
+    <%= "Destination: #{@trip.airport_id}" %>
   </div>
-  <%= f.hidden_field :origin, :value => @trip.origin %>
-  <%= f.hidden_field :destination, :value => @trip.destination %>
+  <%= f.hidden_field :origin_id, :value => @trip.origin_id %>
+  <%= f.hidden_field :airport_id, :value => @trip.airport_id %>
   <div>
     <%= label_tag :card_number, "Credit Card Number" %>
     <%= text_field_tag :card_number, nil, name: nil %>
