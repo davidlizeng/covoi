@@ -19,10 +19,10 @@ class UsersController < ApplicationController
     end while User.find_by_id(user.id) != nil
     if user.save
       UserMailer.registration_confirmation(user).deliver
-      flash[:notice] = "Thanks for registering with Covoi! Check that inbox!"
+      flash.now[:notice] = "Thanks for registering with Covoi! Check that inbox!"
       redirect_to root_url
     else
-      flash[:error] = user.errors.full_messages.to_sentence
+      flash.now[:error] = user.errors.full_messages.to_sentence
       redirect_to new_user_path
     end 
   end
@@ -45,14 +45,14 @@ class UsersController < ApplicationController
         user.confirmed = true
         user.one_time_password = SecureRandom.hex
         if user.save
-          flash[:notice] = "Password created! Try logging in!"
+          flash.now[:notice] = "Password created! Try logging in!"
           redirect_to root_url  
         else
-          flash[:error] = user.errors.full_messages.to_sentence
+          flash.now[:error] = user.errors.full_messages.to_sentence
           redirect_to root_url
         end
       else 
-        flash[:error] = "Incorrect temporary password."
+        flash.now[:error] = "Incorrect temporary password."
         redirect_to root_url
       end
     else

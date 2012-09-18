@@ -10,7 +10,7 @@ development:
   database: covoi_dev 
   pool: 5
   username: covoi
-  password:
+  password: admin
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -22,7 +22,7 @@ test:
   database: covoi_prod
   pool: 5
   username: covoi
-  password:
+  password: admin
 
 production:
   adapter: postgresql
@@ -30,4 +30,4 @@ production:
   database: covoi_test
   pool: 5
   username: covoi
-  password:
+  password: admin

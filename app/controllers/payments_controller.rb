@@ -28,7 +28,7 @@ class PaymentsController < ApplicationController
     @trip = Trip.new
     @trip.origin_id = params[:trip][:origin_id]
     @trip.airport_id = params[:trip][:airport_id]
-    flash[:error] = e.message
+    flash.now[:error] = e.message
     render :new
   end
 
