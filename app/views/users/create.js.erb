@@ -1,0 +1,8 @@
+<% if @user.errors.any? %>
+  $('#message_banner').append('<div class="error"><%= escape_javascript(@user.errors.full_messages[0]) %></div>');
+<% else %>
+  $('#message_banner').append('<div class="notice">Thanks for registering with Covoi! Check you inbox to confirm your registration!</div>');
+  $('#user_first_name').val('');
+  $('#user_last_name').val('');
+  $('#user_email').val('');
+<% end %>

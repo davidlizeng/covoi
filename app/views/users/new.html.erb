@@ -1,6 +1,6 @@
 <div class="box register_box">
 <div class="box_title">Register</div>
-<%= form_for(:user, url: users_path) do |f| %>
+<%= form_for :user, :remote => true, url: users_path, :html => {:id => "register_form"} do |f| %>
   <div>
     <%= f.label :first_name %>
   </div>

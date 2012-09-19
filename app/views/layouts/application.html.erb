@@ -18,12 +18,14 @@
     </div>
   </div>
   <div class="main">
-    <% if flash.now[:notice] %>
-      <p class="notice"><%= flash.now[:notice] %></p>
-    <% end %>
-    <% if flash.now[:error] %>
-      <p class="error"><%= flash.now[:error] %></p>
-    <% end %>
+    <div id="message_banner">
+      <% if flash.now[:notice] %>
+        <div class="notice"><%= flash.now[:notice] %></div>
+      <% end %>
+      <% if flash.now[:error] %>
+        <div class="error"><%= flash.now[:error] %></div>
+      <% end %>
+    </div>
     <%= yield %>
   </div>
   <div class="footer"></div>
