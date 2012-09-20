@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
 
-  #require securerandom
- 
-  before_filter :require_login, :only => [:show] 
+  before_filter :require_login, :only => [:show, :edit] 
   before_filter :require_logout, :only => [:new, :create] 
  
   def new
@@ -19,7 +17,7 @@ class UsersController < ApplicationController
     end while User.find_by_id(@user.id) != nil
     respond_to do |format|
       if @user.save
-        #UserMailer.registration_confirmation(@user).deliver
+        UserMailer.registration_confirmation(@user).deliver
         format.html {redirect_to new_user_path}
         format.js
       else
@@ -55,7 +53,7 @@ class UsersController < ApplicationController
         end
       else 
         flash.now[:error] = "Incorrect temporary password."
-        redirect_to root_url
+        redirect_to 
       end
     else
     end

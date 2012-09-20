@@ -5,7 +5,7 @@
   <%= @user.one_time_password %>
 </p>
 <p>Please use the following link to confirm your registration: 
-  <%= link_to "Confirm Registration", "http://localhost:3000/confirmation/new?id=#{@user.id}&auth_token=#{Digest::SHA2.hexdigest(@user.id.to_s + @user.password_salt)}"%>
+  <%= link_to "Confirm Registration", "http://localhost:3000/confirmations/new?id=#{@user.id}&auth_token=#{Digest::SHA2.hexdigest(@user.id.to_s + @user.password_salt)}"%>
 </p>
 
 <p>The Covoi Team</p>

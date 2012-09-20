@@ -2,9 +2,15 @@
 <div class="box_title">Pick your ride!</div>
 <%= form_for(:trip, url: user_matches_path(current_user)) do |f| %>
   <div>
-    <%= radio_button_tag :trip_id, "0" %> 
-    <%= label_tag :trip_id_0, "#{@trip.origin_id} #{@trip.airport_id}" %>
+    <%= radio_button_tag :trip_id, "0", true %> 
+    <%= label_tag "trip_id_0", "#{@origins[@trip.origin_id - 1].name} to #{@airports[@trip.airport_id - 1].code} #{@airports[@trip.airport_id - 1].terminal}" %>
   </div>
+  <% @trips.each do |trip| %>
+    <div>
+      <%= radio_button_tag :trip_id, "#{trip.id}" %> 
+      <%= label_tag "trip_id_#{trip.id}", "#{@origins[trip.origin_id - 1].name} to #{@airports[trip.airport_id - 1].code} #{@airports[trip.airport_id - 1].terminal}" %>
+    </div>
+  <% end %>
   <%= f.hidden_field :origin_id, :value => @trip.origin_id %>
   <%= f.hidden_field :airport_id, :value => @trip.airport_id %>
   <div>
@@ -12,4 +18,3 @@
   </div>
 <% end %>
 </div>
-

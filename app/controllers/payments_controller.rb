@@ -1,4 +1,7 @@
 class PaymentsController < ApplicationController
+  
+  before_filter :require_login
+  
   def new
   end
 
@@ -22,6 +25,7 @@ class PaymentsController < ApplicationController
     @match = Match.new
     @match.trip_id = @trip.id
     @match.user_id = current_user.id
+    @match.is_creator = true
     @match.save
     redirect_to user_path(current_user.id)
   rescue Stripe::InvalidRequestError => e  
