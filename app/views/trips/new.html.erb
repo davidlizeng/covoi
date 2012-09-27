@@ -3,20 +3,33 @@
 <%= form_for(:trip, url: user_trips_path(current_user)) do |f| %>
   <h2>Enter your trip info</h2>
   <div>
-    <%= f.label :origin_id %>
+    <%= f.label :origin_id, "Pickup Location" %>
   </div>
   <div>
     <%= f.select :origin_id, @origin_choices, :include_blank => true %>
   </div>
   <div>
-    <%= f.label :airport_id %>
+    <%= f.label :airport_id, "Airport" %>
   </div>
   <div>
     <%= f.select :airport_id, @airport_choices, :include_blank => true %>
+  </div>
+  <div>
+    <%= f.label :date, "Date of Departure" %>
+  </div>
+  <div>
+    <%= f.text_field :date %>
+  </div>
+  <div>
+    <%= f.label :time, "Flight Time" %>
+  </div>
+  <div>
+    <%= f.select :hour, options_for_select((1..12).to_a), :include_blank => true %> 
+    <%= f.select :minute, options_for_select((0..59).to_a.map {|m| m.to_s.rjust(2, "0")}), :include_blank => true %>
+    <%= f.select :meridiem, options_for_select(["AM", "PM"]), :include_blank => true %>
   </div>
   <div> 
     <%= f.submit "Next" %>
   </div>
 <% end %>
 </div>
-

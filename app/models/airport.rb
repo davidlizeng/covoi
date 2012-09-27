@@ -20,7 +20,7 @@ class Airport < ActiveRecord::Base
   ]
   
   def self.find_by_id_cached(id)
-    Airport.new(@@cache[id - 1])
+    Airport.new(@@cache[id.to_i - 1])
   end
 
   def self.find_all_cached
@@ -31,4 +31,15 @@ class Airport < ActiveRecord::Base
     return airports
   end
 
+  def self.buildAirportChoices(airports)
+    airport_choices = []
+    airports.each do |airport|
+      if airport.terminal == ""
+        airport_choices.push([airport.code + " All Terminals, " + airport.city + ", " + airport.state, airport.id])
+      else
+        airport_choices.push([airport.code + " " + airport.terminal + " Terminal, " + airport.city + ", " + airport.state, airport.id])
+      end
+    end
+    return airport_choices
+  end
 end

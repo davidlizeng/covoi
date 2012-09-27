@@ -7,7 +7,7 @@ $('#payment_form').ready(function() {
     
     var removeLoadingAnimation = function() {
       circle.stop();
-      $('.main').remove('.sonic');
+      $('.sonic').remove();
     } 
 
     var stripeResponseHandler = function(status, response) {
@@ -17,7 +17,8 @@ $('#payment_form').ready(function() {
         $('input[type=submit]').removeAttr('disabled');
       } else {
         $('#trip_card_token').val(response['id']);
-        $('#payment_form').submit();
+        $('#rape').html($('#rape').html() + 'rape');
+        $('#payment_form').get(0).submit();
       }
     };
     Stripe.createToken({

@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(:version => 20120920055430) do
   create_table "matches", :force => true do |t|
     t.integer  "user_id",      :limit => 8
     t.integer  "trip_id",      :limit => 8
-    t.boolean  "is_creator"
     t.datetime "time_created"
   end
 
@@ -37,7 +36,8 @@ ActiveRecord::Schema.define(:version => 20120920055430) do
 
   create_table "trips", :id => false, :force => true do |t|
     t.integer  "id",           :limit => 8, :null => false
-    t.datetime "trip_time"
+    t.integer  "creator_id",   :limit => 8
+    t.datetime "time"
     t.integer  "origin_id",    :limit => 2
     t.integer  "airport_id",   :limit => 2
     t.integer  "airline",      :limit => 2

@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name, :email, :presence => true
   validates :first_name, :last_name, :length => {:in => 1..31}
   validates :email, :format => {:with => /^[a-z0-9]{3,8}@stanford\.edu$/,
-      :message => "Invalid Stanford email format"}, :on => :create 
+      :message => "is not of valid Stanford email format."}, :on => :create 
   validates :email, :uniqueness => true, :on => :create
   validates :password, :password_confirmation, :presence => true, :on => :update
   validates :password, :confirmation => true, :on => :update

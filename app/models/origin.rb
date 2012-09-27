@@ -33,4 +33,12 @@ class Origin < ActiveRecord::Base
     end
     return origins
   end
+
+  def self.buildOriginChoices(origins)
+    origin_choices = []
+    origins.each do |origin|
+      origin_choices.push([origin.name, origin.id])
+    end
+    return origin_choices
+  end 
 end
