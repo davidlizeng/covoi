@@ -1,6 +1,6 @@
 <div class="box match_box">
 <div class="box_title">Pick your ride!</div>
-<%= form_for :trip, url: user_matches_path(current_user), :html => {:id => "payment_form"} do |f| %>
+<%= form_for :trip, url: matches_path, :html => {:id => "payment_form"} do |f| %>
   <div>
     <%= radio_button_tag :trip_id, "0", @trip.id == 0 %> 
     <%= label_tag "trip_id_0", "#{@origins[@trip.origin_id - 1].name} to #{@airports[@trip.airport_id - 1].code} #{@airports[@trip.airport_id - 1].terminal}" %>

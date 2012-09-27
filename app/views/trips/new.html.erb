@@ -1,6 +1,6 @@
 <div class="box plan_box">
 <div class="box_title">Need a Ride?</div>
-<%= form_for(:trip, url: user_trips_path(current_user)) do |f| %>
+<%= form_for :trip, url: trips_path do |f| %>
   <h2>Enter your trip info</h2>
   <div>
     <%= f.label :origin_id, "Pickup Location" %>

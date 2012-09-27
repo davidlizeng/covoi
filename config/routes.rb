@@ -13,12 +13,10 @@ Covoi::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
   resources :confirmations, :only => [:new]
-  resources :sessions, :only => [:new, :create, :destroy]
-  resources :users, :only => [:new, :create, :show, :edit, :update] do
-    resources :trips, :only => [:new, :create]
-    resources :matches, :only => [:create]
-    resources :payments, :only => [:create]
-  end
+  resource :sessions, :only => [:new, :create, :destroy]
+  resources :users, :only => [:new, :create, :show, :edit, :update]
+  resources :trips, :only => [:new, :create]
+  resources :matches, :only => [:create]
 
   # Sample resource route with options:
   #   resources :products do
