@@ -1,4 +1,11 @@
 $('#payment_form').ready(function() {
+	
+	$.ajaxSetup({
+		'beforeSend': function(xhr) {
+			xhr.setRequestHeader("Accept", "text/javascript");
+		}
+	});
+
   $('#payment_form').submit(function(e) {
     $('input[type=submit]').attr('disabled', true);
     var circle = newLoadingAnimation();
@@ -17,8 +24,12 @@ $('#payment_form').ready(function() {
         $('input[type=submit]').removeAttr('disabled');
       } else {
         $('#trip_card_token').val(response['id']);
-        $('#rape').html($('#rape').html() + 'rape');
-        $('#payment_form').get(0).submit();
+       // $('#payment_form').get(0).submit();
+			 	$.ajax({
+					url: '/matches',
+					type: 'POST',
+					data: $('#payment_form').serialize()
+				});
       }
     };
     Stripe.createToken({
