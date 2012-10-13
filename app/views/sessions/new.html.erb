@@ -1,5 +1,4 @@
 <div class="login_header"></div>
-<div class="agg">
 <div class="box about_box">
   <div class="box_title">How It Works</div>
 </div>
@@ -22,9 +21,31 @@
       <%= f.submit "Login" %>
     </div>
   <% end %>
+</div>
+<div class="box register_box">
+<div class="box_title">Register</div>
+<%= form_for :user, :remote => true, url: users_path, :html => {:id => "register_form"} do |f| %>
   <div>
-    Not a User? &nbsp;
-    <%= link_to "Register Here!", new_user_path %>
-  </div> 
+    <%= f.label :first_name %>
+  </div>
+  <div>
+    <%= f.text_field :first_name %>
+  </div>
+  <div>
+    <%= f.label :last_name %>
+  </div>
+  <div>
+    <%= f.text_field :last_name %>
+  </div>
+  <div>
+    <%= f.label :email %>
+  </div>
+  <div>
+    <%= f.text_field :email %>
+  </div>
+  <div>
+    <%= f.submit "Register" %>
+  </div>
+<% end %>
 </div>
-</div>
+

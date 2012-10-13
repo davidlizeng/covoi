@@ -19,3 +19,6 @@
 
 # Ignore test data migration(s)
 /db/migrate/20120920055430_load_test_data.rb
+
+# Ignore local testing initializers
+/config/initializers/local_testing.rb

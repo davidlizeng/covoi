@@ -1,26 +1,26 @@
-<div class="box register_box">
-<div class="box_title">Register</div>
-<%= form_for :user, :remote => true, url: users_path, :html => {:id => "register_form"} do |f| %>
+<div class="box">
+<div class="box_title">Validate Account</div>
+<%= form_for(:user, url: user_path(@id), :method => "put") do |f| %>
   <div>
-    <%= f.label :first_name %>
+    <%= f.label :temporary_password %>
+  </div>
+  <div>
+    <%= f.password_field :temporary_password %>
   </div>
   <div>  
-    <%= f.text_field :first_name %>
+    <%= f.label :password %>
   </div>
   <div>  
-    <%= f.label :last_name %>
+    <%= f.password_field :password %>
   </div>
-  <div>
-    <%= f.text_field :last_name %>
+  <div>  
+    <%= f.label :password_confirmation %>
   </div>
-  <div>
-    <%= f.label :email %>
+  <div>  
+    <%= f.password_field :password_confirmation %>
   </div>
-  <div>
-    <%= f.text_field :email %>
-  </div>
-  <div> 
-    <%= f.submit "Register" %>
+  <div>  
+    <%= f.submit "Validate" %>
   </div>
 <% end %>
 </div>
