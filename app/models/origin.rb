@@ -3,27 +3,39 @@ class Origin < ActiveRecord::Base
 
   @@cache = [
     { :id => 1,
-      :name => "Stern Hall",
+      :name => "Wilbur Lot",
       :address => "1 Escondido Dr.",
       :city => "Stanford",
       :state => "CA",
       :zip => "94309" },
     { :id => 2,
-      :name => "Wilbur Hall",
+      :name => "Turnaround",
       :address => "2 Escondido Dr.",
       :city => "Stanford",
       :state => "CA",
       :zip => "94309" },
     { :id => 3,
-      :name => "Lagunita Court",
-      :address => "1 Santa Teresa Dr.",
+      :name => "Tresidder",
+      :address => "1 Lagunita Dr.",
+      :city => "Stanford",
+      :state => "CA",
+      :zip => "94309" },
+     { :id => 4,
+      :name => "Roble Gym",
+      :address => "1 Santa Teresa St.",
+      :city => "Stanford",
+      :state => "CA",
+      :zip => "94309" },
+    { :id => 5,
+      :name => "Gov Co",
+      :address => "2 Santa Teresa St.",
       :city => "Stanford",
       :state => "CA",
       :zip => "94309" }
    ]
 
   def self.find_by_id_cached(id)
-    Origin.new(@@cache[id - 1])
+    Origin.new(@@cache[id.to_i - 1])
   end
 
   def self.find_all_cached
@@ -40,5 +52,5 @@ class Origin < ActiveRecord::Base
       origin_choices.push([origin.name, origin.id])
     end
     return origin_choices
-  end 
+  end
 end

@@ -1,0 +1,67 @@
+#trip_box, #match_box, #payment_box {
+  vertical-align: top;
+  width: 315px;
+  padding-right: 0;
+}
+
+#trip_date {
+  width: 80px;
+}
+
+#trip_box {
+  display: inline-block;
+}
+
+#match_box, #payment_box {
+  display: none;
+}
+
+.trip, .active_trip, .picked_trip {
+  border: 1px solid #c0c0c0;
+  width: 275px;
+  padding: 10px;
+  display: inline-block;
+}
+
+.active_trip {
+  margin-right: 40px;
+}
+
+#active_box {
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+}
+
+#active_box_title {
+  vertical-align: top;
+  display: inline-block;
+  font-size: 24px;
+  color: #808080;
+  margin-right: 40px;
+  padding-top: 20px;
+}
+
+#active_box_spacer {
+  height: 20px;
+  border-top: 1px solid #c0c0c0;
+}
+
+#map_box {
+  vertical-align: top;
+  display: inline-block;
+  margin-left: 30px;
+}
+
+#map_canvas {
+  width: 570px;
+  height: 400px;
+  margin: 0;
+  display: inline-block;
+}
+
+#menu {
+  padding-top: 90px;
+  float: right;
+}

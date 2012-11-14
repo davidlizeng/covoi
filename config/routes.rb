@@ -14,7 +14,7 @@ Covoi::Application.routes.draw do
   #   resources :products
   resource :sessions, :only => [:new, :create, :destroy]
   resources :users, :only => [:new, :create, :show, :edit, :update]
-  resources :trips, :only => [:new, :create]
+  resources :trips, :only => [:create]
   resources :matches, :only => [:create]
 
   # Sample resource route with options:

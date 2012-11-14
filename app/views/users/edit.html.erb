@@ -1,0 +1,50 @@
+<% content_for :head do %>
+  <div id="menu">
+    <%= @user.first_name + " " + @user.last_name %> | <%= link_to "Dashboard", user_path(@user.id) %> | <%= link_to "Logout", sessions_path, :method => :delete %>
+  </div>
+<% end %>
+<div id="edit_box" class="box">
+  <div class="box_title">Edit Account</div>
+  <%= form_for :user, :remote => true, :method => :put, url: user_path(@user.id), :html => {:id => "register_form"} do |f| %>
+    <div>
+      <%= f.label :first_name %>
+    </div>
+    <div>
+      <%= f.text_field :first_name, :value => @user.first_name %>
+    </div>
+    <div>
+      <%= f.label :last_name %>
+    </div>
+    <div>
+      <%= f.text_field :last_name, :value => @user.last_name %>
+    </div>
+    <div>
+      <%= f.label :email %>
+    </div>
+    <div>
+      <%= @user.email %>
+    </div>
+    <div>
+      <%= f.label :password, "New password"  %>
+    </div>
+    <div>
+      <%= f.password_field :password %>
+    </div>
+    <div>
+      <%= f.label :password_confirmation, "Confirm new password" %>
+    </div>
+    <div>
+      <%= f.password_field :password_confirmation %>
+    </div>
+    <div>
+      <%= label_tag :user_current_password, "Password" %>
+    </div>
+    <div>
+      <%= password_field_tag :user_current_password %>
+    </div>
+    <div>
+      <%= f.submit "Edit" %>
+    </div>
+  <% end %>
+</div>
+

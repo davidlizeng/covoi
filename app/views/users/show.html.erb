@@ -1,3 +1,123 @@
-<h1><%= @name %></h1>
-<%= link_to "Logout", sessions_path, :method => :delete %>
-<%= link_to "Create a new trip!", new_trip_path %>
+<% content_for :scripts do %>
+  <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7fwbbsGPmOosBwJLq--b1YRyvPjZRa4U&sensor=false">
+  </script>
+ <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+ <script type="text/javascript">
+    Stripe.setPublishableKey('<%= STRIPE_PUBLIC_KEY %>');
+ </script>
+<% end %>
+
+<% content_for :head do %>
+  <div id="menu">
+    <%= @user.first_name + " " + @user.last_name %> | <%= link_to "My Account", edit_user_path(@user.id) %> | <%= link_to "Logout", sessions_path, :method => :delete %>
+  </div>
+<% end %>
+
+<% unless @trips.empty? %>
+<div id="active_box" class="box">
+  <div id="active_box_title" >Active Trips:</div>
+  <% @trips.each do |trip| %>
+    <div class="active_trip">
+      <div><%= "From #{@origins[trip.origin_id - 1].name} to #{@airports[trip.airport_id - 1].code}" %></div>
+      <div><%= "On #{trip.dateString} at #{trip.timeString}" %></div>
+    </div>
+  <% end %>
+</div>
+<div id="active_box_spacer"></div>
+<% end %>
+
+<div id="map_box" class="box">
+  <div class="box_title">Shuttle Pickup Locations</div>
+  <div id="map_canvas"></div>
+</div>
+
+<div id="trip_box" class="box">
+  <div class="box_title">Create a New Trip</div>
+  <div id="trip_error"></div>
+  <div class="spacer"></div>
+  <%= form_for :trip, :remote => true, url: trips_path, :html => {:autocomplete => "off"} do |f| %>
+    <div>
+      <%= f.label :origin_id, "Pickup location" %>
+    </div>
+    <div class="select_wrapper">
+      <%= f.select :origin_id, @origin_choices, :include_blank => true %>
+    </div>
+    <div>
+      <%= f.label :airport_id, "Airport" %>
+    </div>
+    <div class="select_wrapper">
+      <%= f.select :airport_id, @airport_choices, :include_blank => true %>
+    </div>
+    <div>
+      <%= f.label :date, "Date of departure" %>
+    </div>
+    <div>
+      <%= f.text_field :date %>
+    </div>
+    <div>
+      <%= f.label :time, "Flight time" %>
+    </div>
+    <div class="select_wrapper">
+      <%= f.select :hour, options_for_select((1..12).to_a), :include_blank => true %> :
+      <%= f.select :minute, options_for_select((0..59).to_a.map {|m| m.to_s.rjust(2, "0")}), :include_blank => true %>
+      <%= f.select :meridiem, options_for_select(["AM", "PM"]), :include_blank => true %>
+    </div>
+    <div>
+      <%= f.submit "Next", :id => "trip_submit" %>
+    </div>
+  <% end %>
+</div>
+
+<div id="match_box" class="box">
+  <div class="box_title">Pick a Ride</div>
+  <div id="match_error"></div>
+  <div class="spacer"></div>
+  <div id="match_box_variable"></div>
+  <div class="spacer"></div>
+  <div>
+    <%= button_tag "Back", :type => "button", :id => "match_back_button" %>
+    <%= button_tag "Next", :type => "button", :id => "match_next_button" %>
+  </div>
+</div>
+
+<div id="payment_box" class="box">
+  <div class="box_title">Confirm and Pay</div>
+  <div id="payment_error"></div>
+  <div class="spacer"></div>
+  <%= form_for :trip, url: matches_path, :html => {:id => "payment_form", :autocomplete => "off"} do |f| %>
+    <div id="picked_trip" class="picked_trip"></div>
+    <div>
+      <%= label_tag :card_number, "Credit card number" %>
+    </div>
+    <div>
+      <%= text_field_tag nil, nil, {name: nil, id: "card_number"} %>
+    </div>
+    <div>
+      <%= label_tag :card_code, "Security code on card (CVC)" %>
+    </div>
+    <div>
+      <%= text_field_tag nil, nil, {name: nil, id: "card_code"} %>
+    </div>
+    <div class="select_wrapper">
+      <div>
+        <%= label_tag :card_month, "Card expiration" %>
+      </div>
+      <div>
+        <%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"} %>
+        <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+8}, {name: nil, id: "card_year"} %>
+      </div>
+    </div>
+    <%= f.hidden_field :card_token %>
+    <%= f.hidden_field :id %>
+    <%= f.hidden_field :origin_id, :id => "new_trip_origin_id" %>
+    <%= f.hidden_field :airport_id, :id => "new_trip_airport_id" %>
+    <%= f.hidden_field :time %>
+    <div>
+      <%= button_tag "Back", :type => "button", :id => "payment_back_button" %>
+      <%= f.submit "Finish", :id => "payment_submit" %>
+    </div>
+  <% end %>
+</div>
+
+

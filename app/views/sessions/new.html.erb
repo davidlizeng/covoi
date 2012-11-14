@@ -1,15 +1,57 @@
-<div class="login_header"></div>
-<div class="box about_box">
-  <div class="box_title">How It Works</div>
-</div>
-<div class="box login_box">
-  <div class="box_title">Login</div>
-  <%= form_for(:session, url: sessions_path) do |f| %>
+<% content_for :head do %>
+  <div id="login_box">
+    <%= form_for(:session, url: sessions_path) do |f| %>
+      <div id="login_email">
+        <div>
+          <%= f.label :email %>
+        </div>
+        <div>
+          <%= f.text_field :email %>
+        </div>
+      </div>
+      <div id="login_password">
+        <div>
+          <%= f.label :password %>
+        </div>
+        <div>
+          <%= f.password_field :password %>
+        </div>
+      </div>
+      <div id="login_submit">
+        <%= f.submit "Login" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div id="register_box" class="box">
+  <div class="box_title">Register</div>
+  <div id="register_error"></div>
+  <div class="spacer"></div>
+  <%= form_for :user, :remote => true, url: users_path, :html => {:id => "register_form"} do |f| %>
+    <div>
+      <%= f.label :first_name %>
+    </div>
+    <div>
+      <%= f.text_field :first_name %>
+    </div>
+    <div>
+      <%= f.label :last_name %>
+    </div>
+    <div>
+      <%= f.text_field :last_name %>
+    </div>
     <div>
       <%= f.label :email %>
     </div>
     <div>
       <%= f.text_field :email %>
+    </div>
+    <div>
+      <%= f.label :email_confirmation, "Confirm email" %>
+    </div>
+    <div>
+      <%= f.text_field :email_confirmation %>
     </div>
     <div>
       <%= f.label :password %>
@@ -18,34 +60,13 @@
       <%= f.password_field :password %>
     </div>
     <div>
-      <%= f.submit "Login" %>
+      <%= f.label :password_confirmationm, "Confirm password" %>
+    </div>
+    <div>
+      <%= f.password_field :password_confirmation %>
+    </div>
+    <div>
+      <%= f.submit "Register", :id => "register_submit"%>
     </div>
   <% end %>
 </div>
-<div class="box register_box">
-<div class="box_title">Register</div>
-<%= form_for :user, :remote => true, url: users_path, :html => {:id => "register_form"} do |f| %>
-  <div>
-    <%= f.label :first_name %>
-  </div>
-  <div>
-    <%= f.text_field :first_name %>
-  </div>
-  <div>
-    <%= f.label :last_name %>
-  </div>
-  <div>
-    <%= f.text_field :last_name %>
-  </div>
-  <div>
-    <%= f.label :email %>
-  </div>
-  <div>
-    <%= f.text_field :email %>
-  </div>
-  <div>
-    <%= f.submit "Register" %>
-  </div>
-<% end %>
-</div>
-

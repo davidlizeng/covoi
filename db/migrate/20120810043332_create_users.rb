@@ -8,8 +8,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_digest
       t.string :password_salt
       t.boolean :confirmed
-      t.string :one_time_password
       t.timestamp :time_created
+      t.timestamp :time_confirmed
       t.timestamp :last_login
     end
     execute "ALTER TABLE users ADD PRIMARY KEY (id);"

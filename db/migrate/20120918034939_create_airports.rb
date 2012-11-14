@@ -4,7 +4,6 @@ class CreateAirports < ActiveRecord::Migration
       t.string :code
       t.string :city
       t.string :state
-      t.string :terminal
     end
   end
 end

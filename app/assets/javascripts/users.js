@@ -1,14 +1,128 @@
-$('#register_form').ready(function() {
-  var circle = newLoadingAnimation();
-  var beforeHandler = function() {
-    circle.play();
-    $('.main').append(circle.canvas);
-    $('#message_banner').empty();
-  };
-  var successHandler = function() {
-    circle.stop();
-    $('.sonic').remove();
-  };  
-  $('#register_form').bind('ajax:before', beforeHandler);
-  $('#register_form').bind('ajax:success', successHandler);
+$(document).ready(function() {
+
+  if ($('#trip_box').size() > 0) {
+    $('#trip_date').datepicker({minDate: new Date(2012, 12 - 1, 1), maxDate: new Date(2012, 12 - 1, 15)});
+  }
+
+  if ($('#match_box').size() > 0) {
+    $('#match_back_button').click(function(e) {
+      clear_message('match_error');
+      $('#match_box').slideUp('slow', function() {
+        $('#match_box').css('display', 'none');
+        $('#match_box_variable').empty();
+        $('#trip_box').css('display', 'inline-block').hide().slideDown('slow');
+      });
+    });
+
+    $('#match_next_button').click(function(e) {
+      $('#match_next_button').attr('disabled', 'true');
+      if ($('#trip_id:hidden').val() == '') {
+        display_message('Please select a ride', 'error', 'match_error', 'match_next_button');
+      } else {
+        $('#match_next_button').removeAttr('disabled');
+        clear_message('match_error');
+        $('#match_box').slideUp('slow', function() {
+          $('#match_box').css('display', 'none');
+          $('#payment_box').css('display', 'inline-block').hide().slideDown('slow');
+        });
+      }
+    });
+  }
+
+  if ($('#payment_box').size() > 0) {
+    $('#payment_back_button').click(function(e) {
+      clear_message('payment_error');
+      $('#payment_box').slideUp('slow', function() {
+        $('#payment_box').css('display', 'none');
+        $('#match_box').css('display', 'inline-block').hide().slideDown('slow');
+      });
+    });
+
+    $.ajaxSetup({
+      'beforeSend': function(xhr) {
+        xhr.setRequestHeader("Accept", "text/javascript");
+      }
+    });
+
+    $('#payment_form').submit(function(e) {
+      $('#payment_submit').attr('disabled', true);
+
+      var stripeResponseHandler = function(status, response) {
+        if (response.error){
+          display_message(response.error.message, 'error', 'payment_error', 'payment_submit');
+        } else {
+          $('#trip_card_token').val(response['id']);
+          $.ajax({
+            url: '/matches',
+            type: 'POST',
+            data: $('#payment_form').serialize()
+          });
+        }
+      };
+      Stripe.createToken({
+        number: $('#card_number').val(),
+        cvc: $('#card_code').val(),
+        exp_month: $('#card_month').val(),
+        exp_year: $('#card_year').val()
+      }, stripeResponseHandler);
+
+      return false;
+    });
+  }
+
+  if ($('#map_canvas').size() > 0) {
+    var infoWindow = new google.maps.InfoWindow();
+    var mapOptions = {
+      center: new google.maps.LatLng(37.426782, -122.169322),
+      zoom: 15,
+      minZoom: 13,
+      maxZoom: 19,
+      streetViewControl: false,
+      scrollwheel: false,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    var allowedBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(37.419041,-122.184894),
+      new google.maps.LatLng(37.4361,-122.156433)
+    );
+    var lastValidCenter = map.getCenter();
+
+    google.maps.event.addListener(map, 'center_changed', function() {
+      if (allowedBounds.contains(map.getCenter())) {
+        lastValidCenter = map.getCenter();
+        return;
+      }
+      map.panTo(lastValidCenter);
+    });
+    var markers = [];
+    var markersPositions = [
+      new google.maps.LatLng(37.424479, -122.16158),
+      new google.maps.LatLng(37.425259, -122.165239),
+      new google.maps.LatLng(37.423736, -122.170582),
+      new google.maps.LatLng(37.425483, -122.174423),
+      new google.maps.LatLng(37.425333, -122.181032)
+    ];
+    var markersTitles = [
+      'Wilbur Lot',
+      'Turnaround',
+      'Tresidder',
+      'Roble Gym',
+      'Gov Co'
+    ];
+    var markersOptions = [];
+    for (var i = 0; i < 5; ++i) {
+      markersOptions.push({
+        map: map,
+        icon: new google.maps.MarkerImage(
+          'https://chart.googleapis.com/chart?chst=d_bubble_text_small&chld=bb|'+ escape(markersTitles[i])+'|F4A342|000000',
+          null, null, new google.maps.Point(0, 42)),
+        position: markersPositions[i],
+        title: markersTitles[i],
+        zindex: 0
+      });
+      markers.push(new google.maps.Marker(markersOptions[i]));
+    }
+  }
+
 });

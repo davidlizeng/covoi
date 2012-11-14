@@ -1,33 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Covoi</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
-  <script type="text/javascript">
-    Stripe.setPublishableKey('<%= STRIPE_PUBLIC_KEY %>'); 
-  </script>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <div class="header">
-    <div class="header_border">
-      <div class="header_icon">
+  <head>
+    <title>RideGrouped</title>
+    <%= favicon_link_tag "/favicon.ico" %>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet" type="text/css">
+    <%= yield :scripts %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <div class="header_content">
+          <div class="header_icon_padding"></div>
+          <div class="header_icon"></div>
+          <%= yield :head %>
+        </div>
+      </div>
+      <div class="main">
+        <div class="spacer"></div>
+        <div class="main_content">
+          <div id="message_banner">
+            <% if flash.now[:error] %>
+              <script type="text/javascript">
+                $('document').ready(function() {
+                  $('#message_banner').append('<div class="error"><%= flash.now[:error] %></div>').hide().slideDown('slow');
+                });
+              </script>
+            <% elsif flash.now[:notice] %>
+              <script type="text/javascript">
+                $('document').ready(function() {
+                  $('#message_banner').append('<div class="notice"><%= flash.now[:notice] %></div>').hide().slideDown('slow');
+                });
+              </script>
+            <% end %>
+          </div>
+          <%= yield %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="main">
-    <div id="message_banner">
-      <% if flash.now[:notice] %>
-        <div class="notice"><%= flash.now[:notice] %></div>
-      <% end %>
-      <% if flash.now[:error] %>
-        <div class="error"><%= flash.now[:error] %></div>
-      <% end %>
-    </div>
-    <%= yield %>
-  </div>
-  <div class="footer"></div>
-</body>
+  </body>
 </html>

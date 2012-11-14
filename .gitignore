@@ -17,6 +17,9 @@
 # Ignore all vim swp files
 *.swp
 
+# Ignore all DS_Store files
+.DS_Store
+
 # Ignore test data migration(s)
 /db/migrate/20120920055430_load_test_data.rb
 

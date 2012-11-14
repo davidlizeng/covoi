@@ -1,0 +1,32 @@
+<% if @trip.errors.any? %>
+  display_message('<%= escape_javascript(@trip.errors.full_messages[0]) %>', 'error', 'trip_error', 'trip_submit');
+<% else %>
+  var match_box_elems = [];
+  <% unless @trips.empty? %>
+    match_box_elems.push('<div class="match_explanation">Join a ride similar to yours by selecting any of the rides below. Guaranteed savings!</div>');
+    <% @trips.each do |trip| %>
+      <% unless @user_trips.include?(trip.id) %>
+        match_box_elems.push('<div id="<%= "#{trip.id}" %>" class="trip"><div><%= "From #{@origins[trip.origin_id - 1].name} to #{@airports[trip.airport_id - 1].code}"%></div><div><%= "On #{trip.dateString} at #{trip.timeString}" %></div></div>');
+      <% end %>
+    <% end %>
+    match_box_elems.push('<div class="match_explanation">Not satisfied with any existing rides? Create you own by selecting the ride below.</div>');
+  <% end %>
+  match_box_elems.push('<div id="0" class="trip"><div><%= "From #{@origins[@trip.origin_id - 1].name} to #{@airports[@trip.airport_id - 1].code}"%></div><div><%= "On #{@trip.dateString} at #{@trip.timeString}" %></div></div>');
+  $('#match_box_variable').append(match_box_elems.join(''));
+  $('#trip_card_token:hidden').val('');
+  $('#trip_id:hidden').val('');
+  $('#new_trip_origin_id:hidden').val('<%= "#{@trip.origin_id}" %>');
+  $('#new_trip_airport_id:hidden').val('<%= "#{@trip.airport_id}" %>');
+  $('#trip_time:hidden').val('<%= "#{@time}" %>');
+  clear_message('trip_error');
+  $('#trip_box').slideUp('slow', function() {
+    $('#trip_box').css('display', 'none');
+    $('#match_box').css('display', 'inline-block').hide().slideDown('slow');
+  });
+  $('.trip').click(function(e) {
+    $('#trip_id:hidden').val(e.delegateTarget.id);
+    $('#picked_trip').html(e.delegateTarget.innerHTML);
+    $('.trip').css('border-color', '#c0c0c0').css('box-shadow', 'none');
+    $('#' + e.delegateTarget.id).css('border-color', '#e39231').css('box-shadow', 'inset 0 0 2px 2px #f4a342');
+  });
+<% end %>
