@@ -2,10 +2,11 @@
   vertical-align: top;
   width: 315px;
   padding-right: 0;
+  border: none;
 }
 
 #trip_date {
-  width: 80px;
+  width: 156px;
 }
 
 #trip_box {
@@ -16,25 +17,37 @@
   display: none;
 }
 
-.trip, .active_trip, .picked_trip {
+.trip, .picked_trip {
   border: 1px solid #c0c0c0;
   width: 275px;
   padding: 10px;
   display: inline-block;
 }
 
+.trip:hover {
+  cursor: pointer;
+}
+
 .active_trip {
-  margin-right: 40px;
+  margin-left: 10px;
+  border: 1px solid #c0c0c0;
+  padding: 10px;
+  padding-left: 20px;
+  width: 380px;
 }
 
 #active_box {
-  width: 100%;
-  padding: 20px;
+  width: 950px;
+  padding-left: 30px;
+  padding-right: 0px;
+  padding-top: 30px;
+  padding-bottom: 20px;
   margin-bottom: 20px;
   margin-left: 30px;
 }
 
 #active_box_title {
+  font-family: 'Play';
   vertical-align: top;
   display: inline-block;
   font-size: 24px;
@@ -52,6 +65,7 @@
   vertical-align: top;
   display: inline-block;
   margin-left: 30px;
+  border-right: 1px solid #e39231;
 }
 
 #map_canvas {
@@ -64,4 +78,40 @@
 #menu {
   padding-top: 90px;
   float: right;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.mouseover {
+  padding: 0 5px;
+  border: 1px solid #808080;
+  font-size: 13px;
+  margin: 0 5px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.mouseover:hover {
+  cursor: pointer;
+}
+
+body .ui-tooltip {
+  font-size: 14px;
+  font-family: 'Inder';
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+body .ui-datepicker {
+  font-size: 16px;
+  font-family: 'Play';
+}
+
+.ui-datepicker td,
+.ui-datepicker th {
+  width: 14%;
 }

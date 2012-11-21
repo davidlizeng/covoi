@@ -10,18 +10,44 @@
 
 <% content_for :head do %>
   <div id="menu">
-    <%= @user.first_name + " " + @user.last_name %> | <%= link_to "My Account", edit_user_path(@user.id) %> | <%= link_to "Logout", sessions_path, :method => :delete %>
+    <%= @user.first_name + " " + @user.last_name %> | <%= link_to "My Account", edit_user_path(@user.id) %> | <%= link_to "Logout", session_path, :method => :delete %>
   </div>
 <% end %>
 
-<% unless @trips.empty? %>
+<% unless @matches.empty? %>
 <div id="active_box" class="box">
-  <div id="active_box_title" >Active Trips:</div>
-  <% @trips.each do |trip| %>
+  <div class="box_title" >Active Rides</div>
+  <div class="small_spacer"></div>
+  <% @matches.each do |m| %>
     <div class="active_trip">
-      <div><%= "From #{@origins[trip.origin_id - 1].name} to #{@airports[trip.airport_id - 1].code}" %></div>
-      <div><%= "On #{trip.dateString} at #{trip.timeString}" %></div>
+      <div class="inline">
+        <div>RideGrouped Confirmation Number: <%= m.id %></div>
+        <div class="small_spacer"></div>
+        <table>
+          <tbody>
+            <tr>
+              <td align="right">Pickup Location: </td>
+              <td><%= @origins[m.trip.origin_id - 1].name %>, <%= @origins[m.trip.origin_id - 1].address %></td>
+            </tr>
+            <tr>
+              <td align="right">Pickup Date: </td>
+              <td><%= m.trip.dateString %></td>
+            </tr>
+            <tr>
+              <td align="right">Pickup Time: </td>
+              <td><%= m.trip.timeString %></td>
+            </tr>
+            <tr>
+              <td align="right">Airport: </td>
+              <td><%= @airports[m.trip.airport_id - 1].code %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+    <% unless m == @matches.last %>
+      <div class="spacer"></div>
+    <% end %>
   <% end %>
 </div>
 <div id="active_box_spacer"></div>
@@ -33,32 +59,43 @@
 </div>
 
 <div id="trip_box" class="box">
-  <div class="box_title">Create a New Trip</div>
+  <div class="box_title">Book a New Ride</div>
   <div id="trip_error"></div>
-  <div class="spacer"></div>
+  <div class="small_spacer"></div>
   <%= form_for :trip, :remote => true, url: trips_path, :html => {:autocomplete => "off"} do |f| %>
     <div>
-      <%= f.label :origin_id, "Pickup location" %>
+      <%= f.label :origin_id, "Pickup Location" %>
     </div>
-    <div class="select_wrapper">
+    <div>
       <%= f.select :origin_id, @origin_choices, :include_blank => true %>
     </div>
     <div>
       <%= f.label :airport_id, "Airport" %>
     </div>
-    <div class="select_wrapper">
+    <div>
       <%= f.select :airport_id, @airport_choices, :include_blank => true %>
     </div>
     <div>
-      <%= f.label :date, "Date of departure" %>
+      <%= f.label :type, "Flight Type" %>
+    </div>
+    <div>
+      <%= f.select :type, [["Domestic", 1], ["International", 2]], :include_blank => true %>
+    </div>
+    <div>
+      <%= f.label :date, "Date of Departure" %>
     </div>
     <div>
       <%= f.text_field :date %>
     </div>
     <div>
-      <%= f.label :time, "Flight time" %>
+      <div class="inline"><%= f.label :time, "Flight Time" %></div><div id="time_mouseover" class="inline mouseover">?</div>
+      <script>
+        $(document).ready(function () {
+          $(document).tooltip({content: '<p>As per SuperShuttle policy, all travelers on domestic flights must book shuttles at least 3 hours before their flight departure. International travelers must book shuttles at least 4 hours before their departure. </p> <p>SuperShuttle is not accountable for missed flights in the case that you have entered inaccurate flight information.</p>', items: '#time_mouseover'});
+        });
+      </script>
     </div>
-    <div class="select_wrapper">
+    <div class="variable_width_select">
       <%= f.select :hour, options_for_select((1..12).to_a), :include_blank => true %> :
       <%= f.select :minute, options_for_select((0..59).to_a.map {|m| m.to_s.rjust(2, "0")}), :include_blank => true %>
       <%= f.select :meridiem, options_for_select(["AM", "PM"]), :include_blank => true %>
@@ -72,7 +109,7 @@
 <div id="match_box" class="box">
   <div class="box_title">Pick a Ride</div>
   <div id="match_error"></div>
-  <div class="spacer"></div>
+  <div class="small_spacer"></div>
   <div id="match_box_variable"></div>
   <div class="spacer"></div>
   <div>
@@ -84,29 +121,27 @@
 <div id="payment_box" class="box">
   <div class="box_title">Confirm and Pay</div>
   <div id="payment_error"></div>
-  <div class="spacer"></div>
+  <div class="small_spacer"></div>
   <%= form_for :trip, url: matches_path, :html => {:id => "payment_form", :autocomplete => "off"} do |f| %>
     <div id="picked_trip" class="picked_trip"></div>
     <div>
-      <%= label_tag :card_number, "Credit card number" %>
+      <%= label_tag :card_number, "Credit Card Number" %>
     </div>
     <div>
       <%= text_field_tag nil, nil, {name: nil, id: "card_number"} %>
     </div>
     <div>
-      <%= label_tag :card_code, "Security code on card (CVC)" %>
+      <%= label_tag :card_code, "Security Code on Card (CVC)" %>
     </div>
     <div>
       <%= text_field_tag nil, nil, {name: nil, id: "card_code"} %>
     </div>
-    <div class="select_wrapper">
-      <div>
-        <%= label_tag :card_month, "Card expiration" %>
-      </div>
-      <div>
-        <%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"} %>
-        <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+8}, {name: nil, id: "card_year"} %>
-      </div>
+    <div>
+      <%= label_tag :card_month, "Card Expiration" %>
+    </div>
+    <div class="variable_width_select">
+      <%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"} %>
+      <%= select_year nil, {start_year: 2013, end_year: 2021}, {name: nil, id: "card_year"} %>
     </div>
     <%= f.hidden_field :card_token %>
     <%= f.hidden_field :id %>

@@ -6,7 +6,6 @@ class CreateTrips < ActiveRecord::Migration
       t.datetime :time
       t.integer :origin_id, :limit => 2
       t.integer :airport_id, :limit => 2
-      t.integer :airline, :limit => 2
       t.timestamp :time_created
     end
     execute "ALTER TABLE trips ADD PRIMARY KEY (id);"

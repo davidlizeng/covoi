@@ -3,15 +3,16 @@
 <% else %>
   var match_box_elems = [];
   <% unless @trips.empty? %>
-    match_box_elems.push('<div class="match_explanation">Join a ride similar to yours by selecting any of the rides below. Guaranteed savings!</div>');
+    match_box_elems.push('<div class="match_explanation">Based on your flight information, we\'ve matched you with some existing shuttle rides. Select the ride you wish to join by clicking on any of the rides below. Guaranteed Savings!</div><div class="small_spacer"></div>');
     <% @trips.each do |trip| %>
       <% unless @user_trips.include?(trip.id) %>
-        match_box_elems.push('<div id="<%= "#{trip.id}" %>" class="trip"><div><%= "From #{@origins[trip.origin_id - 1].name} to #{@airports[trip.airport_id - 1].code}"%></div><div><%= "On #{trip.dateString} at #{trip.timeString}" %></div></div>');
+        match_box_elems.push('<div id="<%= "#{trip.id}" %>" class="trip"><div><%= "From #{@origins[trip.origin_id - 1].name} to #{@airports[trip.airport_id - 1].code}"%></div><div><%= "On #{trip.dateString} at #{trip.timeString}" %></div><div>Price: $15.00</div></div><div class="small_spacer"></div>');
       <% end %>
     <% end %>
-    match_box_elems.push('<div class="match_explanation">Not satisfied with any existing rides? Create you own by selecting the ride below.</div>');
+    match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">Not satisfied with any existing rides? Create your own by selecting the ride below.</div><div class="small_spacer"></div>');
   <% end %>
-  match_box_elems.push('<div id="0" class="trip"><div><%= "From #{@origins[@trip.origin_id - 1].name} to #{@airports[@trip.airport_id - 1].code}"%></div><div><%= "On #{@trip.dateString} at #{@trip.timeString}" %></div></div>');
+  match_box_elems.push('<div id="0" class="trip"><div><%= "From #{@origins[@trip.origin_id - 1].name} to #{@airports[@trip.airport_id - 1].code}"%></div><div><%= "On #{@trip.dateString} at #{@trip.timeString}" %></div><div><div class="inline">Price: </div><div id="price_mouseover" class="inline mouseover">?</div></div></div>');
+  $('#match_box_variable').empty();
   $('#match_box_variable').append(match_box_elems.join(''));
   $('#trip_card_token:hidden').val('');
   $('#trip_id:hidden').val('');
@@ -29,4 +30,5 @@
     $('.trip').css('border-color', '#c0c0c0').css('box-shadow', 'none');
     $('#' + e.delegateTarget.id).css('border-color', '#e39231').css('box-shadow', 'inset 0 0 2px 2px #f4a342');
   });
+  $(document).tooltip({content: '<p>By creating a new ride, you are placing this ride in RideGrouped’s matchmaking system so that other students will be able to join. If any students join your ride, you will be charged $15.00 for the cost of the ride. Approximately 24 hours before your departure, if no one has joined this ride, you will be charged $20.00 for the cost of the ride.</p>', items: '#price_mouseover'});
 <% end %>

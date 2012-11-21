@@ -124,5 +124,4 @@ $(document).ready(function() {
       markers.push(new google.maps.Marker(markersOptions[i]));
     }
   }
-
 });

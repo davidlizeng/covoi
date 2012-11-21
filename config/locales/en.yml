@@ -2,6 +2,12 @@ en:
   activerecord:
     attributes:
       trip:
-        origin_id: "Pickup location"
-        time: "Flight time"
-        date: "Date of departure"
+        origin_id: "Pickup Location"
+        time: "Flight Time"
+        date: "Date of Departure"
+        type: "Flight Type"
+      user:
+        first_name: "First Name"
+        last_name: "Last Name"
+        password_confirmation: "Password Confirmation"
+        email_confirmation: "Email Confirmation"

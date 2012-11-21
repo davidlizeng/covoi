@@ -1,0 +1,20 @@
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>Thank you for booking with RideGrouped! Your RideGrouped Confirmation Number for this ride is <b><%= @match.id %></b>.<br>
+The total cost for your ride is <b>$15.00</b>.<br></p>
+
+<p>RideGrouped will book a SuperShuttle for you with the following information:<br>
+Pickup Location: <b><%= @origin.name %>: <%= @origin.address %>, <%= @origin.city %>, <%= @origin.state %> <%= @origin.zip %></b><br>
+Pickup Date: <b><%= @trip.dateString %></b><br>
+Pickup Time: <b><%= @trip.timeString %></b><br>
+Destination: <b><%= Airport.find_by_id_cached(@trip.airport_id).code %></b><br>
+</p>
+
+<p> Within 24 hours of your pickup time, you will receive an email with the details of the members of your group, as well as your SuperShuttle Confirmation Number. This will allow you to track your SuperShuttle as it is on its way. </p>
+
+<p> You may be chosen as the "Leader" of the group. RideGrouped books the SuperShuttle under the name of the Leader, and the SuperShuttle driver will be in direct contact with the Leader upon the arrival of the van.  </p>
+
+<p> Since SuperShuttle cannot change group sizes once booked, RideGrouped cannot offer refunds for cancelling your ride. However, on the event that you cannot make your ride, please email us at service@ridegrouped.com and we'll contact your group for you. </p>
+
+<p>Thanks,<br>
+The RideGrouped Team</p>

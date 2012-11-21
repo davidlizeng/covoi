@@ -1,9 +1,10 @@
 ActionMailer::Base.smtp_settings = {
-  :address => "smtp.gmail.com",
+  :address => "smtp.sendgrid.net",
   :port => 587,
-  :domain => "ridegrouped.com",
-  :user_name => "noreply@ridegrouped.com",
-  :password => "d1e5d1d01acd9cc2ab00b7cdaf7461c0",
+  :domain => "heroku.com",
+  :user_name => ENV['SENDGRID_USERNAME'],
+  :password => ENV['SENDGRID_PASSWORD'],
   :authentication => "plain",
   :enable_starttls_auto => true
 }
+ActionMailer::Base.delivery_method = :smtp

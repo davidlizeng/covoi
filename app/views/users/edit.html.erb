@@ -1,11 +1,12 @@
 <% content_for :head do %>
   <div id="menu">
-    <%= @user.first_name + " " + @user.last_name %> | <%= link_to "Dashboard", user_path(@user.id) %> | <%= link_to "Logout", sessions_path, :method => :delete %>
+    <%= @user.first_name + " " + @user.last_name %> | <%= link_to "Dashboard", user_path(@user.id) %> | <%= link_to "Logout", session_path, :method => :delete %>
   </div>
 <% end %>
 <div id="edit_box" class="box">
   <div class="box_title">Edit Account</div>
   <%= form_for :user, :remote => true, :method => :put, url: user_path(@user.id), :html => {:id => "register_form"} do |f| %>
+    <div class="small_spacer"></div>
     <div>
       <%= f.label :first_name %>
     </div>
@@ -22,22 +23,22 @@
       <%= f.label :email %>
     </div>
     <div>
-      <%= @user.email %>
+      <%= text_field_tag nil, @user.email, :readonly => true %>
     </div>
     <div>
-      <%= f.label :password, "New password"  %>
+      <%= f.label :password, "New Password"  %>
     </div>
     <div>
       <%= f.password_field :password %>
     </div>
     <div>
-      <%= f.label :password_confirmation, "Confirm new password" %>
+      <%= f.label :password_confirmation, "Confirm New Password" %>
     </div>
     <div>
       <%= f.password_field :password_confirmation %>
     </div>
     <div>
-      <%= label_tag :user_current_password, "Password" %>
+      <%= label_tag :user_current_password, "Current Password" %>
     </div>
     <div>
       <%= password_field_tag :user_current_password %>

@@ -7,6 +7,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email
       t.string :password_digest
       t.string :password_salt
+      t.string :stripe_customer_id
+      t.string :one_time_password
       t.boolean :confirmed
       t.timestamp :time_created
       t.timestamp :time_confirmed

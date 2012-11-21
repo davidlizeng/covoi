@@ -1,9 +1,9 @@
 <p>Hi <%= @user.first_name %>,</p>
 
-<p>Thank you for registering with Covoi!</p>
-<p>Please click the following link to confirm your email:
+<p>Thank you for registering with RideGrouped!
+<br>Please click the following link to confirm your email:
   <%= link_to "Confirm Registration", "http://#{ENV['SERVER_HOSTNAME']}/users/new?user_id=#{@user.id}&auth_token=#{Digest::SHA2.hexdigest(@user.id.to_s + @user.password_salt)}"%>
 </p>
 
-<p>Thanks,</p>
-<p>The Covoi Team</p>
+<p>Thanks,<br>
+The RideGrouped Team</p>

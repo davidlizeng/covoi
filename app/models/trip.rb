@@ -1,5 +1,5 @@
 class Trip < ActiveRecord::Base
-  attr_accessor :card_token, :hour, :minute, :meridiem, :date
+  attr_accessor :card_token, :hour, :minute, :meridiem, :date, :type
   has_many :matches
   has_many :users, :through => :matches
   set_primary_key :id
@@ -14,6 +14,7 @@ class Trip < ActiveRecord::Base
       errors.add(:date, "is invalid") unless date =~ /^12\/(0[1-9]|1[0-5])\/2012$/
       errors.add(:time, "is invalid") unless hour =~ /^([1-9]|1[0-2])$/ && minute =~ /^[0-5][0-9]$/ && meridiem =~ /^(AM|PM)$/
     end
+    errors.add(:type, "is invalid") unless type =~ /^[1-2]$/
   end
 
   def self.buildDateTime(trip)
@@ -22,7 +23,13 @@ class Trip < ActiveRecord::Base
     elsif trip.meridiem == "PM" && trip.hour != "12"
       trip.hour = ((trip.hour.to_i) + 12).to_s
     end
-    Time.new(trip.date[6, 4], trip.date[0, 2], trip.date[3, 2], trip.hour, trip.minute, 0, "-08:00")
+    time = Time.new(trip.date[6, 4], trip.date[0, 2], trip.date[3, 2], trip.hour, trip.minute, 0, "-08:00")
+    if trip.type == "1"
+      time -= 60*60*3
+    else
+      time -= 60*60*4
+    end
+    return time
   end
 
   def dateString

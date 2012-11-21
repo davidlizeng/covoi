@@ -11,10 +11,11 @@ class UsersController < ApplicationController
       if !valid_token?(params[:user_id], params[:auth_token])
         flash[:error] = "Invalid authorization token"
       else
-        Stripe::Customer.create(
+        @user.stripe_customer_id = Stripe::Customer.create(
           :description => @user.id.to_s,
           :email => @user.email
-        )
+        ).id
+        @user.one_time_password = SecureRandom.hex
         @user.confirmed = true
         @user.time_confirmed = Time.now
         @user.save(:validate => false)
@@ -37,7 +38,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.valid?
         begin
-          @user.id = SecureRandom.random_number(900000000000) + 100000000000
+          @user.id = SecureRandom.random_number(90000000) + 10000000
         end while User.find_by_id(@user.id) != nil
         @user.confirmed = false
         @user.password_salt = SecureRandom.hex
@@ -53,7 +54,8 @@ class UsersController < ApplicationController
   def show
     if params[:id].eql?(current_user.id.to_s)
       @user = current_user
-      @trips = @user.trips.where("time > (?)", Time.now - 60*60*24).order("time DESC").limit(2)
+      time_range = (Time.now - 60*60*24)..(Time.now + 60*60*24*30)
+      @matches = Match.all(:include => :trip, :conditions => {:trips => { :time => time_range }, :user_id => @user.id}, :order => "trips.time ASC")
       @origins = Origin.find_all_cached
       @airports = Airport.find_all_cached
       @origin_choices = Origin.buildOriginChoices(@origins)

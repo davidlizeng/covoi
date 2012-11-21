@@ -11,13 +11,13 @@ class User < ActiveRecord::Base
   end
 
   def validate_on_create
-    errors.add(:email, "must be a valid SUNetID email") unless email =~ /^[a-z0-9]{3,8}@stanford\.edu$/
+    errors.add(:email, "must be a valid SUNetID Email") unless email =~ /^[a-z0-9]{3,8}@stanford\.edu$/
     errors.add(:email, "is already registered") unless User.find_by_email(email) == nil
-    errors.add(:email, "does not match Email confirmation") unless email.eql? email_confirmation
+    errors.add(:email, "does not match Email Confirmation") unless email.eql? email_confirmation
     errors.add(:first_name, "must be between 1 and 31 characters") unless first_name.length >= 1 && first_name.length <= 31
     errors.add(:last_name, "must be between 1 and 31 characters") unless last_name.length >= 1 && last_name.length <= 31
     errors.add(:password, "must be between 6 and 31 characters") unless password.length >= 6 && password.length <= 31
-    errors.add(:password, "does not match Password confirmation") unless password.eql? password_confirmation
+    errors.add(:password, "does not match Password Confirmation") unless password.eql? password_confirmation
   end
 
   def validate_on_update
@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
     errors.add(:last_name, "must be between 1 and 31 characters") unless last_name.length >= 1 && last_name.length <= 31
     if !password.empty?
       errors.add(:password, "must be between 6 and 31 characters") unless password.length >= 6 && password.length <= 31
-      errors.add(:password, "does not match Password confirmation") unless password.eql? password_confirmation
+      errors.add(:password, "does not match Password Confirmation") unless password.eql? password_confirmation
     end
   end
 end
