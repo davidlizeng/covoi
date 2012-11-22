@@ -115,3 +115,22 @@ body .ui-datepicker {
 .ui-datepicker th {
   width: 14%;
 }
+
+#donate_dollars {
+  width: 10px;
+  margin: 0 2px;
+}
+
+#donate_cents {
+  width: 20px;
+  margin-left: 2px;
+  margin-right: 5px;
+}
+
+#donate_10_button,
+#donate_20_button {
+  font-size: 14px;
+  width: 40px;
+  height: 25px;
+  margin-right: 5px;
+}

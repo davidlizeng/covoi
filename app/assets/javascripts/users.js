@@ -30,6 +30,63 @@ $(document).ready(function() {
   }
 
   if ($('#payment_box').size() > 0) {
+    var dollars = 0;
+    var cents = 0;
+
+    $('#donate_10_button').click(function(e) {
+      $('#donate_dollars').val('1');
+      $('#donate_cents').val('50');
+      $('#total_price').html('16.50');
+    });
+
+    $('#donate_20_button').click(function(e) {
+      $('#donate_dollars').val('3');
+      $('#donate_cents').val('00');
+      $('#total_price').html('18.00');
+    });
+
+    $('#donate_dollars').keypress(function(e) {
+      var keyCode = window.event ? e.keyCode : e.which;
+      if (keyCode < 48 || keyCode > 57) {
+        if (keyCode != 0 && keyCode != 8 && keyCode != 13 && !e.ctrlKey) {
+          e.preventDefault();
+        }
+      }
+    });
+
+    $('#donate_dollars').blur(function(e) {
+      dollars = parseInt('15') + ((isNaN(parseInt($('#donate_dollars').val()))) ? '0' : Math.abs(parseInt($('#donate_dollars').val())));
+      cents = (isNaN(parseInt($('#donate_cents').val()))) ? '0' : Math.abs(parseInt($('#donate_cents').val()));
+      if (cents == 0) {
+        $('#total_price').html(dollars.toString() + '.00');
+      } else if (cents < 10) {
+        $('#total_price').html(dollars.toString() + '.0' + cents.toString());
+      } else if (cents < 100){
+        $('#total_price').html(dollars.toString() + '.' + cents.toString());
+      }
+    });
+
+    $('#donate_cents').keypress(function(e) {
+      var keyCode = window.event ? e.keyCode : e.which;
+      if (keyCode < 48 || keyCode > 57) {
+        if (keyCode != 0 && keyCode != 8 && keyCode != 13 && !e.ctrlKey) {
+            e.preventDefault();
+        }
+      }
+    });
+
+    $('#donate_cents').blur(function(e) {
+      dollars = parseInt('15') + ((isNaN(parseInt($('#donate_dollars').val()))) ? '0' : Math.abs(parseInt($('#donate_dollars').val())));
+      cents = (isNaN(parseInt($('#donate_cents').val()))) ? '0' : Math.abs(parseInt($('#donate_cents').val()));
+      if (cents == 0) {
+        $('#total_price').html(dollars.toString() + '.00');
+      } else if (cents < 10) {
+        $('#total_price').html(dollars.toString() + '.0' + cents.toString());
+      } else if (cents < 100){
+        $('#total_price').html(dollars.toString() + '.' + cents.toString());
+      }
+    });
+
     $('#payment_back_button').click(function(e) {
       clear_message('payment_error');
       $('#payment_box').slideUp('slow', function() {

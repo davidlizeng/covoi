@@ -124,6 +124,23 @@
   <div class="small_spacer"></div>
   <%= form_for :trip, url: matches_path, :html => {:id => "payment_form", :autocomplete => "off"} do |f| %>
     <div id="picked_trip" class="picked_trip"></div>
+    <div class="spacer"></div>
+    <div id="donations">
+      <div>
+        <%= label_tag :donations, "Donations" %>
+      </div>
+      <div>
+        $<%= text_field_tag :donate_dollars, "", :maxlength => 1 %>.<%= text_field_tag :donate_cents, "", :maxlength => 2 %><%= button_tag "10%", :type => "button", :id => "donate_10_button" %><%= button_tag "20%", :type => "button", :id => "donate_20_button" %>
+      </div>
+      <div>Total Price: $<span id="total_price">15.00</span></div>
+      <div class="spacer"></div>
+    </div>
+    <div>
+      <%= label_tag :phone, "Cell Phone Number" %>
+    </div>
+    <div>
+      <%= text_field_tag :phone, @user.phone %>
+    </div>
     <div>
       <%= label_tag :card_number, "Credit Card Number" %>
     </div>
@@ -140,8 +157,8 @@
       <%= label_tag :card_month, "Card Expiration" %>
     </div>
     <div class="variable_width_select">
-      <%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"} %>
-      <%= select_year nil, {start_year: 2013, end_year: 2021}, {name: nil, id: "card_year"} %>
+      <%= select_month nil, {add_month_numbers: true, include_blank: true}, {name: nil, id: "card_month"} %>
+      <%= select_year nil, {start_year: 2013, end_year: 2021, include_blank: true}, {name: nil, id: "card_year"} %>
     </div>
     <%= f.hidden_field :card_token %>
     <%= f.hidden_field :id %>

@@ -25,6 +25,8 @@
     $('#match_box').css('display', 'inline-block').hide().slideDown('slow');
   });
   $('.trip').click(function(e) {
+    if (e.delegateTarget.id == '0') $('#donations').css('display', 'none');
+    else $('#donations').css('display', 'block');
     $('#trip_id:hidden').val(e.delegateTarget.id);
     $('#picked_trip').html(e.delegateTarget.innerHTML);
     $('.trip').css('border-color', '#c0c0c0').css('box-shadow', 'none');

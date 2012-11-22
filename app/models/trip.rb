@@ -11,10 +11,10 @@ class Trip < ActiveRecord::Base
     if time
       errors.add(:time, "is invalid") unless time.in_time_zone.to_s =~ /^2012-12-(0[1-9]|1[0-5]) ([0-1][0-9]|2[0-3]):[0-5][0-9]:00 -0800$/
     else
-      errors.add(:date, "is invalid") unless date =~ /^12\/(0[1-9]|1[0-5])\/2012$/
-      errors.add(:time, "is invalid") unless hour =~ /^([1-9]|1[0-2])$/ && minute =~ /^[0-5][0-9]$/ && meridiem =~ /^(AM|PM)$/
+      errors.add(:date, "is invalid") unless date.to_s =~ /^12\/(0[1-9]|1[0-5])\/2012$/
+      errors.add(:time, "is invalid") unless hour.to_s =~ /^([1-9]|1[0-2])$/ && minute.to_s =~ /^[0-5][0-9]$/ && meridiem.to_s =~ /^(AM|PM)$/
     end
-    errors.add(:type, "is invalid") unless type =~ /^[1-2]$/
+    errors.add(:type, "is invalid") unless type.to_s =~ /^[1-2]$/
   end
 
   def self.buildDateTime(trip)
