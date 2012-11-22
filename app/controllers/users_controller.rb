@@ -4,22 +4,25 @@ class UsersController < ApplicationController
   before_filter :require_logout, :only => [:new, :create]
 
   def new
+    params[:user_id] = params[:user_id] || 0
+    params[:auth_token] = params[:auth_token] || ""
     @user = User.find_by_id(params[:user_id])
     if @user == nil
-      flash[:error] = "Invalid user id"
+      flash[:error] = "Invalid confirmation link"
     elsif !@user.confirmed
-      if !valid_token?(params[:user_id], params[:auth_token])
-        flash[:error] = "Invalid authorization token"
+      if !valid_token?(params[:user_id], params[:auth_token], @user)
+        flash[:error] = "Invalid confirmation link"
       else
         @user.stripe_customer_id = Stripe::Customer.create(
           :description => @user.id.to_s,
           :email => @user.email
         ).id
         @user.one_time_password = SecureRandom.hex
+        @user.password_reset_active = false
         @user.confirmed = true
         @user.time_confirmed = Time.now
         @user.save(:validate => false)
-        flash[:notice] = "Thank you for confirming your email!"
+        flash[:notice] = "Thank you for confirming your email. Try logging in with your new RideGrouped account!"
       end
     end
     redirect_to root_url
@@ -31,6 +34,7 @@ class UsersController < ApplicationController
     @user = User.new
     @user.first_name = params[:user][:first_name] || ""
     @user.last_name = params[:user][:last_name] || ""
+    @user.phone = params[:user][:phone] || ""
     @user.email = params[:user][:email].downcase
     @user.email_confirmation = params[:user][:email_confirmation].downcase
     @user.password = params[:user][:password] || ""
@@ -41,6 +45,7 @@ class UsersController < ApplicationController
           @user.id = SecureRandom.random_number(90000000) + 10000000
         end while User.find_by_id(@user.id) != nil
         @user.confirmed = false
+        @user.one_time_password = SecureRandom.hex
         @user.password_salt = SecureRandom.hex
         @user.password_digest = Digest::SHA2.hexdigest(@user.password + @user.password_salt)
         UserMailer.registration_confirmation(@user).deliver
@@ -75,17 +80,21 @@ class UsersController < ApplicationController
       if @user.authenticate(params[:user_current_password])
         @user.first_name = params[:user][:first_name] || ""
         @user.last_name = params[:user][:last_name] || ""
+        @user.phone = params[:user][:phone] || ""
         @user.password = params[:user][:password] || ""
         @user.password_confirmation = params[:user][:password_confirmation] || ""
         if @user.valid?
           if !@user.password.empty?
             @user.password_salt = SecureRandom.hex
             @user.password_digest= Digest::SHA2.hexdigest(@user.password + @user.password_salt)
+            @user.password_reset_active = false
           end
           @user.save
+        else
+          @error = @user.errors.full_messages[0]
         end
       else
-        @user.errors.add(:password, "is incorrect. Changes will not be submitted.")
+        @error = "You must enter your Current Password correctly to submit changes."
       end
       format.js
     end

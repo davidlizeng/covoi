@@ -176,3 +176,8 @@ button:active {
   color: #e39231;
   font-size: 13px;
 }
+
+.notice {
+  color: #e39231;
+  font-size: 14px;
+}

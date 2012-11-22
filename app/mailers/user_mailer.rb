@@ -16,4 +16,8 @@ class UserMailer < ActionMailer::Base
     mail(:from => @@service, :to => @user.email, :subject => "Booking Confirmation")
   end
 
+  def password_reset(user)
+    @user = user
+    mail(:from => @@noreply, :to => @user.email, :subject => "Password Reset")
+  end
 end

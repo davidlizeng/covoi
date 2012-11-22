@@ -1,0 +1,32 @@
+<% content_for :head do %>
+  <div id="menu"><%= link_to "Home", root_url %></div>
+<% end %>
+
+<% if @error %>
+  <div class="error"><%= @error %></div>
+<% else %>
+  <div id="reset_box" class="box">
+    <div class="box_title">Reset Your Password</div>
+    <div id="reset_error"></div>
+    <div class="small_spacer"></div>
+    <%= form_for :user, :remote => true, url: "/iforgot/reset_post" do |f| %>
+      <%= hidden_field_tag :id, @id %>
+      <%= hidden_field_tag :token, @token %>
+      <div>
+        <%= f.label :password, "New Password" %>
+      </div>
+      <div>
+        <%= f.password_field :password %>
+      </div>
+      <div>
+        <%= f.label :password_confirmation, "Confirm New Password" %>
+      </div>
+      <div>
+        <%= f.password_field :password_confirmation %>
+      </div>
+      <div>
+        <%= f.submit "Reset", :id => "reset_submit"%>
+      </div>
+    <% end %>
+  </div>
+<% end %>

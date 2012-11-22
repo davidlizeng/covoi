@@ -2,7 +2,7 @@
 
 <p>Thank you for registering with RideGrouped!
 <br>Please click the following link to confirm your email:
-  <%= link_to "Confirm Registration", "http://#{ENV['SERVER_HOSTNAME']}/users/new?user_id=#{@user.id}&auth_token=#{Digest::SHA2.hexdigest(@user.id.to_s + @user.password_salt)}"%>
+  <%= link_to "Confirm Registration", "http://#{ENV['SERVER_HOSTNAME']}/users/new?user_id=#{@user.id}&auth_token=#{Digest::SHA2.hexdigest(@user.id.to_s + @user.password_salt + @user.one_time_password)}"%>
 </p>
 
 <p>Thanks,<br>

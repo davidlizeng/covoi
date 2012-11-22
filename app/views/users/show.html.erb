@@ -10,7 +10,7 @@
 
 <% content_for :head do %>
   <div id="menu">
-    <%= @user.first_name + " " + @user.last_name %> | <%= link_to "My Account", edit_user_path(@user.id) %> | <%= link_to "Logout", session_path, :method => :delete %>
+    <span id="name"><%= @user.first_name + " " + @user.last_name %></span> | <%= link_to "My Account", edit_user_path(@user.id) %> | <%= link_to "Logout", session_path, :method => :delete %>
   </div>
 <% end %>
 

@@ -1,5 +1,5 @@
 <% if @error.nil? %>
-  window.location.pathname='<%= "#{user_path(@user.id)}" %>'
+  window.location.pathname = '<%= "#{user_path(@user.id)}" %>';
 <% else %>
   display_message('<%= escape_javascript(@error) %>', 'error', 'payment_error', 'payment_submit');
 <% end %>

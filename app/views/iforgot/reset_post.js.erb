@@ -1,0 +1,5 @@
+<% if @error.nil? %>
+  window.location.pathname = '/';
+<% else %>
+  display_message('<%= escape_javascript(@error) %>', 'error', 'reset_error', 'reset_submit');
+<% end %>

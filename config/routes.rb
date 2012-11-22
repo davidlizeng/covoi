@@ -8,6 +8,10 @@ Covoi::Application.routes.draw do
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+  match 'iforgot/new' => 'iforgot#new'
+  match 'iforgot/new_post' => 'iforgot#new_post'
+  match 'iforgot/reset' => 'iforgot#reset'
+  match 'iforgot/reset_post' => 'iforgot#reset_post'
   # This route can be invoked with purchase_url(:id => product.id)
   # match '/' => 'session#new', :as => :new_session
   # Sample resource route (maps HTTP verbs to controller actions automatically):
@@ -16,6 +20,7 @@ Covoi::Application.routes.draw do
   resources :users, :only => [:new, :create, :show, :edit, :update]
   resources :trips, :only => [:create]
   resources :matches, :only => [:create]
+
 
   # Sample resource route with options:
   #   resources :products do

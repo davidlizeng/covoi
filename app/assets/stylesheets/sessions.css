@@ -22,3 +22,12 @@
   margin: 20px;
   margin-left: 600px;
 }
+
+#login_email_text,
+#login_password_text {
+  margin-bottom: 0;
+}
+
+#forgot_password {
+  font-size: 13px;
+}

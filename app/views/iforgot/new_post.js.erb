@@ -1,0 +1,5 @@
+<% if @error.nil? %>
+  display_message('Password reset email successfully sent.', 'notice', 'forgot_error', 'forgot_submit');
+<% else %>
+  display_message('<%= escape_javascript(@error) %>', 'error', 'forgot_error', 'forgot_submit');
+<% end %>

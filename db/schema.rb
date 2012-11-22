@@ -44,15 +44,17 @@ ActiveRecord::Schema.define(:version => 20120920055430) do
   end
 
   create_table "users", :id => false, :force => true do |t|
-    t.integer  "id",                 :limit => 8, :null => false
+    t.integer  "id",                    :limit => 8, :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
+    t.string   "phone"
     t.string   "password_digest"
     t.string   "password_salt"
     t.string   "stripe_customer_id"
     t.string   "one_time_password"
     t.boolean  "confirmed"
+    t.boolean  "password_reset_active"
     t.datetime "time_created"
     t.datetime "time_confirmed"
     t.datetime "last_login"

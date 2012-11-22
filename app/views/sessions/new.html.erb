@@ -1,12 +1,14 @@
 <% content_for :head do %>
   <div id="login_box">
-    <%= form_for(:session, url: session_path) do |f| %>
+    <%= form_for :session, url: session_path do |f| %>
       <div id="login_email">
         <div>
           <%= f.label :email %>
         </div>
         <div>
-          <%= f.text_field :email %>
+          <%= f.text_field :email, :id => "login_email_text" %>
+        </div>
+        <div id="login_error">
         </div>
       </div>
       <div id="login_password">
@@ -14,7 +16,10 @@
           <%= f.label :password %>
         </div>
         <div>
-          <%= f.password_field :password %>
+          <%= f.password_field :password, :id => "login_password_text" %>
+        </div>
+        <div id="forgot_password">
+          <%= link_to "Forgot your password?", "/iforgot/new" %>
         </div>
       </div>
       <div id="login_submit">
@@ -30,16 +35,22 @@
   <div class="spacer"></div>
   <%= form_for :user, :remote => true, url: users_path, :html => {:id => "register_form"} do |f| %>
     <div>
-      <%= f.label :first_name %>
+      <%= f.label :first_name, "First Name" %>
     </div>
     <div>
       <%= f.text_field :first_name %>
     </div>
     <div>
-      <%= f.label :last_name %>
+      <%= f.label :last_name, "Last Name" %>
     </div>
     <div>
       <%= f.text_field :last_name %>
+    </div>
+    <div>
+      <%= f.label :phone, "Cell Phone Number" %>
+    </div>
+    <div>
+      <%= f.text_field :phone %>
     </div>
     <div>
       <%= f.label :email %>
@@ -48,7 +59,7 @@
       <%= f.text_field :email %>
     </div>
     <div>
-      <%= f.label :email_confirmation, "Confirm email" %>
+      <%= f.label :email_confirmation, "Confirm Email" %>
     </div>
     <div>
       <%= f.text_field :email_confirmation %>
@@ -60,7 +71,7 @@
       <%= f.password_field :password %>
     </div>
     <div>
-      <%= f.label :password_confirmationm, "Confirm password" %>
+      <%= f.label :password_confirmation, "Confirm Password" %>
     </div>
     <div>
       <%= f.password_field :password_confirmation %>

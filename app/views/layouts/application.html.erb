@@ -26,16 +26,16 @@
         <div class="spacer"></div>
         <div class="main_content">
           <div id="message_banner">
-            <% if flash.now[:error] %>
+            <% if flash[:error] %>
               <script type="text/javascript">
                 $('document').ready(function() {
-                  $('#message_banner').append('<div class="error"><%= flash.now[:error] %></div>').hide().slideDown('slow');
+                  display_message('<%= escape_javascript(flash[:error]) %>', 'error', 'message_banner', '');
                 });
               </script>
-            <% elsif flash.now[:notice] %>
+            <% elsif flash[:notice] %>
               <script type="text/javascript">
                 $('document').ready(function() {
-                  $('#message_banner').append('<div class="notice"><%= flash.now[:notice] %></div>').hide().slideDown('slow');
+                  display_message('<%= escape_javascript(flash[:notice]) %>', 'notice', 'message_banner', '');
                 });
               </script>
             <% end %>

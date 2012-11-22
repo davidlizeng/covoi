@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
     errors.add(:email, "does not match Email Confirmation") unless email.eql? email_confirmation
     errors.add(:first_name, "must be between 1 and 31 characters") unless first_name.length >= 1 && first_name.length <= 31
     errors.add(:last_name, "must be between 1 and 31 characters") unless last_name.length >= 1 && last_name.length <= 31
+    errors.add(:phone, "must be 10 digits with no other characters") unless phone.to_s =~ /^[0-9]{10}$/
     errors.add(:password, "must be between 6 and 31 characters") unless password.length >= 6 && password.length <= 31
     errors.add(:password, "does not match Password Confirmation") unless password.eql? password_confirmation
   end
@@ -23,6 +24,7 @@ class User < ActiveRecord::Base
   def validate_on_update
     errors.add(:first_name, "must be between 1 and 31 characters") unless first_name.length >= 1 && first_name.length <= 31
     errors.add(:last_name, "must be between 1 and 31 characters") unless last_name.length >= 1 && last_name.length <= 31
+    errors.add(:phone, "must be 10 digits with no other characters") unless phone.to_s =~ /^[0-9]{10}$/
     if !password.empty?
       errors.add(:password, "must be between 6 and 31 characters") unless password.length >= 6 && password.length <= 31
       errors.add(:password, "does not match Password Confirmation") unless password.eql? password_confirmation

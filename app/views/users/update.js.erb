@@ -1,10 +1,12 @@
-<% if @user.errors.any? %>
-  $('#message_banner').append('<div class="error"><%= escape_javascript(@user.errors.full_messages[0]) %></div>');
+<% if @error != nil  %>
+  display_message('<%= escape_javascript(@error) %>', 'error', 'edit_error', 'edit_submit');
 <% else %>
-  $('#message_banner').append('<div class="notice">Changes submitted!</div>');
+  display_message('Changes submitted!', 'error', 'edit_error', 'edit_submit');
   $('#user_first_name').val('<%= escape_javascript(@user.first_name) %>');
   $('#user_last_name').val('<%= escape_javascript(@user.last_name) %>');
+  $('#user_phone').val('<%= escape_javascript(@user.phone) %>');
   $('#user_password').val('');
   $('#user_password_confirmation').val('');
   $('#user_current_password').val('');
+  $('#name').html('<%= escape_javascript(@user.first_name + " " + @user.last_name) %>');
 <% end %>
