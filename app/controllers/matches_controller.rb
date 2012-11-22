@@ -1,6 +1,5 @@
 class MatchesController < ApplicationController
 
-  include MatchesHelper
   before_filter :require_login
 
   def create

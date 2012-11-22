@@ -13,7 +13,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-/test
 
 # Ignore all vim swp files
 *.swp
