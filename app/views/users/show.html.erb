@@ -69,24 +69,28 @@
     <div>
       <%= f.select :origin_id, @origin_choices, :include_blank => true %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= f.label :airport_id, "Airport" %>
     </div>
     <div>
       <%= f.select :airport_id, @airport_choices, :include_blank => true %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= f.label :type, "Flight Type" %>
     </div>
     <div>
       <%= f.select :type, [["Domestic", 1], ["International", 2]], :include_blank => true %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= f.label :date, "Date of Departure" %>
     </div>
     <div>
       <%= f.text_field :date %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <div class="inline"><%= f.label :time, "Flight Time" %></div><div id="time_mouseover" class="inline mouseover">?</div>
       <script>
@@ -100,6 +104,7 @@
       <%= f.select :minute, options_for_select((0..59).to_a.map {|m| m.to_s.rjust(2, "0")}), :include_blank => true %>
       <%= f.select :meridiem, options_for_select(["AM", "PM"]), :include_blank => true %>
     </div>
+    <div class="spacer"></div>
     <div>
       <%= f.submit "Next", :id => "trip_submit" %>
     </div>
@@ -141,30 +146,35 @@
     <div>
       <%= text_field_tag :phone, @user.phone %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= label_tag :card_number, "Credit Card Number" %>
     </div>
     <div>
       <%= text_field_tag nil, nil, {name: nil, id: "card_number"} %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= label_tag :card_code, "Security Code on Card (CVC)" %>
     </div>
     <div>
       <%= text_field_tag nil, nil, {name: nil, id: "card_code"} %>
     </div>
+    <div class="small_spacer"></div>
     <div>
-      <%= label_tag :card_month, "Card Expiration" %>
+      <%= label_tag :card_exp, "Card Expiration" %>
     </div>
     <div class="variable_width_select">
       <%= select_month nil, {add_month_numbers: true, include_blank: true}, {name: nil, id: "card_month"} %>
       <%= select_year nil, {start_year: 2013, end_year: 2021, include_blank: true}, {name: nil, id: "card_year"} %>
     </div>
+    <div class="small_spacer"></div>
     <%= f.hidden_field :card_token %>
     <%= f.hidden_field :id %>
     <%= f.hidden_field :origin_id, :id => "new_trip_origin_id" %>
     <%= f.hidden_field :airport_id, :id => "new_trip_airport_id" %>
     <%= f.hidden_field :time %>
+    <div class="spacer"></div>
     <div>
       <%= button_tag "Back", :type => "button", :id => "payment_back_button" %>
       <%= f.submit "Finish", :id => "payment_submit" %>

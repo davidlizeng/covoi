@@ -7,23 +7,19 @@ class UsersController < ApplicationController
     params[:user_id] = params[:user_id] || 0
     params[:auth_token] = params[:auth_token] || ""
     @user = User.find_by_id(params[:user_id])
-    if @user == nil
-      flash[:error] = "Invalid confirmation link"
-    elsif !@user.confirmed
-      if !valid_token?(params[:user_id], params[:auth_token], @user)
-        flash[:error] = "Invalid confirmation link"
-      else
-        @user.stripe_customer_id = Stripe::Customer.create(
-          :description => @user.id.to_s,
-          :email => @user.email
-        ).id
-        @user.one_time_password = SecureRandom.hex
-        @user.password_reset_active = false
-        @user.confirmed = true
-        @user.time_confirmed = Time.now
-        @user.save(:validate => false)
-        flash[:notice] = "Thank you for confirming your email. Try logging in with your new RideGrouped account!"
-      end
+    if @user == nil || @user.confirmed || !valid_token?(params[:user_id], params[:auth_token], @user)
+      flash[:error] = { :id => "message_banner", :message => "Invalid confirmation link" }
+    else
+      @user.stripe_customer_id = Stripe::Customer.create(
+        :description => @user.id.to_s,
+        :email => @user.email
+      ).id
+      @user.one_time_password = SecureRandom.hex
+      @user.password_reset_active = false
+      @user.confirmed = true
+      @user.time_confirmed = Time.now
+      @user.save(:validate => false)
+      flash[:notice] = "Thank you for confirming your email. Try logging in with your new RideGrouped account!"
     end
     redirect_to root_url
   end

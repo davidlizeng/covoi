@@ -55,7 +55,7 @@ $(document).ready(function() {
     });
 
     $('#donate_dollars').blur(function(e) {
-      dollars = parseInt('15') + ((isNaN(parseInt($('#donate_dollars').val()))) ? '0' : Math.abs(parseInt($('#donate_dollars').val())));
+      dollars = parseInt('15') + ((isNaN(parseInt($('#donate_dollars').val()))) ? 0 : Math.abs(parseInt($('#donate_dollars').val())));
       cents = (isNaN(parseInt($('#donate_cents').val()))) ? '0' : Math.abs(parseInt($('#donate_cents').val()));
       if (cents == 0) {
         $('#total_price').html(dollars.toString() + '.00');
@@ -76,7 +76,7 @@ $(document).ready(function() {
     });
 
     $('#donate_cents').blur(function(e) {
-      dollars = parseInt('15') + ((isNaN(parseInt($('#donate_dollars').val()))) ? '0' : Math.abs(parseInt($('#donate_dollars').val())));
+      dollars = parseInt('15') + ((isNaN(parseInt($('#donate_dollars').val()))) ? 0 : Math.abs(parseInt($('#donate_dollars').val())));
       cents = (isNaN(parseInt($('#donate_cents').val()))) ? '0' : Math.abs(parseInt($('#donate_cents').val()));
       if (cents == 0) {
         $('#total_price').html(dollars.toString() + '.00');

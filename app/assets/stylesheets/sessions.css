@@ -31,3 +31,16 @@
 #forgot_password {
   font-size: 13px;
 }
+
+#register_table td {
+  height: 45px;
+}
+
+#submit_row td {
+  padding-top: 10px;
+}
+
+.register_label {
+  font-size: 14px;
+  width: 80px;
+}

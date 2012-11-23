@@ -18,12 +18,18 @@ class TripsController < ApplicationController
         @time = @trip.time.in_time_zone.to_s
         @origins = Origin.find_all_cached
         @airports = Airport.find_all_cached
-        @trips = Trip.where(:airport_id => @trip.airport_id, :time => ((@trip.time - 60*60*1.5)..(@trip.time))).all
-        @trips = @trips.sort{ |x, y| (@trip.time - x.time + 15*60*(@trip.origin_id - x.origin_id).abs) <=> (@trip.time - y.time + 15*60*(@trip.origin_id - y.origin_id).abs)}
+        trips = Trip.where(:airport_id => @trip.airport_id, :time => ((@trip.time - 60*60*1.5)..(@trip.time))).all
+        trips = trips.sort{ |x, y| (@trip.time - x.time + 15*60*(@trip.origin_id - x.origin_id).abs) <=> (@trip.time - y.time + 15*60*(@trip.origin_id - y.origin_id).abs)}
         matches = Match.find_all_by_user_id(current_user.id)
-        @user_trips = [];
+        user_trips = [];
         matches.each do |m|
-          @user_trips.push(m.trip_id)
+          user_trips.push(m.trip_id)
+        end
+        @trips = []
+        trips.each do |t|
+          unless user_trips.include?(t.id)
+            @trips.push(t)
+          end
         end
         format.js
       else

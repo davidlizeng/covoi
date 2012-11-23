@@ -6,7 +6,7 @@ module UsersHelper
 
   def require_post
     if !request.post?
-      flash[:error] = "Page Not Found"
+      flash[:error] = {:id => "message_banner", :message => "Page Not Found"}
       redirect_to root_url
     end
   end

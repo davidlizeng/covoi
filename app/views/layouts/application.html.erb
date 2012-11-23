@@ -29,13 +29,14 @@
             <% if flash[:error] %>
               <script type="text/javascript">
                 $('document').ready(function() {
-                  display_message('<%= escape_javascript(flash[:error]) %>', 'error', 'message_banner', '');
+                  display_message('<%= escape_javascript(flash[:error][:message]) %>', 'error', '<%= escape_javascript(flash[:error][:id])%>', '');
                 });
               </script>
             <% elsif flash[:notice] %>
               <script type="text/javascript">
                 $('document').ready(function() {
                   display_message('<%= escape_javascript(flash[:notice]) %>', 'notice', 'message_banner', '');
+                  alert('<%= escape_javascript(flash[:notice]) %>');
                 });
               </script>
             <% end %>
