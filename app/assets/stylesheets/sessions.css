@@ -15,12 +15,21 @@
   padding-top: 47px;
 }
 
+#how_to {
+  width: 500px;
+  height: 500px;
+  display: inline-block;
+  background: no-repeat url(/images/how_to.png);
+  margin-top: 30px;
+  margin-left: 20px;
+}
+
 #register_box {
   display: inline-block;
   vertical-align: top;
   width: 300px;
   margin: 20px;
-  margin-left: 600px;
+  margin-left: 60px;
 }
 
 #login_email_text,

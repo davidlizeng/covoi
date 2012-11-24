@@ -167,6 +167,13 @@ $(document).ready(function() {
       'Roble Gym',
       'Gov Co'
     ];
+    var markersDescriptions = [
+      '673 Escondido Rd',
+      '618 Escondido Rd',
+      '459 Lagunita Dr',
+      '351 Santa Teresa St',
+      '236 Santa Teresa St'
+    ]
     var markersOptions = [];
     for (var i = 0; i < 5; ++i) {
       markersOptions.push({
@@ -175,7 +182,7 @@ $(document).ready(function() {
           'https://chart.googleapis.com/chart?chst=d_bubble_text_small&chld=bb|'+ escape(markersTitles[i])+'|F4A342|000000',
           null, null, new google.maps.Point(0, 42)),
         position: markersPositions[i],
-        title: markersTitles[i],
+        title: markersDescriptions[i],
         zindex: 0
       });
       markers.push(new google.maps.Marker(markersOptions[i]));
