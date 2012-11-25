@@ -12,48 +12,65 @@
  *= require_tree .
  */
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Play';
+  height: 100%;
 }
 
-.header {
+#header {
+  height: 117px;
   background: repeat url(/images/bgnoise.png);
   margin: auto;
   min-width: 1024px;
   border-bottom: 1px solid #e39231;
 }
 
-.header_content {
+#header_content {
   width: 1024px;
   margin: auto;
 }
 
-.header_icon {
+#header_icon {
   display: inline-block;
   height: 81px;
   width: 250px;
   margin: 20px;
   margin-bottom: 12px;
   margin-left: 0;
-  background: no-repeat url(/images/ridegrouped_logo_big.png);
+  background: no-repeat url(/images/ridegrouped_logo.png);
 }
 
-.main {
+#main {
+  background: repeat url(/images/bgnoise.png);
   padding: 0 20px;
   margin: auto;
   min-width: 1024px;
+  height: auto;
 }
 
-.main_content {
+#main_content {
   font-size: 0;
   width: 1024px;
   margin: auto;
 }
 
+#footer {
+  background: repeat url(/images/bgnoise.png);
+  margin: auto;
+  min-width: 1024px;
+  border-top: 1px solid #e39231;
+  height: 50px;
+}
+
 a:link,
 a:visited {
   color: #808080;
+  text-decoration: none;
 }
 
 a:hover,
@@ -149,8 +166,8 @@ button:active {
   font-size: 16px;
   font-family: 'Inder';
   border-left: 1px solid #e39231;
-  background-color: #ffffff;
-  padding: 30px;
+  padding: 20px;
+  padding-top: 15px;
   margin: 0;
 }
 
@@ -179,3 +196,4 @@ button:active {
   color: #e39231;
   font-size: 14px;
 }
+

@@ -14,9 +14,23 @@
   </div>
 <% end %>
 
+
+<div id="map_box" class="box">
+  <div class="box_title">Shuttle Pickup Locations</div>
+  <div id="map_canvas"></div>
+</div>
+
 <% unless @matches.empty? %>
+<script>
+  $(document).ready(function () {
+    $('#active_box').css('display', 'inline-block');
+  });
+</script>
 <div id="active_box" class="box">
-  <div class="box_title" >Active Rides</div>
+  <div class="box_title" >
+    Active Rides
+    <span id="show_new" class="tab">Book a New Ride</span>
+  </div>
   <div class="small_spacer"></div>
   <% @matches.each do |m| %>
     <div class="active_trip">
@@ -50,16 +64,21 @@
     <% end %>
   <% end %>
 </div>
-<div id="active_box_spacer"></div>
+<% else %>
+<script>
+  $(document).ready(function () {
+    $('#trip_box').css('display', 'inline-block');
+  });
+</script>
 <% end %>
 
-<div id="map_box" class="box">
-  <div class="box_title">Shuttle Pickup Locations</div>
-  <div id="map_canvas"></div>
-</div>
-
 <div id="trip_box" class="box">
-  <div class="box_title">Book a New Ride</div>
+  <div class="box_title">
+    Book a New Ride
+    <% unless @matches.empty? %>
+      <span id="show_active" class="tab">Active Rides</span>
+    <% end %>
+  </div>
   <div id="trip_error"></div>
   <div class="small_spacer"></div>
   <%= form_for :trip, :remote => true, url: trips_path, :html => {:autocomplete => "off"} do |f| %>

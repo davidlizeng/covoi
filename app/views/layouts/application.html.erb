@@ -14,36 +14,48 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <div class="page">
-      <div class="header">
-        <div class="header_content">
-          <div class="header_icon_padding"></div>
-          <div class="header_icon"></div>
-          <%= yield :head %>
-        </div>
+    <div id="header">
+      <div id="header_content">
+        <div id="header_icon"></div>
+        <%= yield :head %>
       </div>
-      <div class="main">
+    </div>
+    <div id="main">
+      <script>
+        $(document).ready(function() {
+          if ($(window).height() > $('#main').height() + $('#header').height() + $('#footer').height() + 2) {
+            $('#main').height($(window).height() - $('#header').height() - $('#footer').height() - 2);
+          }
+          $(window).resize(function () {
+            if ($(window).height() > $('#main').height() + $('#header').height() + $('#footer').height() + 2) {
+              $('#main').height($(window).height() - $('#header').height() - $('#footer').height() - 2);
+            }
+          });
+        });
+      </script>
+      <div class="spacer"></div>
+      <div id="main_content">
+        <div id="message_banner">
+          <% if flash[:error] %>
+            <script type="text/javascript">
+              $('document').ready(function() {
+                display_message('<%= escape_javascript(flash[:error][:message]) %>', 'error', '<%= escape_javascript(flash[:error][:id])%>', '');
+              });
+            </script>
+          <% elsif flash[:notice] %>
+            <script type="text/javascript">
+              $('document').ready(function() {
+                display_message('<%= escape_javascript(flash[:notice]) %>', 'notice', 'message_banner', '');
+                alert('<%= escape_javascript(flash[:notice]) %>');
+              });
+            </script>
+          <% end %>
+        </div>
+        <%= yield %>
         <div class="spacer"></div>
-        <div class="main_content">
-          <div id="message_banner">
-            <% if flash[:error] %>
-              <script type="text/javascript">
-                $('document').ready(function() {
-                  display_message('<%= escape_javascript(flash[:error][:message]) %>', 'error', '<%= escape_javascript(flash[:error][:id])%>', '');
-                });
-              </script>
-            <% elsif flash[:notice] %>
-              <script type="text/javascript">
-                $('document').ready(function() {
-                  display_message('<%= escape_javascript(flash[:notice]) %>', 'notice', 'message_banner', '');
-                  alert('<%= escape_javascript(flash[:notice]) %>');
-                });
-              </script>
-            <% end %>
-          </div>
-          <%= yield %>
-        </div>
       </div>
+    </div>
+    <div id="footer">
     </div>
   </body>
 </html>

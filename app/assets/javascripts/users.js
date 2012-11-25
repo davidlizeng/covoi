@@ -1,6 +1,23 @@
 $(document).ready(function() {
 
+  if ($('#active_box').size() > 0) {
+    $('#show_new').click(function(e) {
+      $('#active_box').slideUp('slow', function() {
+        $('#active_box').css('display', 'none');
+        $('#trip_box').css('display', 'inline-block').hide().slideDown('slow');
+      });
+    });
+  }
+
   if ($('#trip_box').size() > 0) {
+    if ($('#show_active').size() > 0) {
+      $('#show_active').click(function(e) {
+        $('#trip_box').slideUp('slow', function() {
+          $('#trip_box').css('display', 'none');
+          $('#active_box').css('display', 'inline-block').hide().slideDown('slow');
+        });
+      });
+    }
     $('#trip_date').datepicker({minDate: new Date(2012, 12 - 1, 1), maxDate: new Date(2012, 12 - 1, 15)});
   }
 
@@ -158,7 +175,7 @@ $(document).ready(function() {
       new google.maps.LatLng(37.425259, -122.165239),
       new google.maps.LatLng(37.423736, -122.170582),
       new google.maps.LatLng(37.425483, -122.174423),
-      new google.maps.LatLng(37.425333, -122.181032)
+      new google.maps.LatLng(37.426183, -122.179632)
     ];
     var markersTitles = [
       'Wilbur Lot',

@@ -2,7 +2,7 @@
   <div id="login_box">
     <%= form_for :session, url: session_path do |f| %>
       <div id="login_email">
-        <div>
+        <div class="login_label">
           <%= f.label :email %>
         </div>
         <div>
@@ -12,7 +12,7 @@
         </div>
       </div>
       <div id="login_password">
-        <div>
+        <div class="login_label">
           <%= f.label :password %>
         </div>
         <div>

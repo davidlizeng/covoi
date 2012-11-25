@@ -14,42 +14,49 @@
     <div>
       <%= f.text_field :first_name, :value => @user.first_name %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= f.label :last_name %>
     </div>
     <div>
       <%= f.text_field :last_name, :value => @user.last_name %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= f.label :phone %>
     </div>
     <div>
       <%= f.text_field :phone, :value => @user.phone %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= f.label :email %>
     </div>
     <div>
       <%= text_field_tag nil, @user.email, :readonly => true %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= f.label :password, "New Password"  %>
     </div>
     <div>
       <%= f.password_field :password %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= f.label :password_confirmation, "Confirm New Password" %>
     </div>
     <div>
       <%= f.password_field :password_confirmation %>
     </div>
+    <div class="small_spacer"></div>
     <div>
       <%= label_tag :user_current_password, "Current Password" %>
     </div>
     <div>
       <%= password_field_tag :user_current_password %>
     </div>
+    <div class="spacer"></div>
     <div>
       <%= f.submit "Edit" %>
     </div>
