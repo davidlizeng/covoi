@@ -14,7 +14,6 @@
   </div>
 <% end %>
 
-
 <div class="spacer"></div>
 <div id="map_box" class="box">
   <div class="box_title">Shuttle Pickup Locations</div>
@@ -209,8 +208,8 @@
     <%= f.hidden_field :time %>
     <div class="spacer"></div>
     <div>
-      <%= button_tag "Back", :type => "button", :id => "payment_back_button" %>
-      <%= f.submit "Finish", :id => "payment_submit" %>
+        <%= button_tag "Back", :type => "button", :id => "payment_back_button" %>
+        <%= button_tag "Finish", :type => "button", :id => "payment_submit" %>
     </div>
   <% end %>
 </div>

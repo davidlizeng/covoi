@@ -1,5 +1,6 @@
 <% if @user.errors.any? %>
   display_message('<%= escape_javascript(@user.errors.full_messages[0]) %>', 'error', 'register_error', 'register_submit');
+  $('#register_submit').empty().html('Register');
 <% else %>
   $('#user_first_name').val('');
   $('#user_last_name').val('');
@@ -10,4 +11,5 @@
   $('#user_password_confirmation').val('');
   clear_message('register_error');
   display_message('Thank you for registering with RideGrouped! Check your email to confirm your registration!', 'notice', 'message_banner', 'register_submit');
+  $('#register_submit').empty().html('Register');
 <% end %>

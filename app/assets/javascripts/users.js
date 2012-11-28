@@ -118,21 +118,26 @@ $(document).ready(function() {
       }
     });
 
-    $('#payment_form').submit(function(e) {
-      $('#payment_submit').attr('disabled', true);
+    var stripeResponseHandler = function(status, response) {
+      if (response.error) {
+        display_message(response.error.message, 'error', 'payment_error', 'payment_submit');
+        $('#payment_submit').empty().html('Finish');
+      } else {
+        $('#trip_card_token').val(response['id']);
+        $.ajax({
+          url: '/matches',
+          type: 'POST',
+          data: $('#payment_form').serialize()
+        });
+      }
+    };
 
-      var stripeResponseHandler = function(status, response) {
-        if (response.error){
-          display_message(response.error.message, 'error', 'payment_error', 'payment_submit');
-        } else {
-          $('#trip_card_token').val(response['id']);
-          $.ajax({
-            url: '/matches',
-            type: 'POST',
-            data: $('#payment_form').serialize()
-          });
-        }
-      };
+    $('#payment_submit').click(function(e) {
+      $('#payment_submit').attr('disabled', true);
+      loading = newLoadingAnimation();
+      $('#payment_submit').empty().append(loading.canvas);
+      loading.play();
+
       Stripe.createToken({
         number: $('#card_number').val(),
         cvc: $('#card_code').val(),
@@ -140,7 +145,6 @@ $(document).ready(function() {
         exp_year: $('#card_year').val()
       }, stripeResponseHandler);
 
-      return false;
     });
   }
 

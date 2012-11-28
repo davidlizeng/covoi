@@ -122,3 +122,8 @@ body .ui-datepicker {
 #cvc_mouseover a {
   color: #000000;
 }
+
+#payment_submit,
+#payment_back {
+  vertical-align: top;
+}
