@@ -18,7 +18,7 @@ $(document).ready(function() {
         });
       });
     }
-    $('#trip_date').datepicker({minDate: new Date(2012, 12 - 1, 1), maxDate: new Date(2012, 12 - 1, 15)});
+    $('#trip_date').datepicker({minDate: new Date(2012, 12 - 1, 1), maxDate: new Date(2012, 12 - 1, 22)});
   }
 
   if ($('#match_box').size() > 0) {
@@ -178,11 +178,11 @@ $(document).ready(function() {
       new google.maps.LatLng(37.426183, -122.179632)
     ];
     var markersTitles = [
-      'Wilbur Lot',
-      'Turnaround',
-      'Tresidder',
+      'Kimball Hall',
+      'Escondido Turnaround',
+      'Tresidder Union',
       'Roble Gym',
-      'Gov Co'
+      'Governor\'s Corner'
     ];
     var markersDescriptions = [
       '673 Escondido Rd',

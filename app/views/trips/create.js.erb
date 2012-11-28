@@ -1,5 +1,5 @@
-<% if @trip.errors.any? %>
-  display_message('<%= escape_javascript(@trip.errors.full_messages[0]) %>', 'error', 'trip_error', 'trip_submit');
+<% unless @error.nil? %>
+  display_message('<%= escape_javascript(@error) %>', 'error', 'trip_error', 'trip_submit');
 <% else %>
   var match_box_elems = [];
   <% unless @trips.empty? %>
@@ -11,7 +11,7 @@
   <% else %>
     match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">We were unable to find any good matches with existing shuttle rides. Create your own ride by selecting the ride below.</div><div class="small_spacer"></div>');
   <% end %>
-  match_box_elems.push('<div id="0" class="trip"><div><%= "From #{@origins[@trip.origin_id - 1].name} to #{@airports[@trip.airport_id - 1].code}"%></div><div><%= "On #{@trip.dateString} at #{@trip.timeString}" %></div><div><div class="inline">Price: </div><div id="price_mouseover" class="inline mouseover">?</div></div></div>');
+  match_box_elems.push('<div id="0" class="trip"><div><%= "From #{escape_javascript(@origins[@trip.origin_id - 1].name)} to #{@airports[@trip.airport_id - 1].code}"%></div><div><%= "On #{@trip.dateString} at #{@trip.timeString}" %></div><div><div class="inline">Price: </div><div class="price_mouseover inline mouseover">?</div></div></div>');
   $('#match_box_variable').empty();
   $('#match_box_variable').append(match_box_elems.join(''));
   $('#trip_card_token:hidden').val('');
@@ -32,5 +32,5 @@
     $('.trip').css('border-color', '#c0c0c0').css('box-shadow', 'none');
     $('#' + e.delegateTarget.id).css('border-color', '#e39231').css('box-shadow', 'inset 0 0 2px 2px #f4a342');
   });
-  $(document).tooltip({content: '<p>By creating a new ride, you are placing this ride in RideGrouped’s matchmaking system so that other students will be able to join. If any students join your ride, you will be charged $15.00 for the cost of the ride. Approximately 24 hours before your departure, if no one has joined this ride, you will be charged $20.00 for the cost of the ride.</p>', items: '#price_mouseover'});
+  $('.price_mouseover').tooltip({content: '<p>By creating a new ride, you are placing this ride in RideGrouped’s matchmaking system so that other students will be able to join. If any students join your ride, you will be charged $15.00 for the cost of the ride. Approximately 24 hours before your departure, if no one has joined this ride, you will be charged $20.00 for the cost of the ride.</p>', items: '.price_mouseover'});
 <% end %>

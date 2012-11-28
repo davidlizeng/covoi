@@ -3,6 +3,7 @@
     <span id="name"><%= @user.first_name + " " + @user.last_name %></span> | <%= link_to "Dashboard", user_path(@user.id) %> | <%= link_to "Logout", session_path, :method => :delete %>
   </div>
 <% end %>
+<div class="spacer"></div>
 <div id="edit_box" class="box">
   <div class="box_title">Edit Account</div>
   <%= form_for :user, :remote => true, :method => :put, url: user_path(@user.id), :html => {:id => "edit_form"} do |f| %>
@@ -12,54 +13,64 @@
       <%= f.label :first_name %>
     </div>
     <div>
-      <%= f.text_field :first_name, :value => @user.first_name %>
+      <%= f.text_field :first_name, :value => @user.first_name, :maxlength => 15 %>
     </div>
     <div class="small_spacer"></div>
     <div>
       <%= f.label :last_name %>
     </div>
     <div>
-      <%= f.text_field :last_name, :value => @user.last_name %>
+      <%= f.text_field :last_name, :value => @user.last_name, :maxlength => 15 %>
     </div>
     <div class="small_spacer"></div>
     <div>
-      <%= f.label :phone %>
+      <div class="inline"><%= f.label :phone %></div>
+      <div id="phone_mouseover" class="inline mouseover">?</div>
     </div>
     <div>
-      <%= f.text_field :phone, :value => @user.phone %>
+      <%= f.text_field :phone, :value => @user.phone, :maxlength => 10 %>
     </div>
     <div class="small_spacer"></div>
     <div>
-      <%= f.label :email %>
+      <%= f.label :email, "Stanford Email" %>
     </div>
     <div>
       <%= text_field_tag nil, @user.email, :readonly => true %>
     </div>
     <div class="small_spacer"></div>
     <div>
-      <%= f.label :password, "New Password"  %>
+      <div class="inline"><%= f.label :password, "New Password"  %></div>
+      <div id="new_password_mouseover" class="inline mouseover">?</div>
     </div>
     <div>
-      <%= f.password_field :password %>
+      <%= f.password_field :password, :maxlength => 31 %>
     </div>
     <div class="small_spacer"></div>
     <div>
       <%= f.label :password_confirmation, "Confirm New Password" %>
     </div>
     <div>
-      <%= f.password_field :password_confirmation %>
+      <%= f.password_field :password_confirmation, :maxlength => 31 %>
     </div>
     <div class="small_spacer"></div>
     <div>
-      <%= label_tag :user_current_password, "Current Password" %>
+      <div class="inline"><%= label_tag :user_current_password, "Current Password" %></div>
+      <div id="current_password_mouseover" class="inline mouseover">?</div>
     </div>
     <div>
-      <%= password_field_tag :user_current_password %>
+      <%= password_field_tag :user_current_password, "", :maxlength => 31 %>
     </div>
     <div class="spacer"></div>
     <div>
       <%= f.submit "Edit" %>
     </div>
+    <script>
+      $(document).ready(function() {
+        $('#phone_mouseover').tooltip({content: '<p>Your Cell Phone Number should be 10 digits with no special characters. Note that this is the number SuperShuttle uses to contact you upon the arrival of your shuttle.</p>', items: '#phone_mouseover'});
+        $('#new_password_mouseover').tooltip({content: '<p>You can leave this blank if you do not wish to change your password.</p>', items: '#new_password_mouseover'});
+        $('#current_password_mouseover').tooltip({content: '<p>You must enter your Current Password correctly to submit any changes.</p>', items: '#current_password_mouseover'});
+      });
+    </script>
   <% end %>
 </div>
 

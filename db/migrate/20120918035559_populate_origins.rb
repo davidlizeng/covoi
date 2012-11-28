@@ -1,7 +1,7 @@
 class PopulateOrigins < ActiveRecord::Migration
   def up
     wl = Origin.new
-    wl.name = "Wilbur Lot"
+    wl.name = "Kimball Hall"
     wl.address = "673 Escondido Rd"
     wl.city = "Stanford"
     wl.state = "CA"
@@ -9,7 +9,7 @@ class PopulateOrigins < ActiveRecord::Migration
     wl.save
 
     ta = Origin.new
-    ta.name = "Turnaround"
+    ta.name = "Escondido Turnaround"
     ta.address = "618 Escondido Rd"
     ta.city = "Stanford"
     ta.state = "CA"
@@ -17,7 +17,7 @@ class PopulateOrigins < ActiveRecord::Migration
     ta.save
 
     tr = Origin.new
-    tr.name = "Tresidder"
+    tr.name = "Tresidder Union"
     tr.address = "459 Lagunita Dr"
     tr.city = "Stanford"
     tr.state = "CA"
@@ -33,7 +33,7 @@ class PopulateOrigins < ActiveRecord::Migration
     rg.save
 
     gc = Origin.new
-    gc.name = "Gov Co"
+    gc.name = "Governor's Corner"
     gc.address = "236 Santa Teresa St"
     gc.city = "Stanford"
     gc.state = "CA"

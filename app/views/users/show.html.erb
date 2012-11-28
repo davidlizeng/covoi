@@ -10,11 +10,12 @@
 
 <% content_for :head do %>
   <div id="menu">
-    <span id="name"><%= @user.first_name + " " + @user.last_name %></span> | <%= link_to "My Account", edit_user_path(@user.id) %> | <%= link_to "Logout", session_path, :method => :delete %>
+    <span id="name"><%= @user.first_name + " " + @user.last_name %></span> | <% if @user.admin %><%= link_to "Admin", admin_path %> | <% end %><%= link_to "My Account", edit_user_path(@user.id) %> | <%= link_to "Logout", session_path, :method => :delete %>
   </div>
 <% end %>
 
 
+<div class="spacer"></div>
 <div id="map_box" class="box">
   <div class="box_title">Shuttle Pickup Locations</div>
   <div id="map_canvas"></div>
@@ -111,12 +112,10 @@
     </div>
     <div class="small_spacer"></div>
     <div>
-      <div class="inline"><%= f.label :time, "Flight Time" %></div><div id="time_mouseover" class="inline mouseover">?</div>
-      <script>
-        $(document).ready(function () {
-          $(document).tooltip({content: '<p>As per SuperShuttle policy, all travelers on domestic flights must book shuttles at least 3 hours before their flight departure. International travelers must book shuttles at least 4 hours before their departure. </p> <p>SuperShuttle is not accountable for missed flights in the case that you have entered inaccurate flight information.</p>', items: '#time_mouseover'});
-        });
-      </script>
+      <div class="inline">
+        <%= f.label :time, "Flight Time" %>
+      </div>
+      <div class="time_mouseover inline mouseover">?</div>
     </div>
     <div class="variable_width_select">
       <%= f.select :hour, options_for_select((1..12).to_a), :include_blank => true %> :
@@ -160,24 +159,30 @@
       <div class="spacer"></div>
     </div>
     <div>
-      <%= label_tag :phone, "Cell Phone Number" %>
+      <div class="inline">
+        <%= label_tag :phone, "Cell Phone Number" %>
+      </div>
+      <div id="phone_mouseover" class="inline mouseover">?</div>
     </div>
     <div>
-      <%= text_field_tag :phone, @user.phone %>
+      <%= text_field_tag :phone, @user.phone, :maxlength => 10 %>
     </div>
     <div class="small_spacer"></div>
     <div>
       <%= label_tag :card_number, "Credit Card Number" %>
     </div>
     <div>
-      <%= text_field_tag nil, nil, {name: nil, id: "card_number"} %>
+      <%= text_field_tag nil, nil, {name: nil, id: "card_number", maxlength: 16} %>
     </div>
     <div class="small_spacer"></div>
     <div>
-      <%= label_tag :card_code, "Security Code on Card (CVC)" %>
+      <div class="inline">
+        <%= label_tag :card_code, "Security Code (CVC)" %>
+      </div>
+      <div id="cvc_mouseover" class="inline mouseover"><a target="_blank" href="https://en.wikipedia.org/wiki/Card_Verification_Code">?</a></div>
     </div>
     <div>
-      <%= text_field_tag nil, nil, {name: nil, id: "card_code"} %>
+      <%= text_field_tag nil, nil, {name: nil, id: "card_code", maxlength: 4} %>
     </div>
     <div class="small_spacer"></div>
     <div>
@@ -188,6 +193,15 @@
       <%= select_year nil, {start_year: 2013, end_year: 2021, include_blank: true}, {name: nil, id: "card_year"} %>
     </div>
     <div class="small_spacer"></div>
+    <div>
+      <div class="inline">
+        <%= label_tag :password %>
+      </div>
+      <div id="password_mouseover" class="inline mouseover">?</div>
+    </div>
+    <div>
+      <%= password_field_tag :password, "", :maxlength => 31 %>
+    </div>
     <%= f.hidden_field :card_token %>
     <%= f.hidden_field :id %>
     <%= f.hidden_field :origin_id, :id => "new_trip_origin_id" %>
@@ -200,5 +214,13 @@
     </div>
   <% end %>
 </div>
+<script>
+  $(document).ready(function () {
+    $('.time_mouseover').tooltip({content: '<p>As per SuperShuttle policy, all travelers on domestic flights must book shuttles at least 3 hours before their flight departure. International travelers must book shuttles at least 4 hours before their departure. </p> <p>SuperShuttle is not accountable for missed flights in the case that you have entered inaccurate flight information.</p>', items: '.time_mouseover'});
+    $('#phone_mouseover').tooltip({content: '<p>This is the number SuperShuttle uses to contact you upon the arrival of your shuttle. Please double check to make sure it is correct.</p>', items: '#phone_mouseover'});
+    $('#cvc_mouseover').tooltip({content: '<p>Can\'t find your CVC? Click on the "?" for help.</p>', items: '#cvc_mouseover'});
+    $('#password_mouseover').tooltip({content: '<p>For security purposes, please enter your password to complete this transaction.</p>', items: '#password_mouseover'});
+  });
+</script>
 
 

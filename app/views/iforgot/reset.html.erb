@@ -16,13 +16,13 @@
         <%= f.label :password, "New Password" %>
       </div>
       <div>
-        <%= f.password_field :password %>
+        <%= f.password_field :password, :maxlength => 31 %>
       </div>
       <div>
         <%= f.label :password_confirmation, "Confirm New Password" %>
       </div>
       <div>
-        <%= f.password_field :password_confirmation %>
+        <%= f.password_field :password_confirmation, :maxlength => 31 %>
       </div>
       <div>
         <%= f.submit "Reset", :id => "reset_submit"%>

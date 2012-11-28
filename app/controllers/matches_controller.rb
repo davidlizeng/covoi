@@ -13,12 +13,18 @@ class MatchesController < ApplicationController
     params[:trip][:card_token] = params[:trip][:card_token] || ""
     params[:donate_dollars] = params[:donate_dollars] || ""
     params[:donate_cents] = params[:donate_cents] || ""
+    params[:phone] = params[:phone] || ""
+    params[:password] = params[:password] || ""
     @donate = params[:donate_dollars] + "." + params[:donate_cents]
     customer = Stripe::Customer.retrieve(@user.stripe_customer_id)
     customer.card = params[:trip][:card_token]
     customer.save
     if params[:trip][:id].eql?("")
       @error = "Invalid trip selection"
+    elsif !@user.authenticate(params[:password])
+      @error = "Password is incorrect"
+    elsif (params[:phone].to_s =~ /^[0-9]{10}$/).nil?
+      @error = "Cell Phone Number must be 10 digits with no other characters"
     end
     respond_to do |format|
       if @error.nil?
@@ -29,6 +35,8 @@ class MatchesController < ApplicationController
             @error = "Invalid trip selection"
           elsif !(@donate.to_s =~ /^[0-9]\.[0-9]{2}$/)
             @error = "Donations must be of the format $x.xx"
+          elsif @trip.time < Time.now + 24*60*60
+            @error = "RideGrouped can only accomodate shuttle bookings at least 24 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
           else
             charge = 1500 + (params[:donate_dollars].to_i)*100 + (params[:donate_cents].to_i)
             Stripe::Charge.create(
@@ -48,6 +56,8 @@ class MatchesController < ApplicationController
           @trip.id = 0
           if !@trip.valid?
             @error = @trip.errors.full_messages[0]
+          elsif @trip.time < Time.now + 24*60*60
+            @error = "RideGrouped can only accomodate shuttle bookings at least 24 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
           else
             begin
               @trip.id = SecureRandom.random_number(900000000)+100000000
@@ -69,10 +79,14 @@ class MatchesController < ApplicationController
           @match.user_id = @user.id
           @match.time_created = Time.now
           @match.save
+          unless params[:phone].eql?(@user.phone)
+            @user.phone = params[:phone]
+            @user.save(:validate => false)
+          end
           UserMailer.booking_confirmation(@user, @trip, @match, Origin.find_by_id_cached(@trip.origin_id), @join, @donate, @charge).deliver
         end
-        format.js
       end
+      format.js
     end
   rescue Stripe::InvalidRequestError => e
     @error = "Error processing credit card. Please try again."

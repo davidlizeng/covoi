@@ -3,7 +3,7 @@ module SessionsHelper
   def login(user)
     cookies.signed[:id] = {
         :value => user.id,
-        :expires => 60.minutes.from_now
+        :expires => 7.days.from_now
     }
     self.current_user = user
   end

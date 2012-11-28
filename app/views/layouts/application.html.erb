@@ -11,6 +11,17 @@
     <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Inder" rel="stylesheet" type="text/css">
     <%= yield :scripts %>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-30118084-3']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = 'https://ssl.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
     <%= csrf_meta_tags %>
   </head>
   <body>
@@ -24,16 +35,15 @@
       <script>
         $(document).ready(function() {
           if ($(window).height() > $('#main').height() + $('#header').height() + $('#footer').height() + 2) {
-            $('#main').height($(window).height() - $('#header').height() - $('#footer').height() - 2);
+            $('#main').css('min-height', ($(window).height() - $('#header').height() - $('#footer').height() - 2).toString() + 'px');
           }
           $(window).resize(function () {
             if ($(window).height() > $('#main').height() + $('#header').height() + $('#footer').height() + 2) {
-              $('#main').height($(window).height() - $('#header').height() - $('#footer').height() - 2);
+              $('#main').css('min-height', ($(window).height() - $('#header').height() - $('#footer').height() - 2).toString() + 'px');
             }
           });
         });
       </script>
-      <div class="spacer"></div>
       <div id="main_content">
         <div id="message_banner">
           <% if flash[:error] %>
@@ -56,6 +66,13 @@
       </div>
     </div>
     <div id="footer">
+      <div class="small_spacer"></div>
+      <div>
+        Have any questions? Notice any bugs? Email us at service@ridegrouped.com | For any SSD or ASSU specific questions, email ssd.assu@stanford.edu
+      </div>
+      <div>
+        &copy; Covoi LLC | Terms of Service
+      </div>
     </div>
   </body>
 </html>

@@ -55,9 +55,9 @@ ActiveRecord::Schema.define(:version => 20121124050121) do
     t.string   "one_time_password"
     t.boolean  "confirmed"
     t.boolean  "password_reset_active"
+    t.boolean  "admin"
     t.datetime "time_created"
     t.datetime "time_confirmed"
-    t.datetime "last_login"
   end
 
 end

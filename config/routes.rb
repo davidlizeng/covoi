@@ -17,6 +17,7 @@ Covoi::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
   resource :session, :only => [:new, :create, :destroy]
+  resource :admin, :only => [:show]
   resources :users, :only => [:new, :create, :show, :edit, :update]
   resources :trips, :only => [:create]
   resources :matches, :only => [:create]

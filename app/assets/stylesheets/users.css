@@ -1,7 +1,8 @@
 #active_box, #trip_box, #match_box, #payment_box {
   vertical-align: top;
-  width: 390px;
+  width: 370px;
   padding-right: 0;
+  margin-right: 0;
   border: none;
   display: none;
 }
@@ -22,10 +23,10 @@
 }
 
 .active_trip {
-  font-size: 15px;
+  font-size: 14px;
   border: 1px solid #c0c0c0;
-  padding: 10px;
-  width: 368px;
+  padding: 15px;
+  width: 338px;
 }
 
 .tab {
@@ -59,6 +60,7 @@
 #menu {
   padding-top: 90px;
   float: right;
+  margin-right: 20px;
   color: #808080;
 }
 
@@ -115,4 +117,8 @@ body .ui-datepicker {
   width: 40px;
   height: 25px;
   margin-right: 5px;
+}
+
+#cvc_mouseover a {
+  color: #000000;
 }

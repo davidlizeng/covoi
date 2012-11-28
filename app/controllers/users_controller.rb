@@ -44,6 +44,7 @@ class UsersController < ApplicationController
         @user.one_time_password = SecureRandom.hex
         @user.password_salt = SecureRandom.hex
         @user.password_digest = Digest::SHA2.hexdigest(@user.password + @user.password_salt)
+        @user.admin = false
         UserMailer.registration_confirmation(@user).deliver
         @user.time_created = Time.now
         @user.save

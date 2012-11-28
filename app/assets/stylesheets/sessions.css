@@ -20,20 +20,23 @@
 }
 
 #how_to {
-  width: 500px;
-  height: 500px;
+  width: 470px;
+  height: 520px;
   display: inline-block;
-  background: no-repeat url(/images/how_to.png);
-  margin-top: 20px;
-  margin-left: 20px;
+  background: no-repeat url(/images/flyer.jpg);
+  margin-left: 40px;
 }
 
 #register_box {
   display: inline-block;
   vertical-align: top;
-  width: 300px;
+  width: 320px;
   margin: 20px;
-  margin-left: 60px;
+  margin-left: 40px;
+}
+
+#register_submit {
+  margin-left: 113px;
 }
 
 #login_email_text,

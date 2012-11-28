@@ -12,9 +12,9 @@ class CreateUsers < ActiveRecord::Migration
       t.string :one_time_password
       t.boolean :confirmed
       t.boolean :password_reset_active
+      t.boolean :admin
       t.timestamp :time_created
       t.timestamp :time_confirmed
-      t.timestamp :last_login
     end
     execute "ALTER TABLE users ADD PRIMARY KEY (id);"
   end
