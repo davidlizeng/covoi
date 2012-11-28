@@ -1,1 +1,1 @@
-web: bundle exec rails server -p $PORT -e development
+web: bundle exec rails server -p $PORT

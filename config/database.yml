@@ -7,7 +7,7 @@ development:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: covoi_dev 
+  database: covoi_dev
   pool: 5
   username: covoi
   password: admin
@@ -19,7 +19,7 @@ test:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: covoi_prod
+  database: covoi_test
   pool: 5
   username: covoi
   password: admin
@@ -27,7 +27,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: covoi_test
+  database: covoi_prod
   pool: 5
   username: covoi
   password: admin
