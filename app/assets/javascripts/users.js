@@ -161,7 +161,7 @@ $(document).ready(function() {
   if ($('#map_canvas').size() > 0) {
     var infoWindow = new google.maps.InfoWindow();
     var mapOptions = {
-      center: new google.maps.LatLng(37.426782, -122.169322),
+      center: new google.maps.LatLng(37.426782, -122.172322),
       zoom: 15,
       minZoom: 13,
       maxZoom: 19,
@@ -213,7 +213,7 @@ $(document).ready(function() {
       markersOptions.push({
         map: map,
         icon: new google.maps.MarkerImage(
-          'https://www.covoi.com/images/' + markersFiles[i],
+          'https://www.covoi.com/images/' + markersFiles[i] + '.png',
           null, null, new google.maps.Point(markersWidths[i], 97)),
         position: markersPositions[i],
         title: markersDescriptions[i],
