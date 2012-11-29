@@ -90,7 +90,7 @@ class MatchesController < ApplicationController
             @user.phone = params[:phone]
             @user.save(:validate => false)
           end
-          UserMailer.booking_confirmation(@user, @trip, @match, Origin.find_by_id_cached(@trip.origin_id), @join, @donate, @charge).deliver
+          UserMailer.booking_confirmation(@user, @trip, @match, Origin.find_by_id_cached(@trip.origin_id), @join, @donate, @charge, @charge1, @charge2).deliver
         end
       end
       format.js

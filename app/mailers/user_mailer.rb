@@ -8,13 +8,15 @@ class UserMailer < ActionMailer::Base
     mail(:from => @@noreply, :to => @user.email, :subject => "Complete Your Registration")
   end
 
-  def booking_confirmation(user, trip, match, origin, join, donate, charge)
+  def booking_confirmation(user, trip, match, origin, join, donate, charge, charge1, charge2)
     @user = user
     @trip = trip
     @match = match
     @origin = origin
     @donate = donate
     @charge = charge
+    @charge1 = charge1
+    @charge2 = charge2
     @join = join
     mail(:from => @@service, :to => @user.email, :subject => "Booking Confirmation")
   end

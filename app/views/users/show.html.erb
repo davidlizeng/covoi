@@ -154,6 +154,7 @@
     <div id="donations">
       <div>
         <%= label_tag :donations, "Service Gratuity" %>
+        <div id="donate_mouseover" class="inline mouseover">?</div>
       </div>
       <div>
         $<%= text_field_tag :donate_dollars, "", :maxlength => 1 %>.<%= text_field_tag :donate_cents, "", :maxlength => 2 %><span class="donations_percent"><%= button_tag "10%", :type => "button", :id => "donate_10_button" %><%= button_tag "20%", :type => "button", :id => "donate_20_button" %></span><span class="donations_amount"><%= button_tag "$0.75", :type => "button", :id => "donate_75_button" %><%= button_tag "$1.50", :type => "button", :id => "donate_150_button" %></span>
@@ -222,9 +223,10 @@
   $(document).ready(function () {
     $('.time_mouseover').tooltip({content: '<p>Please enter your exact flight time here. SuperShuttle is not accountable for any problems in the case that you have entered inaccurate flight information.</p>', items: '.time_mouseover'});
     $('#phone_mouseover').tooltip({content: '<p>This is the number SuperShuttle uses to contact you upon the arrival of your shuttle. Please double check to make sure it is correct.</p>', items: '#phone_mouseover'});
+    $('#donate_mouseover').tooltip({content: '<p>Donate and help us grow? We would really appreciate it! Enter 0.00 if you do not wish to donate.</p>', items: '#donate_mouseover'});
     $('#cvc_mouseover').tooltip({content: '<p>Can\'t find your CVC? Click on the "?" for help.</p>', items: '#cvc_mouseover'});
     $('#password_mouseover').tooltip({content: '<p>For security purposes, please enter your password to complete this transaction.</p>', items: '#password_mouseover'});
-    $('#finish_mouseover').tooltip({content: '<p>This reservation entitles you to bring two bags for check in and one carry on item aboard the SuperShuttle. Please make sure each item is under 50 pounds. In the case you have more or oversized items, please contact RideGrouped at service@ridegrouped.com as extra fees may be applicable.</p>', items: '#finish_mouseover'});
+    $('#finish_mouseover').tooltip({content: '<p>By confirming this reservation and paying for this service, you will be joining a shared ride with other Stanford students. The information for your specific shuttle and contact info of the students you will be riding with will be provided within 24 hours of your departure.</p><p>This reservation entitles you to bring two bags for check in and one carry on item aboard the SuperShuttle. Please make sure each item is under 50 pounds. In the case you have more or oversized items, please contact RideGrouped at service@ridegrouped.com as extra fees may be applicable.</p>', items: '#finish_mouseover'});
   });
 </script>
 
