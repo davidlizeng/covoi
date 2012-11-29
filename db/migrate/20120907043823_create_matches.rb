@@ -8,5 +8,6 @@ class CreateMatches < ActiveRecord::Migration
       t.timestamp :time_created
     end
     execute "ALTER TABLE matches ADD PRIMARY KEY (id);"
+    execute "CREATE UNIQUE INDEX ON matches(id);"
   end
 end

@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20121124050121) do
     t.datetime "time_created"
   end
 
+  add_index "matches", ["id"], :name => "matches_id_idx", :unique => true
+
   create_table "origins", :force => true do |t|
     t.string "name"
     t.string "address"
@@ -44,6 +46,8 @@ ActiveRecord::Schema.define(:version => 20121124050121) do
     t.datetime "time_created"
   end
 
+  add_index "trips", ["id"], :name => "trips_id_idx", :unique => true
+
   create_table "users", :id => false, :force => true do |t|
     t.integer  "id",                    :null => false
     t.string   "first_name"
@@ -60,5 +64,8 @@ ActiveRecord::Schema.define(:version => 20121124050121) do
     t.datetime "time_created"
     t.datetime "time_confirmed"
   end
+
+  add_index "users", ["email"], :name => "users_email_idx", :unique => true
+  add_index "users", ["id"], :name => "users_id_idx", :unique => true
 
 end

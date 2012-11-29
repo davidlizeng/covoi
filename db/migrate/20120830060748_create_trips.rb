@@ -9,5 +9,6 @@ class CreateTrips < ActiveRecord::Migration
       t.timestamp :time_created
     end
     execute "ALTER TABLE trips ADD PRIMARY KEY (id);"
+    execute "CREATE UNIQUE INDEX ON trips(id);"
   end
 end

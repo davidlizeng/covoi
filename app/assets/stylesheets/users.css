@@ -7,6 +7,10 @@
   display: none;
 }
 
+#active_box {
+  font-size: 15px;
+}
+
 #trip_date {
   width: 156px;
 }
@@ -23,7 +27,7 @@
 }
 
 .active_trip {
-  font-size: 14px;
+  font-size: 15px;
   border: 1px solid #c0c0c0;
   padding: 15px;
   width: 338px;
