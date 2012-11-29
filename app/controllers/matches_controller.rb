@@ -93,7 +93,7 @@ class MatchesController < ApplicationController
       end
       format.js
     end
-  rescue Stripe::InvalidRequestError => e
+  rescue
     @error = "Error processing credit card. Please try again."
     respond_to do |format|
       format.js
