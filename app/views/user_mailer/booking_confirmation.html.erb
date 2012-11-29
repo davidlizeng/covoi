@@ -14,18 +14,20 @@
 <div>RideGrouped will book a SuperShuttle van for you with the following information:</div>
 <div>Pickup Location: <b><%= @origin.name %>: <%= @origin.address %>, <%= @origin.city %>, <%= @origin.state %> <%= @origin.zip %></b></div>
 <div>Pickup Date: <b><%= @trip.dateString %></b></div>
-<div>Pickup Time: <b><%= @trip.timeString %></b></div>
+<div>Pickup Time: <b><%= @trip.timeString %></b> (Please allow up to 15 minutes for your shuttle to arrive)</div>
 <div>Destination: <b><%= Airport.find_by_id_cached(@trip.airport_id).code %></b></div>
 
 <% unless @join %>
-  <p>Since you have created a new ride, the price of the ride is currently undetermined. If another student joins your ride, you will be charged $15.00 for the ride. Approximately 24 hours before your pickup time, if no one has joined your ride, you will be charged $20.00 for the ride. RideGrouped will send you a separate receipt email once the correct amount is determined.</p>
+  <p>Since you have created a new RideGroup, the price of your ride is currently undetermined. If another student joins your group, you will be charged $15.00 for the ride. Approximately 24 hours before your pickup time, if no one has joined your ride, you will be charged $20.00 for the ride. RideGrouped will send you a separate receipt email once the correct amount is determined.</p>
 <% end %>
 
-<p> Within 24 hours of your pickup time, you will receive an email with the details of your "group". Your group will consist of other RideGrouped users who have joined the same ride as yours. You may be chosen as the "Leader" of the group. RideGrouped books the SuperShuttle for the group under the name of the Leader, and the SuperShuttle driver will be in direct contact with the Leader upon the arrival of the van. </p>
+<p> Within 24 hours of your pickup time, you will receive an email with the details of your RideGroup. Your group will consist of other RideGrouped users who have joined the same ride as yours. You may be chosen as the "Leader" of the group. RideGrouped books the SuperShuttle for the group under the name of the Leader, and the SuperShuttle driver will be in direct contact with the Leader upon the arrival of the van. </p>
 
 <p> This email will also contain your SuperShuttle Confirmation Number. This will allow you to track your SuperShuttle as it is on its way. </p>
 
 <p> Since SuperShuttle cannot change group sizes once booked, RideGrouped cannot offer refunds for cancelling your ride. However, on the event that you cannot make your ride, please email us at service@ridegrouped.com and we will notify your group for you. </p>
+
+<p>
 
 <% if @join %>
   <div>Cost for Ride: $15.00 </div>

@@ -5,6 +5,8 @@ class MatchesController < ApplicationController
   def create
     @user = current_user
     @charge = ""
+    @charge1 = ""
+    @charge2 = ""
     @error = nil
     params[:trip][:id] = params[:trip][:id] || ""
     params[:trip][:origin_id] = params[:trip][:origin_id] || ""

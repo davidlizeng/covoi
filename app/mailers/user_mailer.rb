@@ -5,7 +5,7 @@ class UserMailer < ActionMailer::Base
 
   def registration_confirmation(user)
     @user = user
-    mail(:from => @@noreply, :to => @user.email, :subject => "Complete Registration")
+    mail(:from => @@noreply, :to => @user.email, :subject => "Complete Your Registration")
   end
 
   def booking_confirmation(user, trip, match, origin, join, donate, charge)
@@ -21,6 +21,6 @@ class UserMailer < ActionMailer::Base
 
   def password_reset(user)
     @user = user
-    mail(:from => @@noreply, :to => @user.email, :subject => "Password Reset")
+    mail(:from => @@noreply, :to => @user.email, :subject => "Password Reset Request")
   end
 end

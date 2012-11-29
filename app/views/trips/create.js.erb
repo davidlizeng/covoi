@@ -5,13 +5,13 @@
   <% unless @trips.empty? %>
     match_box_elems.push('<div class="match_explanation">Based on your flight information, we\'ve matched you with some existing RideGroups. Click on any one of these rides to join the group. Share a ride and pay only $15!</div><div class="small_spacer"></div>');
     <% @trips.each do |trip| %>
-      match_box_elems.push('<div id="<%= "#{trip.id}" %>" class="trip"><div><%= "From #{@origins[trip.origin_id - 1].name} to #{@airports[trip.airport_id - 1].code}"%></div><div><%= "Date: #{trip.dateString}" %></div><div><%= "Shuttle Pickup Time: #{trip.timeString}" %></div><div>Price: $15.00</div></div><div class="small_spacer"></div>');
+      match_box_elems.push('<div id="<%= "#{trip.id}" %>" class="trip"><div><%= "From #{@origins[trip.origin_id - 1].name} to #{@airports[trip.airport_id - 1].code}"%></div><div><%= "Date: #{trip.dateString}" %></div><div><%= "Shuttle Pickup Time: #{trip.timeString}" %><div class="inline mouseover delay_mouseover">?</div></div><div>Price: $15.00</div></div><div class="small_spacer"></div>');
     <% end %>
     match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">Don\'t like any of the options above? Start a new RideGroup by selecting the ride below!</div><div class="small_spacer"></div>');
   <% else %>
     match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">We could not find any existing RideGroups with travel times near yours. Start a new RideGroup by selecting the ride below!</div><div class="small_spacer"></div>');
   <% end %>
-  match_box_elems.push('<div id="0" class="trip"><div><%= "From #{escape_javascript(@origins[@trip.origin_id - 1].name)} to #{@airports[@trip.airport_id - 1].code}"%></div><div><%= "Date: #{@trip.dateString}" %></div><div><%= "Shuttle Pickup Time: #{@trip.timeString}" %></div><div><div class="inline">Price: </div><div class="price_mouseover inline mouseover">?</div></div></div>');
+  match_box_elems.push('<div id="0" class="trip"><div><%= "From #{escape_javascript(@origins[@trip.origin_id - 1].name)} to #{@airports[@trip.airport_id - 1].code}"%></div><div><%= "Date: #{@trip.dateString}" %></div><div><%= "Shuttle Pickup Time: #{@trip.timeString}" %><div class="inline mouseover delay_mouseover">?</div></div><div><div class="inline">Price: </div><div class="price_mouseover inline mouseover">?</div></div></div>');
   $('#match_box_variable').empty();
   $('#match_box_variable').append(match_box_elems.join(''));
   $('#trip_card_token:hidden').val('');
@@ -38,6 +38,8 @@
     $('.trip').css('border-color', '#c0c0c0').css('box-shadow', 'none');
     $('#' + e.delegateTarget.id).css('border-color', '#e39231').css('box-shadow', 'inset 0 0 2px 2px #f4a342');
     $('.price_mouseover').tooltip({content: '<p>By creating a new RideGroup, you are placing this ride in RideGrouped’s matchmaking system so that other students will be able to join your group.</p><p>At least one other person must join your group for you to receive the $15 group price. If no one has joined your group 24 hours before your departure, RideGrouped will book your ride as a $20 single ride, which is the exact price of booking a single ride with SuperShuttle.</p>', items: '.price_mouseover'});
+    $('.delay_mouseover').tooltip({content: '<p>As per SuperShuttle policies, travelers on domestic flights must be picked up 3 hours ahead of their flight time. International travelers must be picked up 4 hours in advance.</p>', items: '.delay_mouseover'});
   });
   $('.price_mouseover').tooltip({content: '<p>By creating a new RideGroup, you are placing this ride in RideGrouped’s matchmaking system so that other students will be able to join your group.</p><p> At least one other person must join your group for you to receive the $15 group price. If no one has joined your group 24 hours before your departure, RideGrouped will book your ride as a $20 single ride, which is the exact price of booking a single ride with SuperShuttle.</p>', items: '.price_mouseover'});
+  $('.delay_mouseover').tooltip({content: '<p>As per SuperShuttle policies, travelers on domestic flights must be picked up 3 hours ahead of their flight time. International travelers must be picked up 4 hours in advance.</p>', items: '.delay_mouseover'});
 <% end %>
