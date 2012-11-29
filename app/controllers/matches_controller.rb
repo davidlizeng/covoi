@@ -36,7 +36,7 @@ class MatchesController < ApplicationController
           if !@trip
             @error = "Invalid trip selection"
           elsif !(@donate.to_s =~ /^[0-9]\.[0-9]{2}$/)
-            @error = "Service Gratuity must be of the format $x.xx"
+            @error = "Service Gratuity must be of the format $x.xx. Enter $0.00 if you do not wish to donate."
           elsif @trip.time < Time.now + 24*60*60
             @error = "RideGrouped can only accomodate shuttle bookings at least 24 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
           else
