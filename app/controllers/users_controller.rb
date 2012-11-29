@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.valid?
         begin
-          @user.id = SecureRandom.random_number(90000000) + 10000000
+          @user.id = SecureRandom.random_number(900000) + 100000
         end while User.find_by_id(@user.id) != nil
         @user.confirmed = false
         @user.one_time_password = SecureRandom.hex

@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div id="header">
+  <img id="logo" src="<%= ENV["SERVER_HOSTNAME"] %>/images/ridegrouped_logo.png" width="250" height="81" alt="">
+</div>
+<div id="main">
 <p>Hi <%= @user.first_name %>,</p>
 
 <p>Thank you for booking with RideGrouped! Your RideGrouped Confirmation Number for this ride is <b><%= @match.id %></b>.</p>
@@ -30,3 +39,6 @@
 
 <p>Thanks,<br>
 The RideGrouped Team</p>
+</div>
+</body>
+</html>

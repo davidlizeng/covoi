@@ -20,10 +20,10 @@
 }
 
 #how_to {
-  width: 470px;
+  width: 501px;
   height: 520px;
   display: inline-block;
-  background: no-repeat url(/images/flyer.jpg);
+  background: no-repeat url(/images/flyer.png);
   margin-left: 40px;
 }
 

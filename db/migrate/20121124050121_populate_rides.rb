@@ -2,7 +2,7 @@ class PopulateRides < ActiveRecord::Migration
   def up
     #SJC 12/15
     t = Trip.new
-    t.id = 583935313
+    t.id = 3935313
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 2
@@ -11,7 +11,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 116507289
+    t.id = 6507289
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 2
@@ -20,7 +20,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 651041186
+    t.id = 1041186
     t.creator_id = 0
     t.origin_id = 2
     t.airport_id = 2
@@ -30,7 +30,7 @@ class PopulateRides < ActiveRecord::Migration
 
     #SFO 12/13
     t = Trip.new
-    t.id = 241647080
+    t.id = 1647080
     t.creator_id = 0
     t.origin_id = 2
     t.airport_id = 1
@@ -39,7 +39,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 923983171
+    t.id = 3983171
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 1
@@ -48,7 +48,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 404530262
+    t.id = 4530262
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 1
@@ -57,7 +57,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 418242409
+    t.id = 8242409
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 1
@@ -67,7 +67,7 @@ class PopulateRides < ActiveRecord::Migration
 
     #SFO 12/14
     t = Trip.new
-    t.id = 180886685
+    t.id = 8086685
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 1
@@ -76,7 +76,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 703174106
+    t.id = 3174106
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 1
@@ -85,7 +85,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 780014393
+    t.id = 3014093
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 1
@@ -95,7 +95,7 @@ class PopulateRides < ActiveRecord::Migration
 
     #SFO 12/15
     t = Trip.new
-    t.id = 184050002
+    t.id = 4050002
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 1
@@ -104,7 +104,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 305524649
+    t.id = 5524649
     t.creator_id = 0
     t.origin_id = 2
     t.airport_id = 1
@@ -113,7 +113,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 646765797
+    t.id = 6765797
     t.creator_id = 0
     t.origin_id = 2
     t.airport_id = 1
@@ -122,7 +122,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 168383897
+    t.id = 8383897
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 1
@@ -131,7 +131,7 @@ class PopulateRides < ActiveRecord::Migration
     t.save
 
     t = Trip.new
-    t.id = 887325943
+    t.id = 7325943
     t.creator_id = 0
     t.origin_id = 1
     t.airport_id = 1

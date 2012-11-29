@@ -185,7 +185,7 @@ $(document).ready(function() {
     });
     var markers = [];
     var markersPositions = [
-      new google.maps.LatLng(37.425149, -122.164639),
+      new google.maps.LatLng(37.425129, -122.164639),
       new google.maps.LatLng(37.423736, -122.170582),
       new google.maps.LatLng(37.425483, -122.174423),
       new google.maps.LatLng(37.426183, -122.179632)

@@ -62,7 +62,7 @@ class MatchesController < ApplicationController
             @error = "RideGrouped can only accomodate shuttle bookings at least 24 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
           else
             begin
-              @trip.id = SecureRandom.random_number(900000000)+100000000
+              @trip.id = SecureRandom.random_number(9000000)+1000000
             end while Trip.find_by_id(@trip.id) != nil
             @trip.time_created = Time.now
             @trip.save
@@ -77,10 +77,11 @@ class MatchesController < ApplicationController
         if @error.nil?
           @match = Match.new
           begin
-            @match.id = SecureRandom.random_number(9000000000)+1000000000
+            @match.id = SecureRandom.random_number(90000000)+10000000
           end while Match.find_by_id(@match.id) != nil
           @match.trip_id = @trip.id
           @match.user_id = @user.id
+          @match.group_id = 0
           @match.time_created = Time.now
           @match.save
           unless params[:phone].eql?(@user.phone)

@@ -1,9 +1,9 @@
 class CreateMatches < ActiveRecord::Migration
   def change
     create_table :matches, {:id => false} do |t|
-      t.integer :id, :limit => 8
-      t.integer :user_id, :limit => 8
-      t.integer :trip_id, :limit => 8
+      t.integer :id
+      t.integer :user_id
+      t.integer :trip_id
       t.integer :group_id
       t.timestamp :time_created
     end

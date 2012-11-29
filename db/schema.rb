@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(:version => 20121124050121) do
   end
 
   create_table "matches", :id => false, :force => true do |t|
-    t.integer  "id",           :limit => 8, :null => false
-    t.integer  "user_id",      :limit => 8
-    t.integer  "trip_id",      :limit => 8
+    t.integer  "id",           :null => false
+    t.integer  "user_id"
+    t.integer  "trip_id"
     t.integer  "group_id"
     t.datetime "time_created"
   end
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(:version => 20121124050121) do
   end
 
   create_table "trips", :id => false, :force => true do |t|
-    t.integer  "id",           :limit => 8, :null => false
-    t.integer  "creator_id",   :limit => 8
+    t.integer  "id",                        :null => false
+    t.integer  "creator_id"
     t.datetime "time"
     t.integer  "origin_id",    :limit => 2
     t.integer  "airport_id",   :limit => 2
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20121124050121) do
   end
 
   create_table "users", :id => false, :force => true do |t|
-    t.integer  "id",                    :limit => 8, :null => false
+    t.integer  "id",                    :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
