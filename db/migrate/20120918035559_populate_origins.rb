@@ -1,15 +1,7 @@
 class PopulateOrigins < ActiveRecord::Migration
   def up
-    wl = Origin.new
-    wl.name = "Kimball Hall"
-    wl.address = "673 Escondido Rd"
-    wl.city = "Stanford"
-    wl.state = "CA"
-    wl.zip = "94305"
-    wl.save
-
     ta = Origin.new
-    ta.name = "Escondido Turnaround"
+    ta.name = "Arrillaga Dining"
     ta.address = "618 Escondido Rd"
     ta.city = "Stanford"
     ta.state = "CA"

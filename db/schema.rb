@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20121124050121) do
     t.integer  "id",           :limit => 8, :null => false
     t.integer  "user_id",      :limit => 8
     t.integer  "trip_id",      :limit => 8
+    t.integer  "group_id"
     t.datetime "time_created"
   end
 

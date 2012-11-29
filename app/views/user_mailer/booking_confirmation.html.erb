@@ -9,7 +9,7 @@
 <div>Destination: <b><%= Airport.find_by_id_cached(@trip.airport_id).code %></b></div>
 
 <% unless @join %>
-  <p>Since you have created a new ride, the price of the ride is currently undetermined. If another student joins your ride, you will be charged $15.00 to the card you have provided. Approximately 24 hours before your pickup time, if no one has joined your ride, you will be charged $20.00 to the card you have provided. RideGrouped will send you a separate receipt email once the correct amount is determined.</p>
+  <p>Since you have created a new ride, the price of the ride is currently undetermined. If another student joins your ride, you will be charged $15.00 for the ride. Approximately 24 hours before your pickup time, if no one has joined your ride, you will be charged $20.00 for the ride. RideGrouped will send you a separate receipt email once the correct amount is determined.</p>
 <% end %>
 
 <p> Within 24 hours of your pickup time, you will receive an email with the details of your "group". Your group will consist of other RideGrouped users who have joined the same ride as yours. You may be chosen as the "Leader" of the group. RideGrouped books the SuperShuttle for the group under the name of the Leader, and the SuperShuttle driver will be in direct contact with the Leader upon the arrival of the van. </p>
@@ -20,8 +20,12 @@
 
 <% if @join %>
   <div>Cost for Ride: $15.00 </div>
-  <div>Donations: $<%= @donate %> </div>
+  <div>Service Gratuity: $<%= @donate %> </div>
   <div>Total Charged to Card: $<%= @charge %> </div>
+<% else %>
+  <div>Cost for Ride: $15.00 or $20.00 </div>
+  <div>Service Gratuity: $<%= @donate %> </div>
+  <div>Total Cost: $<%= @charge1 %> or $<%= @charge2 %> </div>
 <% end %>
 
 <p>Thanks,<br>

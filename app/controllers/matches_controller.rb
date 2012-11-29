@@ -34,7 +34,7 @@ class MatchesController < ApplicationController
           if !@trip
             @error = "Invalid trip selection"
           elsif !(@donate.to_s =~ /^[0-9]\.[0-9]{2}$/)
-            @error = "Donations must be of the format $x.xx"
+            @error = "Service Gratuity must be of the format $x.xx"
           elsif @trip.time < Time.now + 24*60*60
             @error = "RideGrouped can only accomodate shuttle bookings at least 24 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
           else
@@ -56,6 +56,8 @@ class MatchesController < ApplicationController
           @trip.id = 0
           if !@trip.valid?
             @error = @trip.errors.full_messages[0]
+          elsif !(@donate.to_s =~ /^[0-9]\.[0-9]{2}$/)
+            @error = "Service Gratuity must be of the format $x.xx"
           elsif @trip.time < Time.now + 24*60*60
             @error = "RideGrouped can only accomodate shuttle bookings at least 24 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
           else
@@ -65,8 +67,10 @@ class MatchesController < ApplicationController
             @trip.time_created = Time.now
             @trip.save
             customer = Stripe::Customer.retrieve(@user.stripe_customer_id)
-            customer.account_balance = customer.account_balance + 2000
+            customer.account_balance = customer.account_balance + 2000 + (params[:donate_dollars].to_i)*100 + (params[:donate_cents].to_i)
             customer.save
+            @charge1 = (15 + params[:donate_dollars].to_i).to_s + "." + params[:donate_cents]
+            @charge2 = (20 + params[:donate_dollars].to_i).to_s + "." + params[:donate_cents]
           end
         end
 

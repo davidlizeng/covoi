@@ -62,6 +62,16 @@ $(document).ready(function() {
       $('#total_price').html('18.00');
     });
 
+    $('#donate_75_button').click(function(e) {
+      $('#donate_dollars').val('0');
+      $('#donate_cents').val('75');
+    });
+
+    $('#donate_150_button').click(function(e) {
+      $('#donate_dollars').val('1');
+      $('#donate_cents').val('50');
+    });
+
     $('#donate_dollars').keypress(function(e) {
       var keyCode = window.event ? e.keyCode : e.which;
       if (keyCode < 48 || keyCode > 57) {
@@ -175,33 +185,36 @@ $(document).ready(function() {
     });
     var markers = [];
     var markersPositions = [
-      new google.maps.LatLng(37.424479, -122.16158),
-      new google.maps.LatLng(37.425259, -122.165239),
+      new google.maps.LatLng(37.425149, -122.164639),
       new google.maps.LatLng(37.423736, -122.170582),
       new google.maps.LatLng(37.425483, -122.174423),
       new google.maps.LatLng(37.426183, -122.179632)
     ];
     var markersTitles = [
-      'Kimball Hall',
-      'Escondido Turnaround',
+      'Arrillaga Dining',
       'Tresidder Union',
       'Roble Gym',
       'Governor\'s Corner'
     ];
     var markersDescriptions = [
-      '673 Escondido Rd',
       '618 Escondido Rd',
       '459 Lagunita Dr',
       '351 Santa Teresa St',
       '236 Santa Teresa St'
-    ]
+    ];
+    var markersWidths = [
+      41, 47, 32, 52
+    ];
+    var markersFiles = [
+      'pin1', 'pin2', 'pin3', 'pin4'
+    ];
     var markersOptions = [];
-    for (var i = 0; i < 5; ++i) {
+    for (var i = 0; i < 4; ++i) {
       markersOptions.push({
         map: map,
         icon: new google.maps.MarkerImage(
-          'https://chart.googleapis.com/chart?chst=d_bubble_text_small&chld=bb|'+ escape(markersTitles[i])+'|F4A342|000000',
-          null, null, new google.maps.Point(0, 42)),
+          'https://www.covoi.com/images/' + markersFiles[i],
+          null, null, new google.maps.Point(markersWidths[i], 97)),
         position: markersPositions[i],
         title: markersDescriptions[i],
         zindex: 0

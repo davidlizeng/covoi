@@ -119,6 +119,14 @@ body .ui-datepicker {
   margin-right: 5px;
 }
 
+#donate_75_button,
+#donate_150_button {
+  font-size: 14px;
+  width: 50px;
+  height: 25px;
+  margin-right: 5px;
+}
+
 #cvc_mouseover a {
   color: #000000;
 }

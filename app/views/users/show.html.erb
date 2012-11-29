@@ -41,7 +41,11 @@
           <tbody>
             <tr>
               <td align="right">Pickup Location: </td>
-              <td><%= @origins[m.trip.origin_id - 1].name %>, <%= @origins[m.trip.origin_id - 1].address %></td>
+              <td><%= @origins[m.trip.origin_id - 1].name %></td>
+            </tr>
+            <tr>
+              <td align="right">Street Address: </td>
+              <td><%= @origins[m.trip.origin_id - 1].address %></td>
             </tr>
             <tr>
               <td align="right">Pickup Date: </td>
@@ -149,12 +153,12 @@
     <div class="spacer"></div>
     <div id="donations">
       <div>
-        <%= label_tag :donations, "Donations" %>
+        <%= label_tag :donations, "Service Gratuity" %>
       </div>
       <div>
-        $<%= text_field_tag :donate_dollars, "", :maxlength => 1 %>.<%= text_field_tag :donate_cents, "", :maxlength => 2 %><%= button_tag "10%", :type => "button", :id => "donate_10_button" %><%= button_tag "20%", :type => "button", :id => "donate_20_button" %>
+        $<%= text_field_tag :donate_dollars, "", :maxlength => 1 %>.<%= text_field_tag :donate_cents, "", :maxlength => 2 %><span class="donations_percent"><%= button_tag "10%", :type => "button", :id => "donate_10_button" %><%= button_tag "20%", :type => "button", :id => "donate_20_button" %></span><span class="donations_amount"><%= button_tag "$0.75", :type => "button", :id => "donate_75_button" %><%= button_tag "$1.50", :type => "button", :id => "donate_150_button" %></span>
       </div>
-      <div>Total Price: $<span id="total_price">15.00</span></div>
+      <div><span class="donations_percent">Total Price: $<span id="total_price">15.00</span></span></div>
       <div class="spacer"></div>
     </div>
     <div>
