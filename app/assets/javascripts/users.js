@@ -213,7 +213,7 @@ $(document).ready(function() {
       markersOptions.push({
         map: map,
         icon: new google.maps.MarkerImage(
-          'https://www.covoi.com/images/' + markersFiles[i] + '.png',
+          'https://www.ridegrouped.com/images/' + markersFiles[i] + '.png',
           null, null, new google.maps.Point(markersWidths[i], 97)),
         position: markersPositions[i],
         title: markersDescriptions[i],
