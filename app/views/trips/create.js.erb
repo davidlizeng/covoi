@@ -9,9 +9,12 @@
     <% end %>
     match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">Don\'t like any of the options above? Start a new RideGroup by selecting the ride below!</div><div class="small_spacer"></div>');
   <% else %>
-    match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">We could not find any existing RideGroups with travel times near yours. Start a new RideGroup by selecting the ride below!</div><div class="small_spacer"></div>');
+    match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">We could not find any existing RideGroups with travel times near yours. But don\'t wait for someone else to start a RideGroup at a time near yours. It\'s to your benefit to add the group to the system as early as possible for others to join. Start a new RideGroup by selecting the ride below! </div><div class="small_spacer"></div>');
   <% end %>
   match_box_elems.push('<div id="0" class="trip"><div><%= "From #{escape_javascript(@origins[@trip.origin_id - 1].name)} to #{@airports[@trip.airport_id - 1].code}"%></div><div><%= "Date: #{@trip.dateString}" %></div><div><%= "Shuttle Pickup Time: #{@trip.timeString}" %><div class="inline mouseover delay_mouseover">?</div></div><div><div class="inline">Price: </div><div class="price_mouseover inline mouseover">?</div></div></div>');
+  <% if @trips.empty? %>
+    match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">For this first week of booking (Nov. 29 - Dec. 5), we\'re raffling off custom RideGrouped tshirts, swag, and even free rides to students who start their own RideGroups! Start your RideGroup now!</div>');
+  <% end %>
   $('#match_box_variable').empty();
   $('#match_box_variable').append(match_box_elems.join(''));
   $('#trip_card_token:hidden').val('');

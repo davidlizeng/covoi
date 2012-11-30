@@ -12,6 +12,7 @@
     <br>Please click the following link to confirm your email:
     <%= link_to "Confirm Registration", "#{ENV['SERVER_HOSTNAME']}/users/new?user_id=#{@user.id}&auth_token=#{Digest::SHA2.hexdigest(@user.id.to_s + @user.password_salt + @user.one_time_password)}"%>
   </p>
+  <p>RideGrouped will be raffling off tshirts, swag, and even free rides to students who *Create Their Own RideGroups* before next Wednesday, December 5th! Book early and win cool prizes!</p>
   <p>Thanks,<br>
   The RideGrouped Team</p>
 </div>
