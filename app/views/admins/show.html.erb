@@ -1,6 +1,6 @@
 <% content_for :scripts do %>
   <style type="text/css">
-    #all_rides td {
+    .rides td {
       font-size: 14px;
       border-bottom: 1px solid #c0c0c0;
       border-right: 1px solid #c0c0c0;
@@ -9,6 +9,10 @@
     .agg {
       font-size: 12px;
       display: none;
+    }
+
+    .group_title {
+      font-size: 16px;
     }
   </style>
 <% end %>
@@ -24,8 +28,9 @@
 </div>
 <% end %>
 
-<div class="box_title">All Rides <%= @matches.size %> bookings made</div>
-<table id="all_rides">
+<div class="box_title">All Rides: <%= @matches.size %> bookings made</div>
+<div class="box_title">Solo Rides: <%= @solo.size %> solo rides</div>
+<table id="solo_rides" class="rides">
   <tbody>
     <tr>
       <td align="center">RG Conf. #</td>
@@ -37,7 +42,7 @@
       <td align="center">SuNetID</td>
       <td align="center">Phone</td>
     </tr>
-    <% @matches.each do |m| %>
+    <% @solo.each do |m| %>
       <tr>
         <td><%= m.id %></td>
         <td><%= @origins[m.trip.origin_id - 1].name %></td>
@@ -51,3 +56,36 @@
     <% end %>
   </tbody>
 </table>
+<div class="spacer"></div>
+<div class="box_title">Grouped Rides: <%= @grouped_count %> grouped rides</div>
+<table id="grouped_rides" class="rides">
+  <tbody>
+    <tr>
+      <td align="center">RG Conf. #</td>
+      <td align="center">Origin</td>
+      <td align="center">Dest.</td>
+      <td align="center">Date</td>
+      <td align="center">Time</td>
+      <td align="center">Full Name</td>
+      <td align="center">SuNetID</td>
+      <td align="center">Phone</td>
+    </tr>
+    <% @group.each do |g| %>
+      <div class="group_title">Group Size: <%= g.size %></div>
+      <% g.each do |m|%>
+        <tr>
+          <td><%= m.id %></td>
+          <td><%= @origins[m.trip.origin_id - 1].name %></td>
+          <td><%= @airports[m.trip.airport_id - 1].code %></td>
+          <td><%= m.trip.dateString %></td>
+          <td><%= m.trip.timeString %></td>
+          <td><%= m.user.first_name + " " + m.user.last_name %></td>
+          <td><%= m.user.email %></td>
+          <td><%= m.user.phone %></td>
+        </tr>
+      <% end %>
+      <div class="small_spacer"></div>
+    <% end %>
+  </tbody>
+</table>
+
