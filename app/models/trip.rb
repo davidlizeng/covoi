@@ -9,7 +9,7 @@ class Trip < ActiveRecord::Base
     errors.add(:origin_id, "is invalid") unless origin_id.to_s =~ /^[1-4]$/
     errors.add(:airport_id, "is invalid") unless airport_id.to_s =~ /^[1-2]$/
     if time
-      errors.add(:time, "is invalid") unless time.in_time_zone.to_s =~ /^2012-12-(0[1-9]|1[0-5]) ([0-1][0-9]|2[0-3]):[0-5][0-9]:00 -0800$/
+      errors.add(:time, "is invalid") unless time.in_time_zone.to_s =~ /^2012-12-(0[1-9]|1[0-9]|2[0-2]) ([0-1][0-9]|2[0-3]):[0-5][0-9]:00 -0800$/
     else
       errors.add(:date, "is invalid") unless date.to_s =~ /^12\/(0[1-9]|1[0-9]|2[0-2])\/2012$/
       errors.add(:time, "is invalid") unless hour.to_s =~ /^([1-9]|1[0-2])$/ && minute.to_s =~ /^[0-5][0-9]$/ && meridiem.to_s =~ /^(AM|PM)$/
