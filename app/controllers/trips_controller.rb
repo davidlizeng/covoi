@@ -22,7 +22,7 @@ class TripsController < ApplicationController
         end
         @origins = Origin.find_all_cached
         @airports = Airport.find_all_cached
-        trips = Trip.where(:airport_id => @trip.airport_id, :time => ((@trip.time - 60*60*1)..(@trip.time))).all
+        trips = Trip.where(:airport_id => @trip.airport_id, :time => ((@trip.time - 60*60*1)..(@trip.time + 60*5))).all
         trips = trips.sort{ |x, y| (@trip.time - x.time + 15*60*(@trip.origin_id - x.origin_id).abs) <=> (@trip.time - y.time + 15*60*(@trip.origin_id - y.origin_id).abs)}
         matches = Match.find_all_by_user_id(current_user.id)
         user_trips = [];
