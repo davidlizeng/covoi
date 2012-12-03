@@ -12,7 +12,7 @@ class AdminsController < ApplicationController
     @groups = []
     @grouped_count = 0
     cur = []
-    for i in 0..(@matches.size-2)
+    0.upto(@matches.size-2) do |i|
       if @matches[i].trip_id == @matches[i+1].trip_id
         @grouped_count++
         cur.push(@matches[i])
