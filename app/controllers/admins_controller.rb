@@ -7,5 +7,7 @@ class AdminsController < ApplicationController
     @origins = Origin.find_all_cached
     @airports = Airport.find_all_cached
     @matches = Match.includes(:trip, :user).order("trips.time ASC, trips.id ASC, matches.time_created ASC")
+    @unconfirmed = User.all(:conditions => {:confirmed => false})
   end
+
 end

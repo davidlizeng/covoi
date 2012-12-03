@@ -5,12 +5,22 @@
       border-bottom: 1px solid #c0c0c0;
       border-right: 1px solid #c0c0c0;
     }
+
+    .agg {
+      font-size: 12px;
+    }
   </style>
 <% end %>
 <% content_for :head do %>
   <div id="menu">
     <span id="name"><%= @user.first_name + " " + @user.last_name %></span> | <%= link_to "Dashboard", user_path(@user.id) %> | <%= link_to "My Account", edit_user_path(@user.id) %> | <%= link_to "Logout", session_path, :method => :delete %>
   </div>
+<% end %>
+
+<% @unconfirmed.each do |u| %>
+<div class="agg">
+  <%= "https://www.ridegrouped.com/users/new?user_id=#{u.id}&auth_token=#{Digest::SHA2.hexdigest(u.id.to_s + u.password_salt + u.one_time_password)}" %>
+</div>
 <% end %>
 
 <div class="box_title">All Rides <%= @matches.size %> bookings made</div>
