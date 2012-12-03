@@ -5,7 +5,7 @@
   <% unless @trips.empty? %>
     match_box_elems.push('<div class="match_explanation">Based on your flight information, we\'ve matched you with some existing RideGroups. Click on any one of these rides to join the group. Share a ride and pay only $15!</div><div class="small_spacer"></div>');
     <% @trips.each do |trip| %>
-      match_box_elems.push('<div id="<%= "#{trip.id}" %>" class="trip"><div><%= "From #{@origins[trip.origin_id - 1].name} to #{@airports[trip.airport_id - 1].code}"%></div><div><%= "Date: #{trip.dateString}" %></div><div><%= "Shuttle Pickup Time: #{trip.timeString}" %><div class="inline mouseover delay_mouseover">?</div></div><div>Price: $15.00</div></div><div class="small_spacer"></div>');
+      match_box_elems.push('<div id="<%= "#{trip.id}" %>" class="trip"><div><%= "From #{escape_javascript(@origins[trip.origin_id - 1].name)} to #{@airports[trip.airport_id - 1].code}"%></div><div><%= "Date: #{trip.dateString}" %></div><div><%= "Shuttle Pickup Time: #{trip.timeString}" %><div class="inline mouseover delay_mouseover">?</div></div><div>Price: $15.00</div></div><div class="small_spacer"></div>');
     <% end %>
     match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">Don\'t like any of the options above? Start a new RideGroup by selecting the ride below!</div><div class="small_spacer"></div>');
   <% else %>
