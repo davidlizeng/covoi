@@ -133,11 +133,31 @@
       <div class="small_spacer"></div>
       </div>
     <% end %>
+<div class="spacer"></div>
+<div class="box_title">Unbooked Users: <%= @unbooked.size %> users who have not booked<span id="unbooked_toggle" class="toggle">Toggle</span></div>
+<table id="unbooked_users" class="rides">
+  <tbody>
+    <tr>
+      <td align="center">Full Name</td>
+      <td align="center">SuNetID</td>
+      <td align="center">Phone</td>
+    </tr>
+    <% @unbooked.each do |u| %>
+      <tr>
+        <td><%= u.first_name + " " + u.last_name %></td>
+        <td><%= u.email %></td>
+        <td><%= u.phone %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <script>
   $(document).ready(function() {
     var all = false;
     var solo = false;
     var group = false;
+    var unbooked = false;
     $('#all_toggle').click(function() {
       if (all) {
         $('#all_rides').css('display', 'none');
@@ -163,6 +183,15 @@
         $('.group_rides').css('display', 'block');
       }
       group = !group;
+    });
+
+    $('#unbooked_toggle').click(function() {
+      if (unbooked) {
+        $('#unbooked_users').css('display', 'none');
+      } else {
+        $('#unbooked_users').css('display', 'block');
+      }
+      unbooked = !unbooked;
     });
   });
 </script>

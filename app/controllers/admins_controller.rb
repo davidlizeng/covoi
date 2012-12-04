@@ -8,6 +8,20 @@ class AdminsController < ApplicationController
     @airports = Airport.find_all_cached
     @matches = Match.includes(:trip, :user).order("trips.time ASC, trips.id ASC, matches.time_created ASC")
     @unconfirmed = User.all(:conditions => {:confirmed => false})
+    @users = User.all(:conditions => {:confirmed => true}, :order => "id ASC")
+    @booked = User.joins(:matches).group("users.id").order("users.id ASC").all
+    @unbooked = []
+    b = 0
+    0.upto(@booked.size - 1) do |a|
+      while @booked[a].id != @users[b].id
+        @unbooked.push(@users[b])
+        b = b + 1
+      end
+    end
+    while b < @booked.size
+      @unbooked.push(@users[b])
+      b = b + 1
+    end
     @solo = []
     @groups = []
     @grouped_count = 0
@@ -32,5 +46,6 @@ class AdminsController < ApplicationController
     else
       @solo.push(@matches[@matches.size - 1])
     end
+
   end
 end
