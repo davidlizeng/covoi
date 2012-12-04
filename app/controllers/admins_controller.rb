@@ -19,6 +19,8 @@ class AdminsController < ApplicationController
       elsif cur.size == 0
         @solo.push(@matches[i])
       else
+        @grouped_count = @grouped_count + 1
+        cur.push(@matches[i])
         @groups.push(cur)
         cur = []
       end
