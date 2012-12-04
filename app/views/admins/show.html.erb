@@ -1,6 +1,7 @@
 <% content_for :scripts do %>
   <style type="text/css">
-    .rides td {
+    .rides td,
+    .group_rides td{
       font-size: 14px;
       border-bottom: 1px solid #c0c0c0;
       border-right: 1px solid #c0c0c0;
@@ -13,6 +14,21 @@
 
     .group_title {
       font-size: 16px;
+    }
+
+    .rides,
+    .group_rides {
+      display: none;
+    }
+
+    .toggle {
+      font-size: 14px;
+      float: right;
+    }
+
+    .toggle:hover {
+      color: #ff0000;
+      cursor: pointer;
     }
   </style>
 <% end %>
@@ -28,8 +44,35 @@
 </div>
 <% end %>
 
-<div class="box_title">All Rides: <%= @matches.size %> bookings made</div>
-<div class="box_title">Solo Rides: <%= @solo.size %> solo rides</div>
+<div class="box_title">All Rides: <%= @matches.size %> bookings made<span id="all_toggle" class="toggle">Toggle</span></div>
+<table id="all_rides" class="rides">
+  <tbody>
+    <tr>
+      <td align="center">RG Conf. #</td>
+      <td align="center">Origin</td>
+      <td align="center">Dest.</td>
+      <td align="center">Date</td>
+      <td align="center">Time</td>
+      <td align="center">Full Name</td>
+      <td align="center">SuNetID</td>
+      <td align="center">Phone</td>
+    </tr>
+    <% @matches.each do |m| %>
+      <tr>
+        <td><%= m.id %></td>
+        <td><%= @origins[m.trip.origin_id - 1].name %></td>
+        <td><%= @airports[m.trip.airport_id - 1].code %></td>
+        <td><%= m.trip.dateString %></td>
+        <td><%= m.trip.timeString %></td>
+        <td><%= m.user.first_name + " " + m.user.last_name %></td>
+        <td><%= m.user.email %></td>
+        <td><%= m.user.phone %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="spacer"></div>
+<div class="box_title">Solo Rides: <%= @solo.size %> solo rides<span id="solo_toggle" class="toggle">Toggle</span></div>
 <table id="solo_rides" class="rides">
   <tbody>
     <tr>
@@ -57,10 +100,11 @@
   </tbody>
 </table>
 <div class="spacer"></div>
-<div class="box_title">Grouped Rides: <%= @grouped_count %> grouped rides</div>
+<div class="box_title">Grouped Rides: <%= @grouped_count %> grouped rides<span id="group_toggle" class="toggle">Toggle</span></div>
     <% @groups.each do |g| %>
+      <div class="group_rides">
       <div class="group_title">Group Size: <%= g.size %></div>
-      <table id="grouped_rides" class="rides">
+      <table>
         <tbody>
         <tr>
           <td align="center">RG Conf. #</td>
@@ -87,5 +131,38 @@
       </tbody>
       </table>
       <div class="small_spacer"></div>
+      </div>
     <% end %>
+<script>
+  $(document).ready(function() {
+    var all = false;
+    var solo = false;
+    var group = false;
+    $('#all_toggle').click(function() {
+      if (all) {
+        $('#all_rides').css('display', 'none');
+      } else {
+        $('#all_rides').css('display', 'block');
+      }
+      all = !all;
+    });
 
+    $('#solo_toggle').click(function() {
+      if (solo) {
+        $('#solo_rides').css('display', 'none');
+      } else {
+        $('#solo_rides').css('display', 'block');
+      }
+      solo = !solo;
+    });
+
+    $('#group_toggle').click(function() {
+      if (group) {
+        $('.group_rides').css('display', 'none');
+      } else {
+        $('.group_rides').css('display', 'block');
+      }
+      group = !group;
+    });
+  });
+</script>
