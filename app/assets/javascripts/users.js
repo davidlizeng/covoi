@@ -56,20 +56,31 @@ $(document).ready(function() {
       $('#total_price').html('16.50');
     });
 
+    $('#donate_15_button').click(function(e) {
+      $('#donate_dollars').val('2');
+      $('#donate_cents').val('25');
+      $('#total_price').html('17.25');
+    });
+
     $('#donate_20_button').click(function(e) {
       $('#donate_dollars').val('3');
       $('#donate_cents').val('00');
       $('#total_price').html('18.00');
     });
 
-    $('#donate_75_button').click(function(e) {
-      $('#donate_dollars').val('0');
-      $('#donate_cents').val('75');
-    });
-
     $('#donate_150_button').click(function(e) {
       $('#donate_dollars').val('1');
       $('#donate_cents').val('50');
+    });
+
+    $('#donate_225_button').click(function(e) {
+      $('#donate_dollars').val('2');
+      $('#donate_cents').val('25');
+    });
+
+    $('#donate_300_button').click(function(e) {
+      $('#donate_dollars').val('3');
+      $('#donate_cents').val('00');
     });
 
     $('#donate_dollars').keypress(function(e) {
@@ -119,6 +130,13 @@ $(document).ready(function() {
       $('#payment_box').slideUp('slow', function() {
         $('#payment_box').css('display', 'none');
         $('#match_box').css('display', 'inline-block').hide().slideDown('slow');
+        $('#donate_dollars').val('');
+        $('#donate_cents').val('');
+        $('#card_number').val('');
+        $('#card_code').val('');
+        $('#card_month').val('');
+        $('#card_year').val('');
+        $('#password').val('');
       });
     });
 

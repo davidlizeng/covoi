@@ -116,6 +116,7 @@ body .ui-datepicker {
 }
 
 #donate_10_button,
+#donate_15_button,
 #donate_20_button {
   font-size: 14px;
   width: 40px;
@@ -123,7 +124,8 @@ body .ui-datepicker {
   margin-right: 5px;
 }
 
-#donate_75_button,
+#donate_300_button,
+#donate_225_button,
 #donate_150_button {
   font-size: 14px;
   width: 50px;
