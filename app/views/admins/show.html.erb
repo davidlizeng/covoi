@@ -140,13 +140,13 @@
     <tr>
       <td align="center">Full Name</td>
       <td align="center">SuNetID</td>
-      <td align="center">Phone</td>
+      <td align="center">Account Created On</td>
     </tr>
     <% @unbooked.each do |u| %>
       <tr>
         <td><%= u.first_name + " " + u.last_name %></td>
         <td><%= u.email %></td>
-        <td><%= u.phone %></td>
+        <td><%= u.time_confirmed.in_time_zone.strftime("%B %-d, %Y") %></td>
       </tr>
     <% end %>
   </tbody>
