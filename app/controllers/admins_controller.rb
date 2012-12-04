@@ -12,9 +12,9 @@ class AdminsController < ApplicationController
     @groups = []
     @grouped_count = 0
     cur = []
-    0.upto(@matches.size-2) do |i|
+    0.upto(@matches.size - 2) do |i|
       if @matches[i].trip_id == @matches[i+1].trip_id
-        @grouped_count++
+        @grouped_count = @grouped_count + 1
         cur.push(@matches[i])
       elsif cur.size == 0
         @solo.push(@matches[i])
@@ -24,7 +24,7 @@ class AdminsController < ApplicationController
       end
     end
     if cur.size != 0
-      @grouped_count++
+      @grouped_count = @grouped_count + 1
       cur.push(@matches[@matches.size - 1])
       @groups.push(cur)
     else

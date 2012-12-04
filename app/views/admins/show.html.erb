@@ -58,7 +58,7 @@
 </table>
 <div class="spacer"></div>
 <div class="box_title">Grouped Rides: <%= @grouped_count %> grouped rides</div>
-    <% @group.each do |g| %>
+    <% @groups.each do |g| %>
       <div class="group_title">Group Size: <%= g.size %></div>
       <table id="grouped_rides" class="rides">
         <tbody>
