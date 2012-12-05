@@ -25,7 +25,7 @@ class UserMailer < ActionMailer::Base
     @matches = matches
     @trip = trip
     @origin = origin
-    mail(:from => @@service, :to => email_string, :subject => "Your RideGroup's Information")
+    mail(:from => @@service, :to => email_string, :subject => "RideGrouped Reservation Details - Important Travel Day Informtaion (READ IMMEDIATELY)")
   end
 
   def password_reset(user)

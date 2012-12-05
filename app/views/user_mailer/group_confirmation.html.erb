@@ -8,16 +8,17 @@
 </div>
 <div id="main">
 
-<p>Thank you again for using RideGrouped as your means to booking transportation back home.</p>
+<p>Thank you again for using RideGrouped as your means to booking transportation back home. Please print or keep a copy of this email for your records.</p>
 
 <div>RideGrouped has booked a SuperShuttle van for you with the following information:</div>
-<div>SuperShuttle Confirmation Number: <b><%= @trip.group_id %></b></div>
+<br>
+<div><u>SuperShuttle Confirmation Number: <b><%= @trip.group_id %></b></u></div>
 <div>Pickup Location: <b><%= @origin.name %>: <%= @origin.address %>, <%= @origin.city %>, <%= @origin.state %> <%= @origin.zip %></b></div>
 <div>Pickup Date: <b><%= @trip.dateString %></b></div>
 <div>Pickup Time: <b><%= @trip.timeString %></b> (Please allow up to 15 minutes for your shuttle to arrive)</div>
 <div>Destination: <b><%= Airport.find_by_id_cached(@trip.airport_id).code %></b></div>
-<br>
-<div>When the time comes for your flight, please be aware of certain general guidelines:</div>
+<p>For those unfamiliar with SuperShuttle, you'll be picked up by a blue van that looks like: <img id="van" src="<%= ENV["SERVER_HOSTNAME"] %>/images/van.jpg" width="100" height="56" alt=""></p>
+<div>When the time comes for your departure, please be aware of certain general guidelines:</div>
 <ol>
 <li>Be waiting at the stop 15 minutes before the pickup time, and be prepared to wait at least 15 minutes after the assigned time, as this is the SuperShuttle pickup window.</li>
 <li>You will only be contact by the van driver if you are the group leader (the individual whose name the booking was made under). If you otherwise wish to know the status of your shuttle, you can call or go to <%= link_to "SuperShuttle's Tracking Service", "https://reservations.supershuttle.com/Default.aspx?content=WhereIsMyVan&lng", :html => {:target => "_blank"} %> and enter your SuperShuttle Confirmation number.</li>
@@ -28,6 +29,7 @@
 </ol>
 
 <div><b>Your Group Info:</b></div>
+<div><b>Group Size: <%= @matches.size %></b></div>
 <table>
   <tbody>
    <tr>
@@ -54,10 +56,14 @@
   </tbody>
 </table>
 
-<p><b>For the Group Leader:</b> You have been chosen as the group leader for this ride. Your SuperShuttle will only call you when he/she is on his way, and you will be notified if said driver is running late. It is your responsibility to pass on this information to the other members of your group (their emails and phone numbers are attached here), and ensure that everyone is on board.</p>
+<% if @matches.size > 1 %>
+<p><b>For the Group Leader:</b> You have been chosen as the group leader for this ride. Your SuperShuttle will only call you when he/she is on his way, and you will be notified if said driver is running late. It is your responsibility to pass on this information to the other members of your group, and ensure that everyone is on board.</p>
+<% end %>
 
+<p>If you encounter any last minute problems, please send a text message alert to RideGrouped's emergency number at <%= "(516) 808-9183" %>.</p>
 
-<p>Thanks,<br>
+<p>Thank you again for booking with RideGrouped! We hope you have a safe and enjoyable trip.<br>
+Happy Holidays!<br>
 The RideGrouped Team</p>
 </div>
 </body>
