@@ -9,6 +9,7 @@ class AdminsController < ApplicationController
     @matches = Match.includes(:trip, :user).order("trips.time ASC, trips.id ASC, matches.time_created ASC")
     @unconfirmed = []
     users = User.all(:conditions => {:confirmed => true}, :order => "id ASC")
+    @user_count = users.size
     booked = User.joins(:matches).order("id ASC")
     @unbooked = []
     b = 0

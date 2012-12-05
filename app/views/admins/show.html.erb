@@ -188,6 +188,8 @@
     <% end %>
   </tbody>
 </table>
+<div class="spacer"></div>
+<div class="box_title">Total Users: <%= @user_count %> confirmed users</div>
 <%= form_for "", url: "/admin", :remote => true, :html => {:id => "group_form"} do |f| %>
   <%= hidden_field_tag :trip_id, "" %>
   <%= hidden_field_tag :group_id, "" %>
