@@ -53,6 +53,31 @@ class AdminsController < ApplicationController
     else
       @solo.push(@matches[@matches.size - 1])
     end
+  end
 
+  def create
+    params[:trip_id] = params[:trip_id] || "0"
+    params[:group_id] = params[:group_id] || "0"
+    if params[:trip_id] =~ /^[0-9]{7}$/ && params[:group_id] =~ /^[0-9]{7}$/
+      @trip = Trip.find_by_id(params[:trip_id])
+      if !@trip.nil?
+        @trip.group_id = params[:group_id]
+        @trip.save(:validate => false)
+        matches = Match.includes(:user).where(:trip_id => params[:trip_id]).order("matches.time_created ASC")
+        emails = []
+        matches.each do |m|
+          emails.push(m.user.email)
+        end
+        email_string = emails.join(",")
+        UserMailer.group_confirmation(email_string, matches, @trip, Origin.find_by_id_cached(@trip.origin_id)).deliver
+      else
+        @error = "Could not find trip"
+      end
+    else
+      @error = "Illegal input"
+    end
+    respond_to do |format|
+      format.js
+    end
   end
 end

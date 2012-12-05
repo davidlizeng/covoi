@@ -58,6 +58,9 @@ class UsersController < ApplicationController
       @user = current_user
       time_range = (Time.now - 60*60*24)..(Time.now + 60*60*24*30)
       @matches = Match.all(:include => :trip, :conditions => {:trips => { :time => time_range }, :user_id => @user.id}, :order => "trips.time ASC")
+      @matches.each do |m|
+        m["number"] = Match.where(:id => m.id).count
+      end
       @origins = Origin.find_all_cached
       @airports = Airport.find_all_cached
       @origin_choices = Origin.buildOriginChoices(@origins)

@@ -30,6 +30,21 @@
       color: #ff0000;
       cursor: pointer;
     }
+
+    .group_button {
+      font-size: 12px;
+      padding: 0;
+      margin: 0;
+      width: 50px;
+      height: 20px;
+    }
+
+    input[type=text] {
+      font-size: 13px;
+      width: 70px;
+      margin: 0;
+      padding: 0;
+    }
   </style>
 <% end %>
 <% content_for :head do %>
@@ -84,6 +99,7 @@
       <td align="center">Full Name</td>
       <td align="center">SuNetID</td>
       <td align="center">Phone</td>
+      <td align="center">SS Conf. #</td>
     </tr>
     <% @solo.each do |m| %>
       <tr>
@@ -95,6 +111,14 @@
         <td><%= m.user.first_name + " " + m.user.last_name %></td>
         <td><%= m.user.email %></td>
         <td><%= m.user.phone %></td>
+        <td id="td_<%= m.trip.id %>">
+          <% if m.trip.group_id == 0 %>
+            <%= text_field_tag "input_" + m.trip.id.to_s, m.trip.group_id, :class => "group_input" %>
+            <%= button_tag "Group", :type => "button", :id => m.trip.id.to_s, :class => "group_button" %>
+          <% else %>
+            <%= m.trip.group_id %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -103,7 +127,19 @@
 <div class="box_title">Grouped Rides: <%= @grouped_count %> grouped rides<span id="group_toggle" class="toggle">Toggle</span></div>
     <% @groups.each do |g| %>
       <div class="group_rides">
-      <div class="group_title">Group Size: <%= g.size %></div>
+      <div class="group_title">
+        Group Size: <%= g.size %>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        SS Conf. #:
+        <span id="td_<%= g.first.trip.id %>">
+          <% if g.first.trip.group_id == 0 %>
+            <%= text_field_tag "input_" + g.first.trip.id.to_s, g.first.trip.group_id, :class => "group_input" %>
+            <%= button_tag "Group", :type => "button", :id => g.first.trip.id.to_s, :class => "group_button" %>
+          <% else %>
+            <%= g.first.trip.group_id %>
+          <% end %>
+        </span>
+      </div>
       <table>
         <tbody>
         <tr>
@@ -115,6 +151,7 @@
           <td align="center">Full Name</td>
           <td align="center">SuNetID</td>
           <td align="center">Phone</td>
+
         </tr>
       <% g.each do |m|%>
         <tr>
@@ -151,7 +188,10 @@
     <% end %>
   </tbody>
 </table>
-
+<%= form_for "", url: "/admin", :remote => true, :html => {:id => "group_form"} do |f| %>
+  <%= hidden_field_tag :trip_id, "" %>
+  <%= hidden_field_tag :group_id, "" %>
+<% end %>
 <script>
   $(document).ready(function() {
     var all = false;
@@ -192,6 +232,13 @@
         $('#unbooked_users').css('display', 'block');
       }
       unbooked = !unbooked;
+    });
+
+    $('.group_button').click(function(e) {
+      $('#trip_id:hidden').val(e.delegateTarget.id);
+      $('#group_id:hidden').val($('#input_'+e.delegateTarget.id).val());
+      $('.group_button').attr('disabled', 'true');
+      $('#group_form').submit();
     });
   });
 </script>

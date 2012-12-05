@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121204093723) do
+ActiveRecord::Schema.define(:version => 20121205072124) do
 
   create_table "airports", :force => true do |t|
     t.string "code"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(:version => 20121204093723) do
     t.integer  "id",           :null => false
     t.integer  "user_id"
     t.integer  "trip_id"
-    t.integer  "group_id"
     t.datetime "time_created"
   end
 
@@ -46,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20121204093723) do
     t.integer  "origin_id",    :limit => 2
     t.integer  "airport_id",   :limit => 2
     t.datetime "time_created"
+    t.integer  "group_id"
   end
 
   add_index "trips", ["id"], :name => "trips_id_idx", :unique => true

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div id="header">
+  <img id="logo" src="<%= ENV["SERVER_HOSTNAME"] %>/images/ridegrouped_logo.png" width="250" height="81" alt="">
+</div>
+<div id="main">
+
+<p>Thank you again for using RideGrouped as your means to booking transportation back home.</p>
+
+<div>RideGrouped has booked a SuperShuttle van for you with the following information:</div>
+<div>SuperShuttle Confirmation Number: <b><%= @trip.group_id %></b></div>
+<div>Pickup Location: <b><%= @origin.name %>: <%= @origin.address %>, <%= @origin.city %>, <%= @origin.state %> <%= @origin.zip %></b></div>
+<div>Pickup Date: <b><%= @trip.dateString %></b></div>
+<div>Pickup Time: <b><%= @trip.timeString %></b> (Please allow up to 15 minutes for your shuttle to arrive)</div>
+<div>Destination: <b><%= Airport.find_by_id_cached(@trip.airport_id).code %></b></div>
+<br>
+<div>When the time comes for your flight, please be aware of certain general guidelines:</div>
+<ol>
+<li>Be waiting at the stop 15 minutes before the pickup time, and be prepared to wait at least 15 minutes after the assigned time, as this is the SuperShuttle pickup window.</li>
+<li>You will only be contact by the van driver if you are the group leader (the individual whose name the booking was made under). If you otherwise wish to know the status of your shuttle, you can call or go to <%= link_to "SuperShuttle's Tracking Service", "https://reservations.supershuttle.com/Default.aspx?content=WhereIsMyVan&lng", :html => {:target => "_blank"} %> and enter your SuperShuttle Confirmation number.</li>
+<li>It is the group leader’s responsibility to contact you with the information he/she has received from the driver. However, it is each of your responsibility to make sure all members of your party are accounted for and on the van. Please use the group information provided here to do so.</li>
+<li>Upon entering the van, please confirm your destination with your driver and inform him/her of relevant information regarding your flight (Terminal Number and Airline, etc).</li>
+<li>This reservation entitles you to bring two bags for check in and one carry on item using the SuperShuttle service. Please make sure each item is under 50 pounds. In the case you have more or oversized items, please contact RideGrouped service at <%= "service@ridegrouped.com" %> as extra fees may be applicable.</li>
+<li>If you are no longer able to ride with your group, please inform the fellow members of your group, and inform the RideGrouped team at <%= "service@ridegrouped.com" %></li>
+</ol>
+
+<div><b>Your Group Info:</b></div>
+<table>
+  <tbody>
+   <tr>
+    <td align="center"><b>Full Name</b></td>
+    <td align="center"><b>Email</b></td>
+    <td align="center"><b>Cell Phone</b></td>
+    <td align="center"><b>Status</b></td>
+   </tr>
+   <tr>
+    <td><%= @matches.first.user.first_name + " " + @matches.first.user.last_name %></td>
+    <td><%= @matches.first.user.email %></td>
+    <td><%= "(#{@matches.first.user.phone[0, 3]}) #{@matches.first.user.phone[3, 3]}-#{@matches.first.user.phone[6, 4]} "%></td>
+    <td>Group Leader</td>
+   </tr>
+   <div>
+   <% 1.upto(@matches.size - 1) do |i| %>
+   <tr>
+    <td><%= @matches[i].user.first_name + " " + @matches[i].user.last_name %></td>
+    <td><%= @matches[i].user.email %></td>
+    <td><%= "(#{@matches[i].user.phone[0, 3]}) #{@matches[i].user.phone[3, 3]}-#{@matches[i].user.phone[6, 4]} "%></td>
+    <td>Group Member</td>
+   </tr>
+   <% end %>
+  </tbody>
+</table>
+
+<p><b>For the Group Leader:</b> You have been chosen as the group leader for this ride. Your SuperShuttle will only call you when he/she is on his way, and you will be notified if said driver is running late. It is your responsibility to pass on this information to the other members of your group (their emails and phone numbers are attached here), and ensure that everyone is on board.</p>
+
+
+<p>Thanks,<br>
+The RideGrouped Team</p>
+</div>
+</body>
+</html>

@@ -56,6 +56,7 @@ class MatchesController < ApplicationController
           @trip.airport_id = params[:trip][:airport_id]
           @trip.time = params[:trip][:time]
           @trip.id = 0
+          @trip.group_id = 0
           if !@trip.valid?
             @error = @trip.errors.full_messages[0]
           elsif !(@donate.to_s =~ /^[0-9]\.[0-9]{2}$/)
@@ -83,7 +84,6 @@ class MatchesController < ApplicationController
           end while Match.find_by_id(@match.id) != nil
           @match.trip_id = @trip.id
           @match.user_id = @user.id
-          @match.group_id = 0
           @match.time_created = Time.now
           @match.save
           unless params[:phone].eql?(@user.phone)

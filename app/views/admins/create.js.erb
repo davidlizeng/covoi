@@ -1,0 +1,6 @@
+<% if @error %>
+  display_message('<%= escape_javascript(@error) %>', 'error', 'message_banner', 'agag');
+<% else %>
+  $('#td_' + '<%= @trip.id %>').empty().html('<%= @trip.group_id %>');
+<% end %>
+$('.group_button').removeAttr('disabled');
