@@ -108,7 +108,7 @@ class AdminsController < ApplicationController
         @leader = matches.first.user
         @count = matches.size
         @origin = Origin.find_by_id_cached(@trip.origin_id)
-        @time = @trip.time + 60*(60*3 + 10)
+        @time = @trip.time + 60*(60*3 + 15)
         @hour = @time.hour % 12
         if @hour == 0
           @hour = 12
