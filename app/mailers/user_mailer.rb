@@ -28,6 +28,18 @@ class UserMailer < ActionMailer::Base
     mail(:from => @@service, :to => email_string, :subject => "RideGrouped Reservation Details - Important Travel Day Informtaion (READ IMMEDIATELY)")
   end
 
+  def booking_receipt(match, amount, grouped)
+    @first_name = match.user.first_name
+    if grouped
+      @gratuity = amount - 1500
+    else
+      @gratuity = amount - 2000
+    end
+    @amount = amount
+    @grouped = grouped
+    mail(:from => @@service, :to => match.user.email, :subject => "Your RideGrouped Booking Receipt")
+  end
+
   def password_reset(user)
     @user = user
     mail(:from => @@noreply, :to => @user.email, :subject => "Password Reset Request")

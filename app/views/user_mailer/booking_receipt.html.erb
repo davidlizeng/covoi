@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div id="header">
+  <img id="logo" src="<%= ENV["SERVER_HOSTNAME"] %>/images/ridegrouped_logo.png" width="250" height="81" alt="">
+</div>
+<div id="main">
+<p>Hi <%= @first_name %>,</p>
+
+<p>Thank you for booking with RideGrouped. By this time, you should have received a notification from us with your final ride details. If you have not, please reach out to us at <%= "service@ridegrouped.com" %>.</p>
+
+<% if @grouped %>
+<div>Your ride was booked as a <b>Shared</b> ride.</div>
+<% else %>
+<div>Your ride was booked as a <b>Single</b> ride.</div>
+<% end %>
+<div>The card you filed was charged accordingly for this transaction.</div>
+<div>Charges are as listed below:</div>
+<br>
+
+<% if @grouped %>
+<div>Cost for Ride: $15.00</div>
+<% else %>
+<div>Cost for Ride: $20.00</div>
+<% end %>
+<div>Service Gratuity: $<%= @gratuity/100 %>.<%= (@gratuity/10)%10 %><%= @gratuity%10%></div>
+<div>Total Cost: $<%= @amount/100 %>.<%= (@amount/10)%10 %><%= @amount%10%> </div>
+
+<p>Wishing you safe travels and a happy holiday season,<br>
+The RideGrouped Team</p>
+</div>
+</body>
+</html>
