@@ -59,7 +59,7 @@ class UsersController < ApplicationController
       time_range = (Time.now - 60*60*24)..(Time.now + 60*60*24*30)
       @matches = Match.all(:include => :trip, :conditions => {:trips => { :time => time_range }, :user_id => @user.id}, :order => "trips.time ASC")
       @matches.each do |m|
-        m["status"] = (Match.where(:trip_id => m.trip_id).count > 1) "Shared" : "Single"
+        m["status"] = (Match.where(:trip_id => m.trip_id).count > 1) ? "Shared" : "Single"
       end
       @origins = Origin.find_all_cached
       @airports = Airport.find_all_cached
