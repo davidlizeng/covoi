@@ -10,7 +10,11 @@
 
 <p>Thank you again for using RideGrouped as your means to booking transportation back home. Please print or keep a copy of this email for your records.</p>
 
-<div>RideGrouped has booked a SuperShuttle van for you with the following information:</div>
+<% if @matches.size > 1 %>
+<div>RideGrouped has booked a SuperShuttle van for you and your group with the following information:</div>
+<% else %>
+<div>RideGrouped has booked a SINGLE seat on a SuperShuttle van for you with the following information:</div>
+<% end %>
 <br>
 <div><u>SuperShuttle Confirmation Number: <b><%= @trip.group_id %></b></u></div>
 <div>Pickup Location: <b><%= @origin.name %>: <%= @origin.address %>, <%= @origin.city %>, <%= @origin.state %> <%= @origin.zip %></b></div>
@@ -21,13 +25,20 @@
 <div>When the time comes for your departure, please be aware of certain general guidelines:</div>
 <ol>
 <li>Be waiting at the stop 15 minutes before the pickup time, and be prepared to wait at least 15 minutes after the assigned time, as this is the SuperShuttle pickup window.</li>
-<li>You will only be contact by the van driver if you are the group leader (the individual whose name the booking was made under). If you otherwise wish to know the status of your shuttle, you can call or go to <%= link_to "SuperShuttle's Tracking Service", "https://reservations.supershuttle.com/Default.aspx?content=WhereIsMyVan&lng", :html => {:target => "_blank"} %> and enter your SuperShuttle Confirmation number.</li>
+<% if @matches.size > 1 %>
+<li>You will only be contacted by the van driver if you are the group leader (the individual whose name the booking was made under). If you otherwise wish to know the status of your shuttle, you can call or go to <%= link_to "SuperShuttle's Tracking Service", "https://reservations.supershuttle.com/Default.aspx?content=WhereIsMyVan&lng", :html => {:target => "_blank"} %> and enter your SuperShuttle Confirmation number.</li>
 <li>It is the group leader’s responsibility to contact you with the information he/she has received from the driver. However, it is each of your responsibility to make sure all members of your party are accounted for and on the van. Please use the group information provided here to do so.</li>
-<li>Upon entering the van, please confirm your destination with your driver and inform him/her of relevant information regarding your flight (Terminal Number and Airline, etc).</li>
+<% else %>
+<li>If you wish to know the status of your shuttle, you can call or go to <%= link_to "SuperShuttle's Tracking Service", "https://reservations.supershuttle.com/Default.aspx?content=WhereIsMyVan&lng", :html => {:target => "_blank"} %> and enter your SuperShuttle Confirmation number.</li>
+<% end %>
+<li>Upon entering the van, please confirm your destination with your driver and inform him/her of relevant information regarding your flight (Terminal and Airline, etc).</li>
 <li>This reservation entitles you to bring two bags for check in and one carry on item using the SuperShuttle service. Please make sure each item is under 50 pounds. In the case you have more or oversized items, please contact RideGrouped service at <%= "service@ridegrouped.com" %> as extra fees may be applicable.</li>
+<% if @matches.size > 1 %>
 <li>If you are no longer able to ride with your group, please inform the fellow members of your group, and inform the RideGrouped team at <%= "service@ridegrouped.com" %></li>
+<% end %>
 </ol>
 
+<% if @matches.size > 1 %>
 <div><b>Your Group Info:</b></div>
 <div><b>Group Size: <%= @matches.size %></b></div>
 <table>
@@ -55,9 +66,7 @@
    <% end %>
   </tbody>
 </table>
-
-<% if @matches.size > 1 %>
-<p><b>For the Group Leader:</b> You have been chosen as the group leader for this ride. Your SuperShuttle will only call you when he/she is on his way, and you will be notified if said driver is running late. It is your responsibility to pass on this information to the other members of your group, and ensure that everyone is on board.</p>
+<p><b>For the Group Leader:</b> You have been chosen as the group leader for this ride. Your SuperShuttle driver will only call you when he/she is on his way, and you will be notified if said driver is running late. It is your responsibility to pass on this information to the other members of your group, and ensure that everyone is on board.</p>
 <% end %>
 
 <p>If you encounter any last minute problems, please send a text message alert to RideGrouped's emergency number at <%= "(516) 808-9183" %>.</p>
