@@ -8,28 +8,30 @@ class AdminsController < ApplicationController
     @airports = Airport.find_all_cached
     @matches = Match.includes(:trip, :user).order("trips.time ASC, trips.id ASC, matches.time_created ASC")
     @unconfirmed = []
-    users = User.all(:conditions => {:confirmed => true}, :order => "id ASC")
-    @user_count = users.size
-    booked = User.joins(:matches).order("id ASC")
+    #users = User.all(:conditions => {:confirmed => true}, :order => "id ASC")
+    #@user_count = users.size
+    #booked = User.joins(:matches).order("id ASC")
     @unbooked = []
-    b = 0
-    a = 0
-    while a < booked.size
-      while (a != (booked.size - 1)) && (booked[a].id == booked[a+1].id)
-        a = a + 1
-      end
-      while booked[a].id.to_s != users[b].id.to_s
-        @unbooked.push(users[b])
-        puts booked[a].id.to_s + " " + users[b].id.to_s
-        b = b + 1
-      end
-      b = b + 1
-      a = a + 1
-    end
-    while b < users.size
-      @unbooked.push(users[b])
-      b = b + 1
-    end
+    @unbooked_count = User.where(:confirmed => true).count - @matches.size
+    #b = 0
+    #a = 0
+    #while a < booked.size
+    #  while (a != (booked.size - 1)) && (booked[a].id == booked[a+1].id)
+    #    a = a + 1
+    #  end
+    #  while booked[a].id.to_s != users[b].id.to_s
+    #    @unbooked.push(users[b])
+    #    puts booked[a].id.to_s + " " + users[b].id.to_s
+    #    b = b + 1
+    #  end
+    #  b = b + 1
+    #  a = a + 1
+    #end
+    #while b < users.size
+    #  @unbooked.push(users[b])
+    #  b = b + 1
+    #end
+    @future = Time.now + 60*60*36
     @solo = []
     @groups = []
     @grouped_count = 0
@@ -118,6 +120,11 @@ class AdminsController < ApplicationController
         @error = "Giveup"
       end
     end
+    respond_to do |format|
+      format.js
+    end
+  rescue Exception => e
+    @error = e.message
     respond_to do |format|
       format.js
     end

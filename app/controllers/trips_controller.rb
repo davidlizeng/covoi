@@ -17,12 +17,12 @@ class TripsController < ApplicationController
       if @trip.valid?
         @trip.time = Trip.buildDateTime(@trip)
         @time = @trip.time.in_time_zone.to_s
-        if @trip.time < Time.now + 24*60*60
-          @error = "RideGrouped can only accomodate shuttle bookings at least 24 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
+        if @trip.time < Time.now + 27*60*60
+          @error = "RideGrouped can only accomodate shuttle bookings at least 27 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
         end
         @origins = Origin.find_all_cached
         @airports = Airport.find_all_cached
-        trips = Trip.where(:airport_id => @trip.airport_id, :time => ((@trip.time - 60*60*1)..(@trip.time + 60*5))).all
+        trips = Trip.where(:airport_id => @trip.airport_id, :time => ((@trip.time - 60*60*1)..(@trip.time + 60*10))).all
         trips = trips.sort{ |x, y| (@trip.time - x.time + 15*60*(@trip.origin_id - x.origin_id).abs) <=> (@trip.time - y.time + 15*60*(@trip.origin_id - y.origin_id).abs)}
         matches = Match.find_all_by_user_id(current_user.id)
         user_trips = [];
