@@ -5,6 +5,11 @@
       font-size: 14px;
       border-bottom: 1px solid #c0c0c0;
       border-right: 1px solid #c0c0c0;
+      min-height: 15px;
+    }
+
+    .nia {
+      border: none;
     }
 
     .agg {
@@ -91,7 +96,7 @@
         <td><%= @matches[i].user.phone %></td>
       </tr>
       <% if i < @matches.size - 1 && @matches[i].trip.id != @matches[i+1].trip.id %>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="nia"></td><td class="nia"></td><td class="nia"></td><td class="nia"></td><td class="nia"></td><td class="nia"></td><td class="nia"></td><td class="nia"></td></tr>
       <% end %>
     <% end %>
   </tbody>
