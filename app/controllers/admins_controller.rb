@@ -111,7 +111,7 @@ class AdminsController < ApplicationController
         @count = matches.size
         locations = [0, 6547, 6550, 11219, 11231]
         @origin = locations[@trip.origin_id] + @trip.airport_id
-        @time = @trip.time + 60*(60*3 + 15)
+        @time = @trip.time + 60*(60*3 + 10)
         @hour = @time.hour % 12
         if @hour == 0
           @hour = 12
