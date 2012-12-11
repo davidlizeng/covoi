@@ -109,7 +109,8 @@ class AdminsController < ApplicationController
         matches = Match.includes(:user).where(:trip_id => params[:trip_id]).order("matches.time_created ASC")
         @leader = matches.first.user
         @count = matches.size
-        @origin = Origin.find_by_id_cached(@trip.origin_id)
+        locations = [0, 6547, 6550, 11219, 11231]
+        @origin = locations[@trip.origin_id] + @trip.airport_id
         @time = @trip.time + 60*(60*3 + 15)
         @hour = @time.hour % 12
         if @hour == 0
