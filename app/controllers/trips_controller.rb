@@ -17,8 +17,8 @@ class TripsController < ApplicationController
       if @trip.valid?
         @trip.time = Trip.buildDateTime(@trip)
         @time = @trip.time.in_time_zone.to_s
-        if @trip.time < Time.now + 27*60*60
-          @error = "RideGrouped can only accomodate shuttle bookings at least 27 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
+        if @trip.time < Time.now + 24*60*60
+          @error = "RideGrouped can only accomodate shuttle bookings at least 24 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
         end
         @origins = Origin.find_all_cached
         @airports = Airport.find_all_cached

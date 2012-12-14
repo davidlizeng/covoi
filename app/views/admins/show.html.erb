@@ -143,47 +143,47 @@
 <div class="box_title">Grouped Rides: <%= @grouped_count %> grouped rides<span id="group_toggle" class="toggle">Toggle</span></div>
     <% @groups.each do |g| %>
       <div class="group_rides">
-      <div class="group_title">
-        Group Size: <%= g.size %>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        SS Conf. #:
-        <span id="td_<%= g.first.trip.id %>">
-          <% if g.first.trip.group_id == 0 && g.first.trip.time < @future %>
-            <%= text_field_tag "input_" + g.first.trip.id.to_s, g.first.trip.group_id, :class => "group_input" %>
-            <%= button_tag "Group", :type => "button", :id => g.first.trip.id.to_s, :class => "group_button" %>
-            <%= button_tag "Script", :type => "button", :id => "s_" + g.first.trip.id.to_s, :class => "script_button" %>
-          <% else %>
-            <%= g.first.trip.group_id %>
-          <% end %>
-        </span>
-      </div>
-      <table>
-        <tbody>
-        <tr>
-          <td align="center">RG Conf. #</td>
-          <td align="center">Origin</td>
-          <td align="center">Dest.</td>
-          <td align="center">Date</td>
-          <td align="center">Time</td>
-          <td align="center">Full Name</td>
-          <td align="center">SuNetID</td>
-          <td align="center">Phone</td>
-        </tr>
-      <% g.each do |m|%>
-        <tr>
-          <td><%= m.id %></td>
-          <td><%= @origins[m.trip.origin_id - 1].name %></td>
-          <td><%= @airports[m.trip.airport_id - 1].code %></td>
-          <td><%= m.trip.dateString %></td>
-          <td><%= m.trip.timeString %></td>
-          <td><%= m.user.first_name + " " + m.user.last_name %></td>
-          <td><%= m.user.email %></td>
-          <td><%= m.user.phone %></td>
-        </tr>
-      <% end %>
-      </tbody>
-      </table>
-      <div class="small_spacer"></div>
+        <div class="group_title">
+          Group Size: <%= g.size %>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          SS Conf. #:
+          <span id="td_<%= g.first.trip.id %>">
+            <% if g.first.trip.group_id == 0 && g.first.trip.time < @future %>
+              <%= text_field_tag "input_" + g.first.trip.id.to_s, g.first.trip.group_id, :class => "group_input" %>
+              <%= button_tag "Group", :type => "button", :id => g.first.trip.id.to_s, :class => "group_button" %>
+              <%= button_tag "Script", :type => "button", :id => "s_" + g.first.trip.id.to_s, :class => "script_button" %>
+            <% else %>
+              <%= g.first.trip.group_id %>
+            <% end %>
+          </span>
+        </div>
+        <table>
+          <tbody>
+          <tr>
+            <td align="center">RG Conf. #</td>
+            <td align="center">Origin</td>
+            <td align="center">Dest.</td>
+            <td align="center">Date</td>
+            <td align="center">Time</td>
+            <td align="center">Full Name</td>
+            <td align="center">SuNetID</td>
+            <td align="center">Phone</td>
+          </tr>
+        <% g.each do |m|%>
+          <tr>
+            <td><%= m.id %></td>
+            <td><%= @origins[m.trip.origin_id - 1].name %></td>
+            <td><%= @airports[m.trip.airport_id - 1].code %></td>
+            <td><%= m.trip.dateString %></td>
+            <td><%= m.trip.timeString %></td>
+            <td><%= m.user.first_name + " " + m.user.last_name %></td>
+            <td><%= m.user.email %></td>
+            <td><%= m.user.phone %></td>
+          </tr>
+        <% end %>
+        </tbody>
+        </table>
+        <div class="small_spacer"></div>
       </div>
     <% end %>
 <div class="spacer"></div>

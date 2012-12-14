@@ -61,8 +61,8 @@ class MatchesController < ApplicationController
             @error = @trip.errors.full_messages[0]
           elsif !(@donate.to_s =~ /^[0-9]\.[0-9]{2}$/)
             @error = "Service Gratuity must be of the format $x.xx"
-          elsif @trip.time < Time.now + 27*60*60
-            @error = "RideGrouped can only accomodate shuttle bookings at least 27 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
+          elsif @trip.time < Time.now + 24*60*60
+            @error = "RideGrouped can only accomodate shuttle bookings at least 24 hours in advance. For last minute bookings, try SuperShuttle's site directly at supershuttle.com"
           else
             begin
               @trip.id = SecureRandom.random_number(9000000)+1000000
