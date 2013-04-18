@@ -12,6 +12,10 @@
       height: 7px;
     }
 
+    .agag {
+      font-size: 12px;
+    }
+
     .agg {
       font-size: 12px;
       display: none;
@@ -37,17 +41,20 @@
     }
 
     .group_button,
-    .script_button {
+    .script_button,
+    .merge_button,
+    .update_button,
+    .delete_button {
       font-size: 12px;
       padding: 0;
       margin: 0;
-      width: 45px;
+      width: 25px;
       height: 20px;
     }
 
     input[type=text] {
       font-size: 13px;
-      width: 70px;
+      width: 80px;
       margin: 0;
       padding: 0;
     }
@@ -63,13 +70,24 @@
   </div>
 <% end %>
 
-<% @unconfirmed.each do |u| %>
-<div class="agg">
-  <%= "https://www.ridegrouped.com/users/new?user_id=#{u.id}&auth_token=#{Digest::SHA2.hexdigest(u.id.to_s + u.password_salt + u.one_time_password)}" %>
-</div>
-<% end %>
-
 <div id="script_area"></div>
+<div class="spacer"></div>
+<div class="agag">Time filter: Between <%= @after.in_time_zone.strftime("%B %-d, %Y") %> and <%= @before.in_time_zone.strftime("%B %-d, %Y") %></div>
+<div class="agag">Hidden airports:
+  <% @airports.each do |a| %>
+    <% if !@airports_shown.include?(a.id) %>
+      <%= a.code %> &nbsp;
+    <% end %>
+  <% end %>
+</div>
+<div class="agag">Hidden pickup locations:
+  <% @origins.each do |a| %>
+    <% if !@origins_shown.include?(a.id) %>
+      <%= a.name %> &nbsp;
+    <% end %>
+  <% end %>
+</div>
+<div class="spacer"></div>
 
 <div class="box_title">All Rides: <%= @matches.size %> bookings made<span id="all_toggle" class="toggle">Toggle</span></div>
 <table id="all_rides" class="rides">
@@ -115,6 +133,7 @@
       <td align="center">SuNetID</td>
       <td align="center">Phone</td>
       <td align="center">SS Conf. #</td>
+      <td align="center">Edit</td>
     </tr>
     <% @solo.each do |m| %>
       <tr>
@@ -128,11 +147,19 @@
         <td><%= m.user.phone %></td>
         <td id="td_<%= m.trip.id %>">
           <% if m.trip.group_id == 0 && m.trip.time < @future %>
-            <%= text_field_tag "input_" + m.trip.id.to_s, m.trip.group_id, :class => "group_input" %>
-            <%= button_tag "Group", :type => "button", :id => m.trip.id.to_s, :class => "group_button" %>
-            <%= button_tag "Script", :type => "button", :id => "s_" + m.trip.id.to_s, :class => "script_button" %>
+            <%= text_field_tag "group_" + m.trip.id.to_s, m.trip.group_id, :class => "group_input" %>
+            <%= button_tag "Grp", :type => "button", :id => "g_" + m.trip.id.to_s, :class => "group_button" %>
+            <%= button_tag "Scr", :type => "button", :id => "s_" + m.trip.id.to_s, :class => "script_button" %>
           <% else %>
             <%= m.trip.group_id %>
+          <% end %>
+        </td>
+        <td>
+          <% if m.trip.group_id == 0 && m.trip.time < @future %>
+            <%= text_field_tag "merge_" + m.id.to_s, 0, :class => "merge_input" %>
+            <%= button_tag "Mer", :type => "button", :id => "m_" + m.id.to_s, :class => "merge_button" %>
+            <%= button_tag "Del", :type => "button", :id => "d_" + m.id.to_s, :class => "delete_button" %>
+            <%= button_tag "Upd", :type => "button", :id => "u_" + m.trip.id.to_s, :class => "update_button" %>
           <% end %>
         </td>
       </tr>
@@ -150,8 +177,8 @@
           <span id="td_<%= g.first.trip.id %>">
             <% if g.first.trip.group_id == 0 && g.first.trip.time < @future %>
               <%= text_field_tag "input_" + g.first.trip.id.to_s, g.first.trip.group_id, :class => "group_input" %>
-              <%= button_tag "Group", :type => "button", :id => g.first.trip.id.to_s, :class => "group_button" %>
-              <%= button_tag "Script", :type => "button", :id => "s_" + g.first.trip.id.to_s, :class => "script_button" %>
+              <%= button_tag "Grp", :type => "button", :id => "g_" + g.first.trip.id.to_s, :class => "group_button" %>
+              <%= button_tag "Scr", :type => "button", :id => "s_" + g.first.trip.id.to_s, :class => "script_button" %>
             <% else %>
               <%= g.first.trip.group_id %>
             <% end %>
@@ -168,6 +195,7 @@
             <td align="center">Full Name</td>
             <td align="center">SuNetID</td>
             <td align="center">Phone</td>
+            <td align="center">Edit</td>
           </tr>
         <% g.each do |m|%>
           <tr>
@@ -179,6 +207,13 @@
             <td><%= m.user.first_name + " " + m.user.last_name %></td>
             <td><%= m.user.email %></td>
             <td><%= m.user.phone %></td>
+            <td>
+              <% if m.trip.group_id == 0 && m.trip.time < @future %>
+                <%= text_field_tag "merge_" + m.id.to_s, 0, :class => "merge_input" %>
+                <%= button_tag "Mer", :type => "button", :id => "m_" + m.id.to_s, :class => "merge_button" %>
+                <%= button_tag "Del", :type => "button", :id => "d_" + m.id.to_s, :class => "delete_button" %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
         </tbody>
@@ -187,28 +222,13 @@
       </div>
     <% end %>
 <div class="spacer"></div>
-<div class="box_title">Unbooked Users: <%= @unbooked_count %> users who have not booked<span id="unbooked_toggle" class="toggle">Toggle</span></div>
-<table id="unbooked_users" class="rides">
-  <tbody>
-    <tr>
-      <td align="center">Full Name</td>
-      <td align="center">SuNetID</td>
-      <td align="center">Account Created On</td>
-    </tr>
-    <% @unbooked.each do |u| %>
-      <tr>
-        <td><%= u.first_name + " " + u.last_name %></td>
-        <td><%= u.email %></td>
-        <td><%= u.time_confirmed.in_time_zone.strftime("%B %-d, %Y") %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<div class="spacer"></div>
 <div class="box_title">Total Users: <%= @user_count %> confirmed users</div>
-<%= form_for "", url: "/admin", :remote => true, :html => {:id => "group_form"} do |f| %>
+<%= form_for "", url: "/admin", :remote => true, :html => {:id => "edit_form"} do |f| %>
+  <%= hidden_field_tag :mode, "" %>
   <%= hidden_field_tag :trip_id, "" %>
+  <%= hidden_field_tag :match_id, "" %>
   <%= hidden_field_tag :group_id, "" %>
+  <%= hidden_field_tag :merge_id, "" %>
 <% end %>
 <script>
   $(document).ready(function() {
@@ -253,17 +273,44 @@
     });
 
     $('.group_button').click(function(e) {
-      $('#trip_id:hidden').val(e.delegateTarget.id);
-      $('#group_id:hidden').val($('#input_'+e.delegateTarget.id).val());
+      $('#mode:hidden').val('group');
+      $('#trip_id:hidden').val(e.delegateTarget.id.substr(2));
+      $('#group_id:hidden').val($('#group_'+e.delegateTarget.id.substr(2)).val());
+      $('#merge_id:hidden').val('');
       $('.group_button').attr('disabled', 'true');
-      $('#group_form').submit();
+      $('#edit_form').submit();
     });
 
     $('.script_button').click(function(e) {
+      $('#mode:hidden').val('script');
       $('#trip_id:hidden').val(e.delegateTarget.id.substr(2));
-      $('#group_id:hidden').val('agg');
+      $('#group_id:hidden').val('');
+      $('#merge_id:hidden').val('');
       $('.script_button').attr('disabled', 'true');
-      $('#group_form').submit();
+      $('#edit_form').submit();
+    });
+
+    $('.merge_button').click(function(e) {
+      $('#mode:hidden').val('merge');
+      $('#trip_id:hidden').val('');
+      $('#match_id:hidden').val(e.delegateTarget.id.substr(2));
+      $('#group_id:hidden').val('');
+      $('#merge_id:hidden').val($('#merge_'+e.delegateTarget.id.substr(2)).val());
+      $('.merge_button').attr('disabled', 'true');
+      $('#edit_form').submit();
+    });
+
+    $('.update_button').click(function(e) {
+    })
+
+    $('.delete_button').click(function(e) {
+      $('#mode:hidden').val('delete');
+      $('#trip_id:hidden').val('');
+      $('#match_id:hidden').val(e.delegateTarget.id.substr(2));
+      $('#group_id:hidden').val('');
+      $('#merge_id:hidden').val('');
+      $('.delete_button').attr('disabled', 'true');
+      $('#edit_form').submit();
     });
   });
 </script>

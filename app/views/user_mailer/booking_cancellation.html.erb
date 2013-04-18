@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div id="header">
+  <img id="logo" src="<%= ENV["SERVER_HOSTNAME"] %>/images/ridegrouped_logo.png" width="250" height="81" alt="">
+</div>
+<div id="main">
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>We have cancelled the following booking:</p>
+
+<div>RideGrouped Confirmation Number: <b><%= @match.id %></b></div>
+<div>Pickup Location: <b><%= @origin.name %>: <%= @origin.address %>, <%= @origin.city %>, <%= @origin.state %> <%= @origin.zip %></b></div>
+<div>Pickup Date: <b><%= @trip.dateString %></b></div>
+<div>Pickup Time: <b><%= @trip.timeString %></b></div>
+<div>Destination: <b><%= Airport.find_by_id_cached(@trip.airport_id).code %></b></div>
+
+<p>Thanks,<br>
+The RideGrouped Team</p>
+</div>
+</body>
+</html>

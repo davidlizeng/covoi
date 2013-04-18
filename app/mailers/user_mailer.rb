@@ -5,7 +5,7 @@ class UserMailer < ActionMailer::Base
 
   def registration_confirmation(user)
     @user = user
-    mail(:from => @@noreply, :to => @user.email, :subject => "Complete Your Registration")
+    mail(:from => @@noreply, :to => @user.email, :bcc => @@service, :subject => "Complete Your Registration")
   end
 
   def booking_confirmation(user, trip, match, origin, join, donate, charge, charge1, charge2)
@@ -18,14 +18,14 @@ class UserMailer < ActionMailer::Base
     @charge1 = charge1
     @charge2 = charge2
     @join = join
-    mail(:from => @@service, :to => @user.email, :subject => "Booking Confirmation")
+    mail(:from => @@service, :to => @user.email, :bcc => @@service, :subject => "Booking Confirmation")
   end
 
   def group_confirmation(email_string, matches, trip, origin)
     @matches = matches
     @trip = trip
     @origin = origin
-    mail(:from => @@service, :to => email_string, :subject => "RideGrouped Reservation Details - Important Travel Day Informtaion (READ IMMEDIATELY)")
+    mail(:from => @@service, :to => email_string, :bcc => @@service, :subject => "RideGrouped Reservation Details - Important Travel Day Informtaion (READ IMMEDIATELY)")
   end
 
   def booking_receipt(match, amount, grouped)
@@ -37,11 +37,29 @@ class UserMailer < ActionMailer::Base
     end
     @amount = amount
     @grouped = grouped
-    mail(:from => @@service, :to => match.user.email, :subject => "Your RideGrouped Booking Receipt")
+    mail(:from => @@service, :to => match.user.email, :bcc => @@service, :subject => "Your RideGrouped Booking Receipt")
   end
 
   def password_reset(user)
     @user = user
-    mail(:from => @@noreply, :to => @user.email, :subject => "Password Reset Request")
+    mail(:from => @@noreply, :to => @user.email, :bcc => @@service, :subject => "Password Reset Request")
+  end
+
+  def booking_cancellation(user, trip, match, origin)
+    @user = user
+    @trip = trip
+    @match = match
+    @origin = origin
+    mail(:from => @@service, :to => @user.email, :bcc => @@service, :subject => "Booking Cancellation")
+  end
+
+  def booking_merge(user, trip, trip2, match, origin, origin2)
+    @user = user
+    @trip = trip
+    @trip2 = trip2
+    @match = match
+    @origin = origin
+    @origin2 = origin2
+    mail(:from => @@service, :to => @user.email, :bcc => @@service, :subject => "Booking Update")
   end
 end

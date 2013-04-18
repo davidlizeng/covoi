@@ -18,7 +18,7 @@ $(document).ready(function() {
         });
       });
     }
-    $('#trip_date').datepicker({minDate: new Date(2012, 12 - 1, 1), maxDate: new Date(2012, 12 - 1, 22)});
+    $('#trip_date').datepicker({minDate: new Date(2013, 6 - 1, 1), maxDate: new Date(2013, 6 - 1, 30)});
   }
 
   if ($('#match_box').size() > 0) {
@@ -205,33 +205,30 @@ $(document).ready(function() {
     var markersPositions = [
       new google.maps.LatLng(37.425129, -122.164639),
       new google.maps.LatLng(37.423736, -122.170582),
-      new google.maps.LatLng(37.425483, -122.174423),
       new google.maps.LatLng(37.426183, -122.179632)
     ];
     var markersTitles = [
       'Arrillaga Dining',
       'Tresidder Union',
-      'Roble Gym',
       'Governor\'s Corner'
     ];
     var markersDescriptions = [
       '618 Escondido Rd',
       '459 Lagunita Dr',
-      '351 Santa Teresa St',
       '236 Santa Teresa St'
     ];
     var markersWidths = [
-      41, 47, 32, 52
+      41, 47, 52
     ];
     var markersFiles = [
-      'pin1', 'pin2', 'pin3', 'pin4'
+      'pin1', 'pin2', 'pin4'
     ];
     var markersOptions = [];
-    for (var i = 0; i < 4; ++i) {
+    for (var i = 0; i < 3; ++i) {
       markersOptions.push({
         map: map,
         icon: new google.maps.MarkerImage(
-          'https://www.ridegrouped.com/images/' + markersFiles[i] + '.png',
+          'https://covoi.herokuapp.com/images/' + markersFiles[i] + '.png',
           null, null, new google.maps.Point(markersWidths[i], 97)),
         position: markersPositions[i],
         title: markersDescriptions[i],

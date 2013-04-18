@@ -6,62 +6,72 @@ class AdminsController < ApplicationController
     @user = current_user
     @origins = Origin.find_all_cached
     @airports = Airport.find_all_cached
-    @matches = Match.includes(:trip, :user).order("trips.time ASC, trips.id ASC, matches.time_created ASC")
+
     @unconfirmed = []
-    #users = User.all(:conditions => {:confirmed => true}, :order => "id ASC")
     @user_count = User.where(:confirmed => true).count
-    #booked = User.joins(:matches).order("id ASC")
-    @unbooked = []
-    @unbooked_count = @user_count - @matches.size
-    #b = 0
-    #a = 0
-    #while a < booked.size
-    #  while (a != (booked.size - 1)) && (booked[a].id == booked[a+1].id)
-    #    a = a + 1
-    #  end
-    #  while booked[a].id.to_s != users[b].id.to_s
-    #    @unbooked.push(users[b])
-    #    puts booked[a].id.to_s + " " + users[b].id.to_s
-    #    b = b + 1
-    #  end
-    #  b = b + 1
-    #  a = a + 1
-    #end
-    #while b < users.size
-    #  @unbooked.push(users[b])
-    #  b = b + 1
-    #end
-    @future = Time.now + 60*60*36
+    #@unbooked = []
+    #@unbooked_count = @user_count - @matches.size
+    @future = Time.now + 60*60*24*1000
+    @after = Time.new(2013, 6, 1, 0, 0, 0, "-07:00")
+    @before = Time.new(2013, 7, 1, 0, 0, 0, "-07:00")
+    @airports_shown = [1, 2]
+    @origins_shown = [1, 2, 3, 4]
+    if !params[:after].nil?
+      begin
+        @after = Time.strptime(params[:after], "%m/%d/%Y").in_time_zone(Time.zone)
+      rescue Exception => e
+        @error = "Invalid value for parameter after"
+      end
+    end
+    if !params[:before].nil?
+      begin
+        @before = Time.strptime(params[:before], "%m/%d/%Y").in_time_zone(Time.zone)
+      rescue Exception => e
+        @error = "Invalid value for parameter before"
+      end
+    end
+    if !params[:hAirports].nil?
+      hidden_airports = params[:hAirports].split(",").map { |s| @airports_shown.delete(s.to_i) }
+    end
+    if !params[:hOrigins].nil?
+      hidden_origins = params[:hOrigins].split(",").map { |s| @origins_shown.delete(s.to_i) }
+    end
+    @matches = Match.includes(:trip, :user).where("trips.time >= ? AND trips.time <= ?", @after, @before).where("trips.origin_id" => @origins_shown).where("trips.airport_id" => @airports_shown).order("trips.time ASC, trips.id ASC, matches.time_created ASC")
     @solo = []
     @groups = []
     @grouped_count = 0
     cur = []
-    0.upto(@matches.size - 2) do |i|
-      if @matches[i].trip_id == @matches[i+1].trip_id
-        @grouped_count = @grouped_count + 1
-        cur.push(@matches[i])
-      elsif cur.size == 0
-        @solo.push(@matches[i])
-      else
-        @grouped_count = @grouped_count + 1
-        cur.push(@matches[i])
-        @groups.push(cur)
-        cur = []
+    if !@matches.empty?
+      0.upto(@matches.size - 2) do |i|
+        if @matches[i].trip_id == @matches[i+1].trip_id
+          @grouped_count = @grouped_count + 1
+          cur.push(@matches[i])
+        elsif cur.size == 0
+          @solo.push(@matches[i])
+        else
+          @grouped_count = @grouped_count + 1
+          cur.push(@matches[i])
+          @groups.push(cur)
+          cur = []
+        end
       end
-    end
-    if cur.size != 0
-      @grouped_count = @grouped_count + 1
-      cur.push(@matches[@matches.size - 1])
-      @groups.push(cur)
-    else
-      @solo.push(@matches[@matches.size - 1])
+      if cur.size != 0
+        @grouped_count = @grouped_count + 1
+        cur.push(@matches[@matches.size - 1])
+        @groups.push(cur)
+      else
+        @solo.push(@matches[@matches.size - 1])
+      end
     end
   end
 
+
   def create
     params[:trip_id] = params[:trip_id] || "0"
+    params[:match_id] = params[:match_id] || "0"
     params[:group_id] = params[:group_id] || "0"
-    if params[:group_id] != "agg"
+    params[:merge_id] = params[:merge_id] || "0"
+    if params[:mode] == "group"
       if params[:trip_id] =~ /^[0-9]{7}$/ && params[:group_id] =~ /^[0-9]{7}$/
         @trip = Trip.find_by_id(params[:trip_id])
         if !@trip.nil?
@@ -76,33 +86,62 @@ class AdminsController < ApplicationController
           email_string = emails.join(",")
           UserMailer.group_confirmation(email_string, matches, @trip, Origin.find_by_id_cached(@trip.origin_id)).deliver
           customer = Stripe::Customer.retrieve(matches.first.user.stripe_customer_id)
-          if customer.account_balance > 0
-            if matches.size > 1
-              Stripe::Charge.create(
-                :amount => customer.account_balance - 500,
-                :currency => "usd",
-                :customer => customer.id
-              )
-              UserMailer.booking_receipt(matches.first, customer.account_balance - 500, true).deliver
-            else
-              Stripe::Charge.create(
-                :amount => customer.account_balance,
-                :currency => "usd",
-                :customer => customer.id
-              )
-              UserMailer.booking_receipt(matches.first, customer.account_balance, false).deliver
-            end
-            customer.account_balance = 0
-            customer.save
-          end
         else
           @error = "Could not find trip"
         end
       else
         @error = "Illegal input"
       end
-    else
-      params[:trip_id] = params[:trip_id] || "0"
+    elsif params[:mode] == "merge"
+      if params[:match_id] =~ /^[0-9]{8}$/ && params[:merge_id] =~ /^[0-9]{8}$/
+        @mode = "merge"
+        match = Match.find_by_id(params[:match_id])
+        match2 = Match.find_by_id(params[:merge_id])
+        if !match.nil? && !match2.nil?
+          trip = Trip.find_by_id(match.trip_id)
+          trip2 = Trip.find_by_id(match2.trip_id)
+          if match.id != match2.id && trip.id != trip2.id
+            match_count = Match.where(:trip_id => match.trip_id).count
+            user = User.find_by_id(match.user_id)
+            if match_count == 1
+              trip.locked = true
+              trip.save(:validate => false)
+            end
+            UserMailer.booking_merge(user, trip, trip2, match, Origin.find_by_id_cached(trip.origin_id), Origin.find_by_id_cached(trip2.origin_id)).deliver
+            match.trip_id = trip2.id
+            match.time_created = Time.now
+            match.save
+          else
+            @error = "Cannot merge ride with itself"
+          end
+        else
+          @error = "Match not found"
+        end
+      else
+        @error = "Illegal input"
+      end
+    elsif params[:mode] == "delete"
+      if params[:match_id] =~ /^[0-9]{8}$/
+        @mode = "delete"
+        match = Match.find_by_id(params[:match_id])
+        if !match.nil?
+          match_count = Match.where(:trip_id => match.trip_id).count
+          user = User.find_by_id(match.user_id)
+          trip = Trip.find_by_id(match.trip_id)
+          if match_count == 1
+            trip.locked = true
+            trip.save(:validate => false)
+          end
+          UserMailer.booking_cancellation(user, trip, match, Origin.find_by_id_cached(trip.origin_id)).deliver
+          match.delete
+        else
+          @error = "Match not found"
+        end
+      else
+        @error = "Illegal input"
+      end
+    elsif params[:mode] == "update"
+    elsif params[:mode] == "script"
       @trip = Trip.find_by_id(params[:trip_id])
       if !@trip.nil?
         @mode = "script"
@@ -122,7 +161,7 @@ class AdminsController < ApplicationController
         end
         @meridiem = (@time.hour > 11) ? "PM" : "AM"
       else
-        @error = "Giveup"
+        @error = "Could not find trip with id #{params[:trip_id]}"
       end
     end
     respond_to do |format|

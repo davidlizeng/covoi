@@ -4,7 +4,11 @@
   $('#td_' + '<%= @trip.id %>').empty().html('<%= @trip.group_id %>');
 <% elsif @mode == "script" %>
   $('#script_area').empty().html('<div><%= escape_javascript("$('#ctl00_cphContent_ctl00_ddlAirport').val('#{Airport.find_by_id_cached(@trip.airport_id).code}');\n$('#ctl00_cphContent_ctl00_GRFlightDetails1_cboMonth0').val('12');\n$('#ctl00_cphContent_ctl00_GRFlightDetails1_cboDay0').val('#{@time.in_time_zone.day}');\n$('#ctl00_cphContent_ctl00_GRFlightDetails1_cboYear0').val('2012');\n$('#ctl00_cphContent_ctl00_GRFlightDetails1_cboHour0').val('#{@hour}');\n$('#ctl00_cphContent_ctl00_GRFlightDetails1_cboMinute0').val('#{@time.min}');\n$('#ctl00_cphContent_ctl00_GRFlightDetails1_cboAMPM0').val('#{@meridiem}');\n$('#ctl00_cphContent_ctl00_GRFlightDetails1_cboDomestic0').val('1');\n$('#ctl00_cphContent_ctl00_ddlAdult').val('#{@count}');\n$('#ctl00_cphContent_ctl00_ddlLandmark').val('#{@origin}');\n$('#ctl00_cphContent_ctl00_txtFirstName').val('#{@leader.first_name}');\n$('#ctl00_cphContent_ctl00_txtLastName').val('#{@leader.last_name}');\n$('#ctl00_cphContent_ctl00_txtPhoneNumber').val('#{@leader.phone}');\n$('#ctl00_cphContent_ctl00_txtGratuity').val('0');\n$('#ctl00_cphContent_ctl00_txtEmailAddress').val('admin@ridegrouped.com');\n$('#ctl00_cphContent_ctl00_btnNext').click();\n$('#ctl00_cphContent_ctl00_ctlRateList_gvRateList_ctl02_imgBtnSelect').click();\n") %></div>');
+<% elsif @mode == "delete" || @mode == "merge" %>
+  window.location.pathname = '/admin';
 <% end %>
 $('.group_button').removeAttr('disabled');
 $('.script_button').removeAttr('disabled');
-
+$('.merge_button').removeAttr('disabled');
+$('.delete_button').removeAttr('disabled');
+$('.update_button').removeAttr('disabled');

@@ -21,7 +21,10 @@
 .DS_Store
 
 # Ignore test data migration(s)
-/db/migrate/20120920055430_load_test_data.rb
+/db/migrate/20130320055430_load_test_data.rb
+
+# Ignore phantom rides for Fall 2012 launch
+/db/migrate/20121124050121_populate_rides.rb
 
 # Ignore local testing initializers
 /config/initializers/local_testing.rb

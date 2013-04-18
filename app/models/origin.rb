@@ -1,6 +1,8 @@
 class Origin < ActiveRecord::Base
   attr_accessible :id, :name, :address, :city, :state, :zip
 
+  @@valid_origins = ["1", "2", "4"]
+
   @@cache = [
     { :id => 1,
       :name => "Arrillaga Dining",
@@ -14,7 +16,7 @@ class Origin < ActiveRecord::Base
       :city => "Stanford",
       :state => "CA",
       :zip => "94305" },
-     { :id => 3,
+    { :id => 3,
       :name => "Roble Gym",
       :address => "351 Santa Teresa St",
       :city => "Stanford",
@@ -35,7 +37,9 @@ class Origin < ActiveRecord::Base
   def self.find_all_cached
     origins = []
     @@cache.each do |origin|
-      origins.push(Origin.new(origin))
+      if @@valid_origins.include?(origin[:id].to_s) then
+        origins.push(Origin.new(origin))
+      end
     end
     return origins
   end
@@ -46,5 +50,9 @@ class Origin < ActiveRecord::Base
       origin_choices.push([origin.name, origin.id])
     end
     return origin_choices
+  end
+
+  def self.isValidOrigin?(str)
+    return @@valid_origins.include?(str)
   end
 end
