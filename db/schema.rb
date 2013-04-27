@@ -20,15 +20,11 @@ ActiveRecord::Schema.define(:version => 20130410034146) do
   end
 
   create_table "matches", :id => false, :force => true do |t|
-    t.integer  "id",           :null => false
+    t.integer  "id"
     t.integer  "user_id"
     t.integer  "trip_id"
     t.datetime "time_created"
   end
-
-  add_index "matches", ["id"], :name => "matches_id_idx", :unique => true
-  add_index "matches", ["trip_id"], :name => "matches_trip_id_idx"
-  add_index "matches", ["user_id"], :name => "matches_user_id_idx"
 
   create_table "origins", :force => true do |t|
     t.string "name"
@@ -39,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20130410034146) do
   end
 
   create_table "trips", :id => false, :force => true do |t|
-    t.integer  "id",                        :null => false
+    t.integer  "id"
     t.integer  "creator_id"
     t.datetime "time"
     t.integer  "origin_id",    :limit => 2
@@ -49,10 +45,8 @@ ActiveRecord::Schema.define(:version => 20130410034146) do
     t.boolean  "locked"
   end
 
-  add_index "trips", ["id"], :name => "trips_id_idx", :unique => true
-
   create_table "users", :id => false, :force => true do |t|
-    t.integer  "id",                    :null => false
+    t.integer  "id"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
@@ -67,8 +61,5 @@ ActiveRecord::Schema.define(:version => 20130410034146) do
     t.datetime "time_created"
     t.datetime "time_confirmed"
   end
-
-  add_index "users", ["email"], :name => "users_email_idx", :unique => true
-  add_index "users", ["id"], :name => "users_id_idx", :unique => true
 
 end

@@ -16,8 +16,10 @@ class CreateUsers < ActiveRecord::Migration
       t.timestamp :time_created
       t.timestamp :time_confirmed
     end
-    execute "ALTER TABLE users ADD PRIMARY KEY (id);"
-    execute "CREATE UNIQUE INDEX ON users(id);"
-    execute "CREATE UNIQUE INDEX ON users(email);"
+    if Rails.env != "development" then
+      execute "ALTER TABLE users ADD PRIMARY KEY (id);"
+      execute "CREATE UNIQUE INDEX ON users(id);"
+      execute "CREATE UNIQUE INDEX ON users(email);"
+    end
   end
 end

@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <%= javascript_include_tag "application" %>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/humanity/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Inder" rel="stylesheet" type="text/css">
     <%= yield :scripts %>
@@ -28,12 +28,34 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <div id="header">
+      <!--
       <div id="header_content">
         <div id="header_icon"></div>
         <%= yield :head %>
+      </div>-->
+    <%= yield %>
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="logo span1">
+            <img src="static/img/logo-dark-colorful.svg" alt="">
+          </div>
+          <div class="span7">
+            <ul class="nav nav-pills">
+              <li><a href="about.html">About</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Terms</a></li>
+              <li><a href="#">Privacy</a></li>
+            </ul>
+          </div>
+          <div id="copyright" class="span2 pull-right">
+            <p>© Covoi, LLC.</p>
+          </div>
+        </div>
       </div>
-    </div>
+    </footer>
+    <!--
     <div id="main">
       <div id="main_content">
         <div class="small_spacer"></div>
@@ -53,7 +75,6 @@
             </script>
           <% end %>
         </div>
-        <%= yield %>
         <div class="spacer"></div>
       </div>
     </div>
@@ -66,5 +87,6 @@
         &copy; Covoi, LLC All Rights Reserved | <%= link_to "Terms of Service", "/terms_of_service.pdf" , :target => "_blank"%>
       </div>
     </div>
+    -->
   </body>
 </html>

@@ -8,7 +8,9 @@ class CreateTrips < ActiveRecord::Migration
       t.integer :airport_id, :limit => 2
       t.timestamp :time_created
     end
-    execute "ALTER TABLE trips ADD PRIMARY KEY (id);"
-    execute "CREATE UNIQUE INDEX ON trips(id);"
+    if Rails.env != "development" then
+      execute "ALTER TABLE trips ADD PRIMARY KEY (id);"
+      execute "CREATE UNIQUE INDEX ON trips(id);"
+    end
   end
 end

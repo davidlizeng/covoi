@@ -1,35 +1,68 @@
-<% content_for :head do %>
-  <div id="login_box">
-    <%= form_for :session, url: session_path do |f| %>
-      <div id="login_email">
-        <div class="login_label">
-          <%= f.label :email %>
-        </div>
-        <div>
-          <%= f.text_field :email, :id => "login_email_text" %>
-        </div>
-        <div id="login_error">
+<header class="fat">
+  <div class="container">
+    <div class="row">
+      <div class="logo span5">
+        <a href="/">
+          <img src="/images/logo-white.svg" alt>
+          <h1 class="name">RideGrouped</h1>
+        </a>
+      </div>
+      <div id="login-buttons" class="span5">
+        <div class="btn-group">
+          <a href="/" class="btn btn-large">Log in</a>
+          <a href="/" class="btn btn-large">Sign up</a>
         </div>
       </div>
-      <div id="login_password">
-        <div class="login_label">
-          <%= f.label :password %>
-        </div>
-        <div>
-          <%= f.password_field :password, :id => "login_password_text", :maxlength => 31 %>
-        </div>
-        <div id="forgot_password">
-          <%= link_to "Forgot your password?", "/iforgot/new" %>
+      <div class="row hidden-phone">
+        <div id="tagline" class="span10">
+          <h1 class="big thin">Share a ride. Save money.</h1>
         </div>
       </div>
-      <div id="login_submit">
-        <%= f.submit "Login" %>
-      </div>
-    <% end %>
+    </div>
   </div>
-<% end %>
-
-<div id="how_to"></div>
+</header>
+<div id="content">
+  <div class="container">
+    <div class="row">
+      <div class="span1 gutter-icon">
+        <img src="static/img/icons/airplane.svg" alt="">
+      </div>
+      <div class="span9">
+        <h1 class="thin">Heading home this summer?</h1>
+        <p class="lead">Look no further! We're here to save you money while you enjoy the comfort of a shuttle ride to the airport. </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="login_box">
+  <%= form_for :session, url: session_path do |f| %>
+    <div id="login_email">
+      <div class="login_label">
+        <%= f.label :email %>
+      </div>
+      <div>
+        <%= f.text_field :email, :id => "login_email_text" %>
+      </div>
+      <div id="login_error">
+      </div>
+    </div>
+    <div id="login_password">
+      <div class="login_label">
+        <%= f.label :password %>
+      </div>
+      <div>
+        <%= f.password_field :password, :id => "login_password_text", :maxlength => 31 %>
+      </div>
+      <div id="forgot_password">
+        <%= link_to "Forgot your password?", "/iforgot/new" %>
+      </div>
+    </div>
+    <div id="login_submit">
+      <%= f.submit "Login", :class => "btn btn-warning" %>
+    </div>
+  <% end %>
+</div>
+<!--
 <div id="register_box" class="box">
   <div class="box_title">First time? Sign up for free!</div>
   <div id="register_error"></div>
@@ -87,3 +120,4 @@
     </script>
   <% end %>
 </div>
+-->

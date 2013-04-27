@@ -8,18 +8,107 @@
  </script>
 <% end %>
 
-<% content_for :head do %>
-  <div id="menu">
-    <span id="name"><%= @user.first_name + " " + @user.last_name %></span> | <% if @user.admin %><%= link_to "Admin", admin_path %> | <% end %><%= link_to "My Account", edit_user_path(@user.id) %> | <%= link_to "Logout", session_path, :method => :delete %>
+<header class="skinny">
+  <div class="container">
+    <div class="row">
+      <div class="logo span8">
+        <a href="/">
+          <img src="/images/logo-white.svg" alt="">
+          <h1 class="name">RideGrouped</h1>
+        </a>
+      </div>
+      <div class="span2">
+        <div class="btn-group">
+          <%= link_to @user.first_name + " " + @user.last_name, edit_user_path(@user.id), :class => "btn" %>
+          <%= link_to "Log out", session_path, :method => :delete, :class => "btn" %>
+        </div>
+      </div>
+    </div>
   </div>
-<% end %>
+</header>
 
-<div class="spacer"></div>
-<div id="map_box" class="box">
-  <div class="box_title">Shuttle Pickup Locations</div>
-  <div id="map_canvas"></div>
+<div id="content">
+  <div class="container">
+    <!--<div class="row">
+      <div class="span10">
+        <div class="progress">
+          <div class="bar" style="width: 33%;"></div>
+          (step 1 of 3)
+        </div>
+        <h2 class="thin">What are you looking for in a ride?</h2>
+      </div>
+    </div>-->
+    <div class="row">
+      <div id="ride-map" class="span5"></div>
+        <!--<div class="box_title">
+          <% unless @matches.empty? %>
+            <span id="show_active" class="tab">Active Rides</span>
+          <% end %>
+        </div> -->
+      <div id="trip_box">
+        <%= form_for :trip, :remote => true, url: trips_path, :html => {:autocomplete => "off"} do |f| %>
+          <fieldset class="span2">
+            <h4>Pickup Location</h4>
+            <% @origins.each do |origin| %>
+              <label class="radio">
+                <%= f.radio_button :origin_id, origin[:id].to_s %><%= origin[:name] %>
+              </label>
+            <% end %>
+          </fieldset>
+          <fieldset class="span1">
+            <h4>Airport</h4>
+            <% @airports.each do |airport| %>
+              <label class="radio">
+                <%= f.radio_button :airport_id, airport[:id].to_s %><%= airport[:code] %>
+              </label>
+            <% end %>
+          </fieldset>
+          <fieldset class="span2">
+            <h4>Flight Type</h4>
+            <label class="radio">
+              <%= f.radio_button :type, "1" %>Domestic
+            </label>
+            <label class="radio">
+              <%= f.radio_button :type, "2" %>International
+            </label>
+          </fieldset>
+          <div class="span5"></div>
+          <fieldset class="span2">
+            <h4>Date of Departure</h4>
+            <%= f.text_field :date, :class => "span2" %>
+          </fieldset>
+          <fieldset class="span3">
+            <h4>Flight Time</h4>
+            <%= f.select :hour, options_for_select((1..12).to_a), {:include_blank => true}, {:class => "span1"} %>
+            <%= f.select :minute, options_for_select((0..59).to_a.map {|m| m.to_s.rjust(2, "0")}), {:include_blank => true}, {:class => "span1"} %>
+            <%= f.select :meridiem, options_for_select(["AM", "PM"]), {:include_blank => true}, {:class => "span1"} %>
+          </fieldset>
+          <div class="span5">
+            <%= f.submit "Search", :id => "trip_submit" , :class => "btn btn-primary"%>
+          </div>
+        <% end %>
+      </div>
+      <div id="match_box">
+        <div class="row">
+          <table class="span5 table table-striped">
+            <thead>
+              <tr>
+                <th>Pickup Location</th>
+                <th>Destination</th>
+                <th>Date</th>
+                <th>Pickup Time</th>
+              </tr>
+            </thead>
+            <tbody id="match_table">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<!--
 <% unless @matches.empty? %>
 <script>
   $(document).ready(function () {
@@ -77,62 +166,6 @@
   });
 </script>
 <% end %>
-
-<div id="trip_box" class="box">
-  <div class="box_title">
-    Book a New Ride
-    <% unless @matches.empty? %>
-      <span id="show_active" class="tab">Active Rides</span>
-    <% end %>
-  </div>
-  <div id="trip_error"></div>
-  <div class="small_spacer"></div>
-  <%= form_for :trip, :remote => true, url: trips_path, :html => {:autocomplete => "off"} do |f| %>
-    <div>
-      <%= f.label :origin_id, "Pickup Location" %>
-    </div>
-    <div>
-      <%= f.select :origin_id, @origin_choices, :include_blank => true %>
-    </div>
-    <div class="small_spacer"></div>
-    <div>
-      <%= f.label :airport_id, "Airport" %>
-    </div>
-    <div>
-      <%= f.select :airport_id, @airport_choices, :include_blank => true %>
-    </div>
-    <div class="small_spacer"></div>
-    <div>
-      <%= f.label :type, "Flight Type" %>
-    </div>
-    <div>
-      <%= f.select :type, [["Domestic", 1], ["International", 2]], :include_blank => true %>
-    </div>
-    <div class="small_spacer"></div>
-    <div>
-      <%= f.label :date, "Date of Departure" %>
-    </div>
-    <div>
-      <%= f.text_field :date %>
-    </div>
-    <div class="small_spacer"></div>
-    <div>
-      <div class="inline">
-        <%= f.label :time, "Flight Time" %>
-      </div>
-      <div class="time_mouseover inline mouseover">?</div>
-    </div>
-    <div class="variable_width_select">
-      <%= f.select :hour, options_for_select((1..12).to_a), :include_blank => true %> :
-      <%= f.select :minute, options_for_select((0..59).to_a.map {|m| m.to_s.rjust(2, "0")}), :include_blank => true %>
-      <%= f.select :meridiem, options_for_select(["AM", "PM"]), :include_blank => true %>
-    </div>
-    <div class="spacer"></div>
-    <div>
-      <%= f.submit "Next", :id => "trip_submit" %>
-    </div>
-  <% end %>
-</div>
 
 <div id="match_box" class="box">
   <div class="box_title">Pick a Ride</div>
@@ -226,16 +259,17 @@
         <%= button_tag "Finish", :type => "button", :id => "payment_submit" %>
     </div>
   <% end %>
-</div>
+</div> -->
 <script>
   $(document).ready(function () {
+    /*
     $('.time_mouseover').tooltip({content: '<p>Please enter your exact flight time here. SuperShuttle is not accountable for any problems in the case that you have entered inaccurate flight information.</p>', items: '.time_mouseover'});
     $('#phone_mouseover').tooltip({content: '<p>This is the number SuperShuttle uses to contact you upon the arrival of your shuttle. Please double check to make sure it is correct.</p>', items: '#phone_mouseover'});
     $('#donate_mouseover').tooltip({content: '<p>Enter 0.00 if you do not wish to pay a gratuity.</p>', items: '#donate_mouseover'});
     $('#card_mouseover').tooltip({content: '<p>RideGrouped does not save any of your credit card information. All credit card processing is handled by the payment service Stripe.</p>', items: '#card_mouseover'});
     $('#cvc_mouseover').tooltip({content: '<p>Can\'t find your CVC? Click on the "?" for help.</p>', items: '#cvc_mouseover'});
     $('#password_mouseover').tooltip({content: '<p>For security purposes, please enter your password to complete this transaction.</p>', items: '#password_mouseover'});
-    $('#finish_mouseover').tooltip({content: '<p>By clicking "Finish", you will be joining a shared ride with other Stanford students. The information for your specific shuttle and contact info of the students you will be riding with will be provided within 24 hours of your departure.</p><p>Since SuperShuttle cannot change group sizes once booked, RideGrouped cannot offer refunds for cancelling your ride. However, on the event that you cannot make your ride, please email us at service@ridegrouped.com and we will notify your group for you.</p><p>This reservation entitles you to bring two bags for check in and one carry on item aboard the SuperShuttle. Please make sure each item is under 50 pounds. In the case you have more or oversized items, please contact RideGrouped at service@ridegrouped.com as extra fees may be applicable.</p>', items: '#finish_mouseover'});
+    $('#finish_mouseover').tooltip({content: '<p>By clicking "Finish", you will be joining a shared ride with other Stanford students. The information for your specific shuttle and contact info of the students you will be riding with will be provided within 24 hours of your departure.</p><p>Since SuperShuttle cannot change group sizes once booked, RideGrouped cannot offer refunds for cancelling your ride. However, on the event that you cannot make your ride, please email us at service@ridegrouped.com and we will notify your group for you.</p><p>This reservation entitles you to bring two bags for check in and one carry on item aboard the SuperShuttle. Please make sure each item is under 50 pounds. In the case you have more or oversized items, please contact RideGrouped at service@ridegrouped.com as extra fees may be applicable.</p>', items: '#finish_mouseover'});*/
   });
 </script>
 

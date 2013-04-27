@@ -176,10 +176,11 @@ $(document).ready(function() {
     });
   }
 
-  if ($('#map_canvas').size() > 0) {
+  if ($('#ride-map').size() > 0) {
     var infoWindow = new google.maps.InfoWindow();
     var mapOptions = {
       center: new google.maps.LatLng(37.426782, -122.172322),
+      mapTypeControl: false,
       zoom: 15,
       minZoom: 13,
       maxZoom: 19,
@@ -187,7 +188,7 @@ $(document).ready(function() {
       scrollwheel: false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    var map = new google.maps.Map(document.getElementById("ride-map"), mapOptions);
     var allowedBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(37.419041,-122.184894),
       new google.maps.LatLng(37.4361,-122.156433)
