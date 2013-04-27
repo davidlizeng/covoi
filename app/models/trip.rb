@@ -2,7 +2,7 @@ class Trip < ActiveRecord::Base
   attr_accessor :card_token, :hour, :minute, :meridiem, :date, :type
   has_many :matches
   has_many :users, :through => :matches
-  set_primary_key :id
+  #self.primary_key = :id
   validate :validate_trip
 
   def validate_trip

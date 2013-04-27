@@ -1,6 +1,6 @@
 class CreateUsers < ActiveRecord::Migration
   def change
-    create_table :users, {:id => false} do |t|
+    create_table :users, {:primary_key => :id} do |t|
       t.integer :id
       t.string :first_name
       t.string :last_name

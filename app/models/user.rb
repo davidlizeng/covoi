@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation, :email_confirmation
   has_many :matches
   has_many :trips, :through => :matches
-  set_primary_key :id
+  #self.primary_key = :id
   validate :validate_on_create, :on => :create
   validate :validate_on_update, :on => :update
 

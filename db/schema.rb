@@ -19,8 +19,7 @@ ActiveRecord::Schema.define(:version => 20130410034146) do
     t.string "state"
   end
 
-  create_table "matches", :id => false, :force => true do |t|
-    t.integer  "id"
+  create_table "matches", :force => true do |t|
     t.integer  "user_id"
     t.integer  "trip_id"
     t.datetime "time_created"
@@ -34,8 +33,7 @@ ActiveRecord::Schema.define(:version => 20130410034146) do
     t.string "zip"
   end
 
-  create_table "trips", :id => false, :force => true do |t|
-    t.integer  "id"
+  create_table "trips", :force => true do |t|
     t.integer  "creator_id"
     t.datetime "time"
     t.integer  "origin_id",    :limit => 2
@@ -45,8 +43,7 @@ ActiveRecord::Schema.define(:version => 20130410034146) do
     t.boolean  "locked"
   end
 
-  create_table "users", :id => false, :force => true do |t|
-    t.integer  "id"
+  create_table "users", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"

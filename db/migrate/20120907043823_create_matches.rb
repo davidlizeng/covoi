@@ -1,6 +1,6 @@
 class CreateMatches < ActiveRecord::Migration
   def change
-    create_table :matches, {:id => false} do |t|
+    create_table :matches, {:primary_key => :id} do |t|
       t.integer :id
       t.integer :user_id
       t.integer :trip_id

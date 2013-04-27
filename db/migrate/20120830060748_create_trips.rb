@@ -1,6 +1,6 @@
 class CreateTrips < ActiveRecord::Migration
   def change
-    create_table :trips, {:id => false} do |t|
+    create_table :trips, {:primary_key => :id} do |t|
       t.integer :id
       t.integer :creator_id
       t.datetime :time
