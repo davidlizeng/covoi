@@ -12,7 +12,7 @@ class AdminsController < ApplicationController
     #@unbooked = []
     #@unbooked_count = @user_count - @matches.size
     @future = Time.now + 60*60*24*1000
-    @after = Time.new(2013, 6, 1, 0, 0, 0, "-07:00")
+    @after = Time.new(2012, 11, 1, 0, 0, 0, "-07:00")
     @before = Time.new(2013, 7, 1, 0, 0, 0, "-07:00")
     @airports_shown = [1, 2]
     @origins_shown = [1, 2, 3, 4]
