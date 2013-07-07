@@ -12,4 +12,5 @@
 //
 //= require jquery_ujs
 //= require sonic
+//= require bootstrap.min
 //= require_tree .

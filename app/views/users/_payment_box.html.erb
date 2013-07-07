@@ -1,0 +1,47 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Pickup Location</th>
+      <th>Airport</th>
+      <th>Date</th>
+      <th>Pickup Time</th>
+      <th>Price</ih>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="selection_origin"></td>
+      <td id="selection_airport"></td>
+      <td id="selection_date"></td>
+      <td id="selection_time"></td>
+      <td id="selection_price"></td>
+    </tr>
+  </tbody>
+</table>
+<%= form_for :trip, url: matches_path, :html => {:id => "payment_form", :autocomplete => "off"} do |f| %>
+  <div class="row">
+
+  </div>
+  <div class="row">
+    <fieldset class="span2">
+      <h4>Credit Card Number</h4>
+      <%= text_field_tag nil, nil, {name: nil, id: "card_number", maxlength: 16, class: "span2"} %>
+    </fieldset>
+    <fieldset id="cvc" class="span1">
+      <h4>CVC</h4>
+      <%= text_field_tag nil, nil, {name: nil, id: "card_code", maxlength: 4, class: "span1"} %>
+    </fieldset>
+    <fieldset class="span3">
+      <h4>Card Expiration</h4>
+      <%= select_month nil, {add_month_numbers: true, include_blank: true}, {name: nil, id: "card_month", class: "span2"} %>
+      <%= select_year nil, {start_year: 2013, end_year: 2021, include_blank: true}, {name: nil, id: "card_year", class: "span1"} %>
+    </fieldset>
+  </div>
+  <%= f.hidden_field :card_token %>
+  <%= f.hidden_field :id %>
+  <%= f.hidden_field :origin_id, :id => "new_trip_origin_id" %>
+  <%= f.hidden_field :airport_id, :id => "new_trip_airport_id" %>
+  <%= f.hidden_field :time %>
+  <%= button_tag "Back", :type => "button", :id => "payment_back_button", :class => "btn btn-large btn-warning" %>
+  <%= button_tag "Finish", :type => "button", :id => "payment_submit", :class => "btn btn-large btn-warning" %>
+<% end %>

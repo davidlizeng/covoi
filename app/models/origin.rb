@@ -37,9 +37,7 @@ class Origin < ActiveRecord::Base
   def self.find_all_cached
     origins = []
     @@cache.each do |origin|
-      if @@valid_origins.include?(origin[:id].to_s) then
-        origins.push(Origin.new(origin))
-      end
+      origins.push(Origin.new(origin))
     end
     return origins
   end

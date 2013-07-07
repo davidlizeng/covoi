@@ -3,7 +3,6 @@ class TripsController < ApplicationController
   before_filter :require_login
 
   def create
-    @error = nil
     @trip = Trip.new
     @trip.origin_id = params[:trip][:origin_id] || 0
     @trip.airport_id = params[:trip][:airport_id] || 0

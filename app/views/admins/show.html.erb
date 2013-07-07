@@ -64,12 +64,34 @@
     }
   </style>
 <% end %>
-<% content_for :head do %>
-  <div id="menu">
-    <span id="name"><%= @user.first_name + " " + @user.last_name %></span> | <%= link_to "Dashboard", user_path(@user.id) %> | <%= link_to "My Account", edit_user_path(@user.id) %> | <%= link_to "Logout", session_path, :method => :delete %>
-  </div>
-<% end %>
+<header class="skinny">
+  <div class="container">
+    <div class="row">
+      <div class="logo span10">
+        <a href="/">
+          <img src="/images/rg_logo_white.png" alt="">
+          <h1 class="name">RideGrouped</h1>
+        </a>
+      </div>
+      <div class="span2">
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <%= "Hi, " + @user.first_name %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Dashboard", root_url %></li>
+            <li><%= link_to "Edit account", edit_user_path(@user.id) %></li>
 
+            <li><%= link_to "Log out", session_path, :method => :delete %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="content">
 <div id="script_area"></div>
 <div class="spacer"></div>
 <div class="agag">Time filter: Between <%= @after.in_time_zone.strftime("%B %-d, %Y") %> and <%= @before.in_time_zone.strftime("%B %-d, %Y") %></div>
@@ -314,3 +336,4 @@
     });
   });
 </script>
+</div>

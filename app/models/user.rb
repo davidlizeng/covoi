@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :matches
   has_many :trips, :through => :matches
   #self.primary_key = :id
+  set_primary_key :id
   validate :validate_on_create, :on => :create
   validate :validate_on_update, :on => :update
 

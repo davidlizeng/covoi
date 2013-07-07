@@ -1,0 +1,59 @@
+
+<%= form_for :trip, :remote => true, url: trips_path, :html => {:autocomplete => "off"} do |f| %>
+  <div class="row">
+  <fieldset class="span2">
+    <h4>Pickup Location</h4>
+    <% @origins.each do |origin| %>
+      <% if Origin.isValidOrigin?(origin[:id].to_s) then %>
+        <label class="radio">
+          <%= f.radio_button :origin_id, origin[:id].to_s, :checked => origin.eql?(@origins.first) %><%= origin[:name] %>
+        </label>
+      <% end %>
+    <% end %>
+  </fieldset>
+  <fieldset class="span1">
+    <h4>Airport</h4>
+    <% @airports.each do |airport| %>
+      <label class="radio">
+        <%= f.radio_button :airport_id, airport[:id].to_s, :checked => airport.eql?(@airports.first) %><%= airport[:code] %>
+      </label>
+    <% end %>
+  </fieldset>
+  <fieldset class="span2">
+    <h4>Flight Type</h4>
+    <label class="radio">
+      <%= f.radio_button :type, "1", :checked => true %>Domestic
+    </label>
+    <label class="radio">
+      <%= f.radio_button :type, "2" %>International
+    </label>
+  </fieldset>
+  </div>
+  <div class="row">
+  <fieldset class="span2">
+    <h4>Date of Departure</h4>
+    <%= f.text_field :date, :class => "span2" %>
+  </fieldset>
+  <fieldset class="span3">
+    <h4>Flight Time</h4>
+    <div id="agg2">
+      <%= f.text_field :hour, :class => "span1", :maxlength => 2, :placeholder => "Hour" %>
+      <%= f.text_field :minute, :class => "span1", :maxlength => 2, :placeholder => "Minute" %>
+    </div>
+    <div id="agg">
+    <label class="radio">
+      <%= f.radio_button :meridiem, "AM", :checked => true %>AM
+    </label>
+    <label class="radio">
+      <%= f.radio_button :meridiem, "PM" %>PM
+    </label>
+  </div>
+    <!--<%= f.select :meridiem, options_for_select(["AM", "PM"]), {}, {:class => "span1"} %>-->
+  </fieldset>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <input value="Search for a ride!" id ="trip_submit" class="btn btn-large btn-warning" name="commit" type="submit">
+    </div>
+  </div>
+<% end %>

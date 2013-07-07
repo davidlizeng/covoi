@@ -1,0 +1,58 @@
+<div id="register_box" class="modal hide fade" tabindex="-1" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <h3>Register</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_for :user, :remote => true, url: users_path, :html => {:id => "register_form"} do |f| %>
+      <div class="span6">
+        <div class="row">
+          <fieldset class="span3">
+            <h4>First Name</h4>
+            <%= f.text_field :first_name, :maxlength => 15 %>
+          </fieldset>
+          <fieldset class="span3">
+            <h4>Last Name</h4>
+            <%= f.text_field :last_name, :maxlength => 15 %>
+          </fieldset>
+        </div>
+      </div>
+      <div class="span6">
+        <div class="row">
+          <fieldset class="span3">
+            <h4>Stanford Email</h4>
+            <%= f.text_field :email %>
+          </fieldset>
+          <fieldset class="span3">
+            <h4>Confirm Email</h4>
+            <%= f.text_field :email_confirmation %>
+          </fieldset>
+        </div>
+      </div>
+      <div class="span6">
+        <fieldset>
+          <h4>Cell Phone Number</h4>
+          <%= f.text_field :phone, :maxlength => 10 %>
+        </fieldset>
+      </div>
+      <div class="span6">
+        <div class="row">
+          <fieldset class="span3">
+            <h4>Password</h4>
+            <%= f.text_field :email %>
+          </fieldset>
+          <fieldset class="span3">
+            <h4>Confirm Password</h4>
+            <%= f.text_field :email_confirmation %>
+          </fieldset>
+        </div>
+      </div>
+      <%= button_tag "Register", :type => "button", :id => "register_submit", :class => "btn btn-large btn-warning" %>
+
+     <!-- $(document).ready(function() {
+        $('#phone_mouseover').tooltip({content: '<p>Your Cell Phone Number should be 10 digits with no special characters. Note that this is the number SuperShuttle uses to contact you upon the arrival of your shuttle.</p>', items: '#phone_mouseover'});
+        $('#password_mouseover').tooltip({content: '<p>Your Password needs to be at least 6 characters in length</p>', items: '#password_mouseover'});
+      });-->
+    <% end %>
+  </div>
+</div>

@@ -77,24 +77,24 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     respond_to do |format|
-      if @user.authenticate(params[:user_current_password])
-        @user.first_name = params[:user][:first_name] || ""
-        @user.last_name = params[:user][:last_name] || ""
-        @user.phone = params[:user][:phone] || ""
-        @user.password = params[:user][:password] || ""
-        @user.password_confirmation = params[:user][:password_confirmation] || ""
-        if @user.valid?
-          if !@user.password.empty?
+      @user.first_name = params[:user][:first_name] || ""
+      @user.last_name = params[:user][:last_name] || ""
+      @user.phone = params[:user][:phone] || ""
+      @user.password = params[:user][:password] || ""
+      @user.password_confirmation = params[:user][:password_confirmation] || ""
+      if @user.valid?
+        if !@user.password.empty?
+          if @user.authenticate(params[:user_current_password])
             @user.password_salt = SecureRandom.hex
             @user.password_digest= Digest::SHA2.hexdigest(@user.password + @user.password_salt)
             @user.password_reset_active = false
+          else
+            @error = "You must enter your Current Password to change your password."
           end
-          @user.save
-        else
-          @error = @user.errors.full_messages[0]
         end
+        @user.save
       else
-        @error = "You must enter your Current Password correctly to submit changes."
+        @error = @user.errors.full_messages[0]
       end
       format.js
     end

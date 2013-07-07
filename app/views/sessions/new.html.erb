@@ -1,20 +1,20 @@
 <header class="fat">
   <div class="container">
     <div class="row">
-      <div class="logo span5">
+      <div class="logo span6">
         <a href="/">
-          <img src="/images/logo-white.svg" alt>
+          <img src="/images/rg_logo_white.png" alt>
           <h1 class="name">RideGrouped</h1>
         </a>
       </div>
-      <div id="login-buttons" class="span5">
+      <div id="login-buttons" class="span6">
         <div class="btn-group">
-          <a href="/" class="btn btn-large">Log in</a>
-          <a href="/" class="btn btn-large">Sign up</a>
+          <a href="#login_box" class="btn btn-large" data-toggle="modal">Log in</a>
+          <a href="#register_box" class="btn btn-large" data-toggle="modal">Sign up</a>
         </div>
       </div>
       <div class="row hidden-phone">
-        <div id="tagline" class="span10">
+        <div id="tagline" class="span12">
           <h1 class="big thin">Share a ride. Save money.</h1>
         </div>
       </div>
@@ -27,97 +27,12 @@
       <div class="span1 gutter-icon">
         <img src="static/img/icons/airplane.svg" alt="">
       </div>
-      <div class="span9">
+      <div class="span11">
         <h1 class="thin">Heading home this summer?</h1>
         <p class="lead">Look no further! We're here to save you money while you enjoy the comfort of a shuttle ride to the airport. </p>
       </div>
     </div>
   </div>
 </div>
-<div id="login_box">
-  <%= form_for :session, url: session_path do |f| %>
-    <div id="login_email">
-      <div class="login_label">
-        <%= f.label :email %>
-      </div>
-      <div>
-        <%= f.text_field :email, :id => "login_email_text" %>
-      </div>
-      <div id="login_error">
-      </div>
-    </div>
-    <div id="login_password">
-      <div class="login_label">
-        <%= f.label :password %>
-      </div>
-      <div>
-        <%= f.password_field :password, :id => "login_password_text", :maxlength => 31 %>
-      </div>
-      <div id="forgot_password">
-        <%= link_to "Forgot your password?", "/iforgot/new" %>
-      </div>
-    </div>
-    <div id="login_submit">
-      <%= f.submit "Login", :class => "btn btn-warning" %>
-    </div>
-  <% end %>
-</div>
-<!--
-<div id="register_box" class="box">
-  <div class="box_title">First time? Sign up for free!</div>
-  <div id="register_error"></div>
-  <div class="small_spacer"></div>
-  <%= form_for :user, :remote => true, url: users_path, :html => {:id => "register_form"} do |f| %>
-    <table id="register_table">
-      <tbody>
-        <tr>
-          <td class="register_label"><%= f.label :first_name, "First Name" %></td>
-          <td><%= f.text_field :first_name, :maxlength => 15 %></td>
-        </tr>
-        <tr>
-          <td class="register_label"><%= f.label :last_name, "Last Name" %></td>
-          <td><%= f.text_field :last_name, :maxlength => 15 %></td>
-        </tr>
-        <tr>
-          <td class="register_label"><%= f.label :phone, "Cell Phone Number" %></td>
-          <td>
-            <div class="inline"><%= f.text_field :phone, :maxlength => 10 %></div>
-            <div id="phone_mouseover" class="inline mouseover">?</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="register_label"><%= f.label :email, "Stanford Email" %></td>
-          <td><%= f.text_field :email %></td>
-        </tr>
-        <tr>
-          <td class="register_label"><%= f.label :email_confirmation, "Confirm Email" %></td>
-          <td><%= f.text_field :email_confirmation %></td>
-        </tr>
-        <tr>
-          <td class="register_label"><%= f.label :password %></td>
-          <td>
-            <div class="inline"><%= f.password_field :password, :maxlength => 31 %></div>
-            <div id="password_mouseover" class="inline mouseover">?</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="register_label"><%= f.label :password_confirmation, "Confirm Password" %></td>
-          <td><%= f.password_field :password_confirmation, :maxlength => 31 %></td>
-        </tr>
-        <tr id="submit_row">
-          <td></td>
-          <td>
-            <%= button_tag "Register", :type => "button", :id => "register_submit"%>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <script>
-      $(document).ready(function() {
-        $('#phone_mouseover').tooltip({content: '<p>Your Cell Phone Number should be 10 digits with no special characters. Note that this is the number SuperShuttle uses to contact you upon the arrival of your shuttle.</p>', items: '#phone_mouseover'});
-        $('#password_mouseover').tooltip({content: '<p>Your Password needs to be at least 6 characters in length</p>', items: '#password_mouseover'});
-      });
-    </script>
-  <% end %>
-</div>
--->
+<%= render "login_box" %>
+<%= render "register_box" %>

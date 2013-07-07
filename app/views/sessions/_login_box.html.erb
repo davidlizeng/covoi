@@ -1,0 +1,45 @@
+<div id="login_box" class="modal hide fade" tabindex="-1" aria-hidden="true">
+  <div class="modal-body">
+    <div class="accordion" id="login_accordion">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <h3 class="accordion-toggle" data-toggle="collapse" data-parent="#login_accordion" href="#login_form">
+            Login
+          </h3>
+        </div>
+        <div class="accordion-body collapse in" id="login_form">
+          <%= form_for :session, :remote => true, url: session_path do |f| %>
+            <fieldset>
+              <h4>Email</h4>
+              <%= f.text_field :email, :id => "login_email_text" %>
+            </fieldset>
+            <fieldset>
+              <h4>Password</h4>
+              <%= f.password_field :password, :id => "login_password_text", :maxlength => 31 %>
+            </fieldset>
+            <fieldset>
+              <div id="login_submit">
+                <%= f.submit "Login", :class => "btn btn-large btn-warning" %>
+              </div>
+            </fieldset>
+          <% end %>
+        </div>
+      </div>
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <h3 class="accordion-toggle" data-toggle="collapse" data-parent="#login_accordion" href="#forgot_form">
+            Forgot Your Password?
+          </h3>
+        </div>
+        <div class="accordion-body collapse" id="forgot_form">
+          <%= form_for :user, :remote => true, url: "/iforgot/new_post" do |f| %>
+            <div> No worries! Just enter your email and we'll send you a link to reset your password. </div>
+            <div>
+              <%= f.text_field :email %> <%= f.submit "Send", :id => "forgot_submit", :class => "btn btn-large btn-warning"%>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
