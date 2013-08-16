@@ -1,7 +1,7 @@
 class CreateUsers < ActiveRecord::Migration
   def change
-    #create_table :users, {:primary_key => :id} do |t|
-    create_table :users, {:id => false} do |t|
+    create_table :users, {:primary_key => :id} do |t|
+    #create_table :users, {:id => false} do |t|
       t.integer :id
       t.string :first_name
       t.string :last_name
@@ -17,10 +17,10 @@ class CreateUsers < ActiveRecord::Migration
       t.timestamp :time_created
       t.timestamp :time_confirmed
     end
-    #if Rails.env != "development" then
+    if Rails.env != "development" then
       execute "ALTER TABLE users ADD PRIMARY KEY (id);"
       execute "CREATE UNIQUE INDEX ON users(id);"
       execute "CREATE UNIQUE INDEX ON users(email);"
-    #end
+    end
   end
 end

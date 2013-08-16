@@ -19,7 +19,11 @@ $(document).ready(function() {
         });
       });
     }
-    $('#trip_date').datepicker({minDate: new Date(2013, 8 - 1, 1), maxDate: new Date(2013, 8 - 1, 31)});
+    var minDate = "+1d";
+    var maxDate = "+1m"
+    $('#trip_date').datepicker();
+    $('#trip_date').datepicker("option","minDate",minDate);
+    $('#trip_date').datepicker("option","maxDate",maxDate);
 
     $('#match_back_button').click(function(e) {
       //clear_message('match_error');

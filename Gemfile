@@ -6,11 +6,11 @@ gem 'rails', '3.2.11'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-#gem 'sqlite3'
-gem 'unicorn'
+gem 'sqlite3'
+#gem 'unicorn'
 gem 'stripe'
 gem 'newrelic_rpm'
-
+gem 'rake', '10.1.0'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -42,4 +42,4 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem 'execjs'
-gem 'therubyracer'
+#gem 'therubyracer'
