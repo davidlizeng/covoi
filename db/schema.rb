@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20130410034146) do
     t.datetime "time"
     t.integer  "origin_id",    :limit => 2
     t.integer  "airport_id",   :limit => 2
+    t.integer  "test"
     t.datetime "time_created"
     t.integer  "group_id"
     t.boolean  "locked"

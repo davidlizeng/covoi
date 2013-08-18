@@ -37,6 +37,7 @@ class AdminsController < ApplicationController
       hidden_origins = params[:hOrigins].split(",").map { |s| @origins_shown.delete(s.to_i) }
     end
     @matches = Match.includes(:trip, :user).where("trips.time >= ? AND trips.time <= ?", @after, @before).where("trips.origin_id" => @origins_shown).where("trips.airport_id" => @airports_shown).order("trips.time ASC, trips.id ASC, matches.time_created ASC")
+    puts @matches.size
     @solo = []
     @groups = []
     @grouped_count = 0

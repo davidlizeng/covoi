@@ -17,6 +17,9 @@
               <h4>Password</h4>
               <%= f.password_field :password, :id => "login_password_text", :maxlength => 31 %>
             </fieldset>
+            <div id="false_credentials">
+              Error message
+            </div>
             <fieldset>
               <div id="login_submit">
                 <%= f.submit "Login", :class => "btn btn-large btn-warning" %>

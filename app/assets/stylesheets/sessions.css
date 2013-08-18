@@ -62,3 +62,7 @@
   width: 80px;
 }*/
 
+#false_credentials {
+  display: none;
+  color: red;
+}

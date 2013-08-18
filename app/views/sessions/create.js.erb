@@ -1,5 +1,7 @@
 <% if @error %>
   //RODO: Display login error.
+  document.getElementById("false_credentials").style.display="block";
+  document.getElementById("false_credentials").innerHTML="<%= @error %>"
 <% else %>
   window.location.pathname = '<%= "#{user_path(@user.id)}" %>';
 <% end %>
