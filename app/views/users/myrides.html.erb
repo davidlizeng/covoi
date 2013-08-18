@@ -1,0 +1,72 @@
+<% content_for :scripts do %>
+  <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7fwbbsGPmOosBwJLq--b1YRyvPjZRa4U&sensor=false">
+  </script>
+ <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+ <script type="text/javascript">
+    Stripe.setPublishableKey('<%= STRIPE_PUBLIC_KEY %>');
+ </script>
+<% end %>
+
+<header class="skinny">
+  <div class="container">
+    <div class="row">
+      <div class="logo span10">
+        <a href="/">
+          <img src="/images/rg_logo_white.png" alt="">
+          <h1 class="name">RideGrouped</h1>
+        </a>
+      </div>
+      <div class="span2">
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <%= "Hi, " + @user.first_name %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Edit account", edit_user_path(@user.id) %></li>
+            <% if @user.admin then%>
+              <li> <%= link_to "Admin", admin_path %></li>
+            <% end %>
+            <li><%= link_to "Log out", session_path, :method => :delete %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id = "content">
+  <div class = "container">
+    <div id="edit_box" class="span12">
+      <h3>Current Rides for <%= @user.first_name %> 
+      <%= @user.last_name %></h3>
+
+            <% if @user.trips.nil? || @user.trips.empty? then %>
+		<h4>No rides yet</h4>
+            <% else %>
+                <table id = "myrides">
+                  <tr id = "myrides_header">
+                    <td>Ride</td>
+                    <td>Created By</td>
+                    <td>Date</td>
+                    <td>Time</td>
+                    <td>Departs From</td>
+                    <td>Destination</td>
+                  </tr>
+                  <% @user.trips.each do |trip| %>
+                    <tr class = "myrides_ride">
+                      <td><%= trip.id %></td>
+                      <td><%= User.find_by_id(trip.creator_id).first_name %> <%= User.find_by_id(trip.creator_id).last_name %></td>
+                      <td><%= trip.dateString %></td>
+                      <td><%= trip.timeString %></td>
+                      <td><%= Origin.find_by_id(trip.origin_id).name %></td>
+                      <td><%= Airport.find_by_id(trip.airport_id).code %></td>
+                    </tr>
+                  <% end %>
+                </table>
+            <% end %>
+
+    </div>
+  </div>
+</div>
