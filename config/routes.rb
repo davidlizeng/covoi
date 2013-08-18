@@ -12,6 +12,7 @@ Covoi::Application.routes.draw do
   match 'iforgot/new_post' => 'iforgot#new_post'
   match 'iforgot/reset' => 'iforgot#reset'
   match 'iforgot/reset_post' => 'iforgot#reset_post'
+  match 'users/myrides' => 'users#myrides'
   # This route can be invoked with purchase_url(:id => product.id)
   # match '/' => 'session#new', :as => :new_session
   # Sample resource route (maps HTTP verbs to controller actions automatically):
