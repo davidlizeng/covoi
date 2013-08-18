@@ -24,6 +24,7 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
+            <li><%= link_to "My Rides", :controller => "users", :action => "myrides" %></li>
             <li><%= link_to "Edit account", edit_user_path(@user.id) %></li>
             <% if @user.admin then%>
               <li> <%= link_to "Admin", admin_path %></li>
