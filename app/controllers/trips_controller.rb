@@ -26,13 +26,10 @@ class TripsController < ApplicationController
         matches = Match.find_all_by_user_id(current_user.id)
         user_trips = [];
         matches.each do |m|
-          puts m.trip_id
           user_trips.push(m.trip_id)
         end
         @trips = []
-        puts trips[0].id
         trips.each do |t|
-          puts t.id
           #unless user_trips.include?(t.id)
             @trips.push(t)
           #end

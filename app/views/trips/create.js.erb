@@ -2,9 +2,9 @@
   display_message('<%= escape_javascript(@error) %>', 'error', 'trip_error', 'trip_submit');
 <% else %>
   var match_box_elems = [];
-  var match_message;
+  var match_message = "";
   <% unless @trips.empty? %>
-    match_message = '<div class="match_explanation">Based on your flight information, we\'ve matched you with some existing RideGroups. Click on any one of these rides to join the group. Share a ride and pay only $15!</div><div class="small_spacer"></div>';
+    match_message = '<div class="match_explanation">Based on your flight information, we\'ve matched you with some existing RideGroups. Click on any one of these rides to join the group. Share a ride and pay only $16!</div><div class="small_spacer"></div>';
     <% @trips.each do |trip| %>
       match_box_elems.push(
         '<tr>' +
@@ -15,22 +15,34 @@
           '<td><%= button_tag "$16.00", :id => trip.id.to_s, :class => "trip btn btn-primary" %></td>' +
         '</tr>');
     <% end %>
-    match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">Don\'t like any of the options above? Start a new RideGroup by selecting the ride below!</div><div class="small_spacer"></div>');
+    new_ride_message = '<div class="small_spacer"></div><div class="match_explanation">Don\'t like any of the options above? Start a new RideGroup by selecting the ride below.!</div><div class="small_spacer"></div>';
   <% else %>
-    match_box_elems.push('<div class="small_spacer"></div><div class="match_explanation">We could not find any existing RideGroups with travel times near yours. But don\'t wait for someone else to start a RideGroup at a time near yours. It\'s to your benefit to add the group to the system as early as possible for others to join. Start a new RideGroup by selecting the ride below! </div><div class="small_spacer"></div>');
-  
-    match_box_elems.push(
-      '<tr>' +
-        '<td id="origin_0"><%= escape_javascript(@origins[@trip.origin_id - 1].name) %></td>' +
-        '<td id="airport_0"><%= @airports[@trip.airport_id - 1].code %></td>' +
-        '<td id="date_0"><%= @trip.dateString %></td>' +
-        '<td id="time_0"><%= @trip.timeString %></td>' +
-        '<td><%= button_tag "$20.00", :id => "0", :class => "trip btn btn-danger" %></td>' +
-      '</tr>');
+    new_ride_message = '<div class="small_spacer"></div><div class="match_explanation">We could not find any existing RideGroups with travel times near yours. But don\'t wait for someone else to start a RideGroup at a time near yours. It\'s to your benefit to add the group to the system as early as possible for others to join. Start a new RideGroup by selecting the ride below! </div><div class="small_spacer"></div>';
   <% end %>
+  var new_ride = 
+    '<tr>' +
+      '<td id="origin_0"><%= escape_javascript(@origins[@trip.origin_id - 1].name) %></td>' +
+      '<td id="airport_0"><%= @airports[@trip.airport_id - 1].code %></td>' +
+      '<td id="date_0"><%= @trip.dateString %></td>' +
+      '<td id="time_0"><%= @trip.timeString %></td>' +
+      '<td><%= button_tag "$20.00", :id => "0", :class => "trip btn btn-danger" %></td>' +
+    '</tr>';
+  $('#match_message').empty();
   $('#match_message').append(match_message);
-  $('#match_table').empty();
-  $('#match_table').append(match_box_elems.join(''));
+  $('#match_table_body').empty();
+  $('#match_table_body').append(match_box_elems.join(''));
+  <% if @trips.empty? %>
+    $('#match_message').hide();
+    $('#match_table').hide();
+  <% else %>
+    $('#match_message').show();
+    $('#match_table').show();
+  <% end %>
+
+  $('#new_ride_message').empty();
+  $('#new_ride_message').append(new_ride_message);
+  $('#new_ride_table').empty();
+  $('#new_ride_table').append(new_ride);
   $('#trip_box').collapse('hide');
   $('#match_box').collapse('show');
   $('#trip_card_token:hidden').val('');
