@@ -99,4 +99,8 @@ class UsersController < ApplicationController
       format.js
     end
   end
+  
+  def myrides
+    @user = current_user
+  end
 end
