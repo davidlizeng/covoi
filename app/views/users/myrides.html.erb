@@ -56,7 +56,7 @@
                     <td>Destination</td>
                   </tr>
                   <% @user.trips.each do |trip| %>
-                    <tr class>
+                    <tr>
                       <td><%= trip.id %></td>
                       <td><%= User.find_by_id(trip.creator_id).first_name %> <%= User.find_by_id(trip.creator_id).last_name %></td>
                       <td>
