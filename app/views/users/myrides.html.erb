@@ -59,6 +59,11 @@
                     <tr class>
                       <td><%= trip.id %></td>
                       <td><%= User.find_by_id(trip.creator_id).first_name %> <%= User.find_by_id(trip.creator_id).last_name %></td>
+                      <td>
+                        <% trip.users.each do |user| %>
+                          <%= user.first_name %> <%= user.last_name %> </br>
+                        <% end %>
+                      </td>
                       <td><%= trip.dateString %></td>
                       <td><%= trip.timeString %></td>
                       <td><%= Origin.find_by_id(trip.origin_id).name %></td>
