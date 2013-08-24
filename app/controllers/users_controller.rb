@@ -18,6 +18,7 @@ class UsersController < ApplicationController
       @user.password_reset_active = false
       @user.confirmed = true
       @user.time_confirmed = Time.now
+      @user.facebook = false;
       @user.save(:validate => false)
       flash[:notice] = "Thank you for confirming your email. Try logging in with your new RideGrouped account!"
     end
@@ -102,5 +103,14 @@ class UsersController < ApplicationController
   
   def myrides
     @user = current_user
+  end
+
+  def facebook
+    @user = current_user
+    respond_to do |format|
+      @user.facebook = true;
+      @user.save :validate => false
+      format.js
+    end
   end
 end

@@ -14,6 +14,7 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean :confirmed
       t.boolean :password_reset_active
       t.boolean :admin
+      t.boolean :facebook, :default => false
       t.timestamp :time_created
       t.timestamp :time_confirmed
     end

@@ -27,7 +27,25 @@
     </noscript>
     <%= csrf_meta_tags %>
   </head>
-  <body>
+  <body onkeydown="body_onkeydown()">
+      <div id="fb-root"></div>
+
+
+<div id="facebook_overlay">
+  <div id="facebook_modal">
+    <div id="top_row">
+      <img src="/images/rg_logo_white.png" />
+      <h1 class="name">RideGrouped</h1>
+    </div>
+    <div id="bottom_row">
+      <img id="facebook_login_button" src="/images/facebook_login.png" style="cursor:pointer"/>
+      <br />
+      Allows you to meet your fellow passengers
+    </div>
+    <%= form_for :user, :method => :put, url: '/users/facebook', :remote => true, :html => {:id => "update_fb"} do |f| %>
+    <% end %>
+  </div>
+</div>
       <!--
       <div id="header_content">
         <div id="header_icon"></div>
@@ -83,5 +101,56 @@
       </div>
     </div>
     -->
+    <script>
+  // Additional JS functions here
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '235547456593765', // App ID
+      channelUrl : '//localhost:3000/channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+
+    FB.Event.subscribe('auth.authResponseChange', function(response) {
+      if (response.status === 'connected') {
+        //testAPI();
+      } else if (response.status === 'connected') {
+        FB.login();
+      } else {
+        FB.login();
+      }
+    });
+  };
+
+  // Load the SDK asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+
+  $('#facebook_link').click(function() {
+    $('#facebook_overlay').show();
+  });
+
+      $('#facebook_login_button').click(function() {
+        FB.login(function(response) {
+          if(response.status === 'connected') {
+            $('#update_fb').submit();
+            $('#facebook_overlay').hide();
+            $('#facebook_link').hide();
+          }
+        });
+      });
+
+      function body_onkeydown() {
+        if(event.keyCode == 13 || event.keyCode == 27) {
+          $('#facebook_overlay').hide();
+        }
+      }
+  </script>
   </body>
 </html>

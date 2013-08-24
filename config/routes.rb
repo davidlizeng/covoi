@@ -14,6 +14,7 @@ Covoi::Application.routes.draw do
   match 'iforgot/reset_post' => 'iforgot#reset_post'
   match 'users/myrides' => 'users#myrides'
   match 'admin/sort' => 'admins#sort'
+  match 'users/facebook' => 'users#facebook'
   # This route can be invoked with purchase_url(:id => product.id)
   # match '/' => 'session#new', :as => :new_session
   # Sample resource route (maps HTTP verbs to controller actions automatically):
@@ -24,6 +25,21 @@ Covoi::Application.routes.draw do
   resources :trips, :only => [:create]
   resources :matches, :only => [:create]
 
+  #For Facebook
+  get '/channel.html' => proc {
+    [
+      200,
+      {
+        'Pragma' => 'public',
+        'Cache-Control' => "max-age=#{1.year.to_i}",
+        'Expires' => 1.year.from_now.to_s(:rfc822),
+        'Content-Type' => 'text/html'
+      },
+      ['<script type="text/javascript" src="//connect.facebook.net/en_US/all.js"></script>']
+    ]
+  }
+
+  #map.facebook :facebook, :controller => :user, :action => :facebook
 
   # Sample resource route with options:
   #   resources :products do

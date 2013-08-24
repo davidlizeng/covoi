@@ -199,3 +199,44 @@ button:active {
   font-size: 14px;
 }
 */
+
+#facebook_link {
+  cursor: pointer;
+}
+
+#facebook_overlay {
+  display:none;
+  background-color: rgba(0,0,0,0.4);
+  height:100%;
+  width:100%;
+  position:fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  vertical-align: middle;
+  z-index: 9999;
+}
+
+#facebook_modal {
+  display:inline-block;
+  vertical-align: middle;
+  position: relative;
+  width:320px;
+  top:30%;
+  min-height: 200px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 5px;
+  -webkit-border-radius:5px;
+}
+
+#facebook_modal #top_row {
+  background: #de7b08 url('/images/map-2.svg');
+  color:#FFFFFF;
+}
+
+#facebook_modal #bottom_row {
+  color: #000000;
+}

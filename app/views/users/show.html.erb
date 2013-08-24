@@ -29,6 +29,9 @@
             <% if @user.admin then%>
               <li> <%= link_to "Admin", admin_path %></li>
             <% end %>
+            <% if !@user.facebook then %>
+              <li><a id="facebook_link">Facebook</a></li>
+            <% end %>
             <li><%= link_to "Log out", session_path, :method => :delete %></li>
           </ul>
         </div>
