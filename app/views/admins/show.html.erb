@@ -124,6 +124,43 @@
 <div id="content">
 <div id="script_area"></div>
 <div class="spacer"></div>
+
+<div id = "sort_all">
+  <%= form_for(:sort_all, :url => {:action => "sort"}) do |form| %>
+    <%= form.label("Sort All Rides by: ") %>
+    <%= form.select(:select, options_for_select([
+      "ID", "Origin", "Destination", "Date", "Time", "First Name", "Last Name", "Email", "Phone" 
+    ])) %> </br>
+    <%= form.label("Filter: ") %>
+    <%= form.text_field :input %>
+    <%= form.submit "Submit" %>
+  <% end %>
+</div>
+
+<div id = "sort_solo">
+  <%= form_for(:sort_solo, :url => {:action => "sort"}) do |form| %>
+    <%= form.label("Sort Solo Rides by: ") %>
+    <%= form.select(:select, options_for_select([
+      "ID", "Origin", "Destination", "Date", "Time", "First Name", "Last Name", "Email", "Phone" 
+    ])) %> </br>
+    <%= form.label("Filter: ") %>
+    <%= form.text_field :input %>
+    <%= form.submit "Submit" %>
+  <% end %>
+</div>
+
+<div id = "sort_grouped">
+  <%= form_for(:sort_grouped, :url => {:action => "sort"}) do |form| %>
+    <%= form.label("Sort Grouped Rides by: ") %>
+    <%= form.select(:select, options_for_select([
+      "Trip ID", "Origin", "Destination", "Date", "Time", "Creator First Name", "Creator Last Name", "Creator Email", "Creator Phone"
+    ])) %> </br>
+    <%= form.label("Filter: ") %>
+    <%= form.text_field :input %>
+    <%= form.submit "Submit" %>
+  <% end %>
+</div>
+
 <div class="agag">Time filter: Between <%= @after.in_time_zone.strftime("%B %-d, %Y") %> and <%= @before.in_time_zone.strftime("%B %-d, %Y") %></div>
 <div class="agag">Hidden airports:
   <% @airports.each do |a| %>
