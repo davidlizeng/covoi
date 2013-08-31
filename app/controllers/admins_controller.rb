@@ -66,6 +66,104 @@ class AdminsController < ApplicationController
     end
   end
 
+  def sort
+    show()
+
+    @to_sort = nil
+    @filter = ""
+    @property = ""
+    @sorting = ""
+    if !params[:sort_all].nil? then
+      @property = params[:sort_all][:select]
+      @filter = params[:sort_all][:input].downcase
+      @to_sort = @matches
+      @sorting = "all"
+    elsif !params[:sort_solo].nil? then
+      @property = params[:sort_solo][:select]
+      @filter = params[:sort_solo][:input].downcase
+      @to_sort = @solo
+      @sorting = "solo"
+    elsif !params[:sort_grouped].nil? then
+      @property = params[:sort_grouped][:select]
+      @filter = params[:sort_grouped][:input].downcase
+      @to_sort = @groups
+      @sorting = "grouped"
+    end
+
+    if !@filter.nil? && @filter != "" then
+      to_delete = []
+      for i in 0..@to_sort.length-1
+        keep = false
+        matches = []
+        if @sorting == "grouped" then
+          @to_sort[i].each do |match|
+            matches.push(match)
+          end
+        else
+          matches.push(@to_sort[i])
+        end
+        matches.each do |match|
+          name = match.user.first_name + " " + match.user.last_name
+          if match.id.to_s.downcase.include?(@filter) ||
+              Origin.find_by_id(match.trip.origin_id).name.downcase.include?(@filter) ||
+              Airport.find_by_id(match.trip.airport_id).code.to_s.downcase.include?(@filter) ||
+              match.trip.dateString.downcase.include?(@filter) ||
+              match.trip.timeString.downcase.include?(@filter) ||
+              name.downcase.include?(@filter) ||
+              match.user.email.downcase.include?(@filter) ||
+              match.user.phone.to_s.downcase.include?(@filter) then
+            keep = true
+            break
+          end
+        end
+        if keep then next end
+        to_delete.push(i)
+        if @sorting == "grouped" then @grouped_count = @grouped_count - matches.length end
+      end
+      to_delete.reverse_each do |i|
+        @to_sort.slice!(i)
+      end
+    end
+
+    @to_sort.sort! { |x, y|
+      if @sorting == "grouped" then
+        x = x[0]
+        y = y[0]
+      end
+  
+      case @property
+      when "ID"
+        x.id <=> y.id
+      when "Trip ID"
+        x.trip.id <=> y.trip.id
+      when "Origin"
+        Origin.find_by_id(x.trip.origin_id).name <=> Origin.find_by_id(y.trip.origin_id).name
+      when "Destination"
+        Airport.find_by_id(x.trip.airport_id).code <=> Airport.find_by_id(y.trip.airport_id).code
+      when "Date"
+        x.trip.dateString <=> y.trip.dateString
+      when "Time"
+        x.trip.timeString <=> y.trip.timeString
+      when "First Name"
+        x.user.first_name <=> y.user.first_name
+      when "Last Name"
+        x.user.last_name <=> y.user.last_name
+      when "Creator First Name"
+        User.find_by_id(x.trip.creator_id).first_name <=> User.find_by_id(y.trip.creator_id).first_name
+      when "Creator Last Name"
+        User.find_by_id(x.trip.creator_id).last_name <=> User.find_by_id(y.trip.creator_id).last_name
+      when "Email"
+        x.user.email <=> y.user.email
+      when "Phone"
+        x.user.phone <=> y.user.phone
+      when "Creator Email"
+        User.find_by_id(x.trip.creator_id).email <=> User.find_by_id(y.trip.creator_id).email
+      when "Creator Phone"
+        User.find_by_id(x.trip.creator_id).phone <=> User.find_by_id(y.trip.creator_id).phone
+      end
+    }
+    render :action => "show"
+  end
 
   def create
     params[:trip_id] = params[:trip_id] || "0"
