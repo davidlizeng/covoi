@@ -7,7 +7,25 @@
     Stripe.setPublishableKey('<%= STRIPE_PUBLIC_KEY %>');
  </script>
 <% end %>
-
+<div id="facebook_overlay" class="modal hide fade" tabindex="-1" aria-hidden="true" style="width:460px;">
+  <div class="modal_body">
+    <div id="facebook_modal">
+      <div id="top_row">
+        <img src="/images/rg_logo_white_small.png" />
+        <h1 class="name">RideGrouped</h1>
+      </div>
+      <div id="bottom_row">
+        <img id="facebook_connect_button" src="/images/facebook_connect.png" style="cursor:pointer"/>
+        <br />
+        Allows you to meet your fellow passengers
+      </div>
+      <%= form_for :fb_link, url: '/users/fb_link', :remote => true, :html => {:id => "fb_link_form"} do |f| %>
+        <%= hidden_field_tag(:fbid, "-1") %>
+        <%= hidden_field_tag(:fbtoken, "-1") %>
+      <% end %>
+    </div>
+  </div>
+</div>
 <header class="skinny">
   <div class="container">
     <div class="row">
@@ -29,9 +47,7 @@
             <% if @user.admin then%>
               <li> <%= link_to "Admin", admin_path %></li>
             <% end %>
-            <% if !@user.facebook then %>
-              <li><a id="facebook_link">Facebook</a></li>
-            <% end %>
+            <li><a id="facebook_link" data-toggle="modal" data-target="#facebook_overlay" style="cursor:pointer; display:none">Facebook</a></li>
             <li><%= link_to "Log out", session_path, :method => :delete %></li>
           </ul>
         </div>
@@ -249,6 +265,31 @@
     $('#cvc_mouseover').tooltip({content: '<p>Can\'t find your CVC? Click on the "?" for help.</p>', items: '#cvc_mouseover'});
     $('#password_mouseover').tooltip({content: '<p>For security purposes, please enter your password to complete this transaction.</p>', items: '#password_mouseover'});
     $('#finish_mouseover').tooltip({content: '<p>By clicking "Finish", you will be joining a shared ride with other Stanford students. The information for your specific shuttle and contact info of the students you will be riding with will be provided within 24 hours of your departure.</p><p>Since SuperShuttle cannot change group sizes once booked, RideGrouped cannot offer refunds for cancelling your ride. However, on the event that you cannot make your ride, please email us at service@ridegrouped.com and we will notify your group for you.</p><p>This reservation entitles you to bring two bags for check in and one carry on item aboard the SuperShuttle. Please make sure each item is under 50 pounds. In the case you have more or oversized items, please contact RideGrouped at service@ridegrouped.com as extra fees may be applicable.</p>', items: '#finish_mouseover'});*/
+  });
+</script>
+<script>
+  $(document).on('fbload', function() {
+    FB.getLoginStatus(function(response) {
+      if(response.status === 'connected') {
+        $('#facebook_link').hide();
+      }
+      else {
+        $('#facebook_link').show();
+      }
+    });
+  });
+
+  $('#facebook_connect_button').click(function() {
+    FB.login(function(response) {
+      console.log(response);
+      if(response.status === 'connected') {
+        $('#facebook_overlay').modal('hide');
+        $('#facebook_link').hide();
+        $("#fbid").val(response.authResponse.userID);
+        $('#fbtoken').val(response.authResponse.accessToken);
+        $('#fb_link_form').submit();
+      }
+    });
   });
 </script>
 

@@ -7,9 +7,16 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.find_by_email(params[:session][:email].downcase)
+    if params[:fbid]
+      @user = User.find_by_fbid(params[:fbid])
+    else
+      @user = User.find_by_email(params[:session][:email].downcase)
+    end
     respond_to do |format|
       if @user && @user.confirmed && @user.authenticate(params[:session][:password])
+        login(@user)
+      elsif @user && (@user.fbid == params[:fbid])
+        puts "hello"
         login(@user)
       else
         @error = "Wrong email or password"

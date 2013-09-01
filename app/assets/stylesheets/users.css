@@ -154,3 +154,7 @@ body .ui-datepicker {
   font-size: 18px;
   font-weight: bold;
 }
+
+#profile_icon {
+  margin: 10px 0px 10px 0px;
+}

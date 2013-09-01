@@ -72,6 +72,13 @@
           <div class="span8">
             <div class="row">
               <div class="span4">
+                <img id="profile_icon" /> <a href="#" id="facebook_linker"> </a>
+              </div>
+            </div>
+          </div>
+          <div class="span8">
+            <div class="row">
+              <div class="span4">
                 <%= f.submit "Edit Account Info", :class => "btn btn-large btn-warning" %>
               </div>
               <div class="span4">
@@ -83,7 +90,40 @@
               $('#phone_mouseover').tooltip({content: '<p>Your Cell Phone Number should be 10 digits with no special characters. Note that this is the number SuperShuttle uses to contact you upon the arrival of your shuttle.</p>', items: '#phone_mouseover'});
               $('#new_password_mouseover').tooltip({content: '<p>You can leave this blank if you do not wish to change your password.</p>', items: '#new_password_mouseover'});
               $('#current_password_mouseover').tooltip({content: '<p>You must enter your Current Password correctly to submit any changes.</p>', items: '#current_password_mouseover'});
+              
             });
+
+            $(document).on('fbload', function() {
+              FB.getLoginStatus(function(response) {
+                  if(response.status === 'connected') {
+                    var id = response.authResponse.userID;
+                    setFBEnabled(id);
+                  }
+                  else {
+                    setFBDisabled();
+                  }
+                });
+            });
+            
+            function setFBEnabled(id) {
+              $('#profile_icon').attr('src','http://graph.facebook.com/'+id+'/picture');
+              $('#facebook_linker').text('Unlink');
+              $('#facebook_linker').click(function() {
+                FB.api('/me/permissions', 'DELETE', function(response) {
+                  setFBDisabled();
+                });
+              });
+            };
+
+            function setFBDisabled() {
+              $('#profile_icon').attr('src','/images/facebook_icon_small.png');
+              $('#facebook_linker').text('Link');
+              $('#facebook_linker').click(function() {
+                FB.login(function(response) {
+                  setFBEnabled(response.authResponse.userID);
+                });
+              });
+            };
           </script>
         <% end %>
       </div>

@@ -105,12 +105,14 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
-  def facebook
+  def fb_link
     @user = current_user
     respond_to do |format|
-      @user.facebook = true;
+      @user.fbid = params[:fbid];
+      @user.fbtoken = params[:fbtoken];
       @user.save :validate => false
       format.js
     end
   end
+
 end

@@ -1,6 +1,7 @@
 <% unless @error.nil? %>
   display_message('<%= escape_javascript(@error) %>', 'error', 'trip_error', 'trip_submit');
 <% else %>
+
   var match_box_elems = [];
   var match_message = "";
   <% unless @trips.empty? %>

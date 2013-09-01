@@ -55,9 +55,10 @@ ActiveRecord::Schema.define(:version => 20130410034146) do
     t.boolean  "confirmed"
     t.boolean  "password_reset_active"
     t.boolean  "admin"
-    t.boolean  "facebook",              :default => false
     t.datetime "time_created"
     t.datetime "time_confirmed"
+    t.string   "fbid",                  :default => "0"
+    t.string   "fbtoken"
   end
 
 end

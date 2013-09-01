@@ -8,7 +8,7 @@
           </h3>
         </div>
         <div class="accordion-body collapse in" id="login_form">
-          <%= form_for :session, :remote => true, url: session_path do |f| %>
+          <%= form_for :session, :remote => true, url: session_path, :html => {:id => 'login_form_form'} do |f| %>
             <fieldset>
               <h4>Email</h4>
               <%= f.text_field :email, :id => "login_email_text" %>
@@ -18,14 +18,16 @@
               <%= f.password_field :password, :id => "login_password_text", :maxlength => 31 %>
             </fieldset>
             <div id="false_credentials">
-              Error message
+              &nbsp;
             </div>
             <fieldset>
               <div id="login_submit">
                 <%= f.submit "Login", :class => "btn btn-large btn-warning" %>
               </div>
             </fieldset>
+            <%= hidden_field_tag(:fbid) %>
           <% end %>
+          <input type="image" id="facebook_login_button" src="/images/facebook_login.png" />
         </div>
       </div>
       <div class="accordion-group">

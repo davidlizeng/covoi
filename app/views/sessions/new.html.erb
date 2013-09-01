@@ -36,3 +36,24 @@
 </div>
 <%= render "login_box" %>
 <%= render "register_box" %>
+
+<script>
+  $(document).on('fbload', function() {
+    FB.getLoginStatus(function(response) {
+      console.log(response);
+      if(response.status === 'connected') {
+        $('#facebook_login_button').show();
+        $('#fbid').val(response.authResponse.userID);
+      }
+      else {
+        $('#facebook_login_button').hide();
+      }
+    });
+
+    $('#facebook_login_button').click(function() {
+      $('#login_form_form').submit();
+    })
+  });
+
+  
+</script>

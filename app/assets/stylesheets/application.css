@@ -200,11 +200,8 @@ button:active {
 }
 */
 
-#facebook_link {
-  cursor: pointer;
-}
 
-#facebook_overlay {
+/*#facebook_overlay {
   display:none;
   background-color: rgba(0,0,0,0.4);
   height:100%;
@@ -231,12 +228,14 @@ button:active {
   border-radius: 5px;
   -webkit-border-radius:5px;
 }
-
+*/
 #facebook_modal #top_row {
   background: #de7b08 url('/images/map-2.svg');
   color:#FFFFFF;
+  text-align: center;
 }
 
 #facebook_modal #bottom_row {
   color: #000000;
+  text-align: center;
 }

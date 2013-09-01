@@ -9744,11 +9744,11 @@ footer #copyright p {
 }
 #login_box {
   width: 400px;
-  height: 500px;
+  height: 530px;
   margin-left: -200px;
 }
 #login_box .modal-body {
-  max-height: 500px;
+  max-height: 530px;
 }
 #register_box {
   height: 600px;

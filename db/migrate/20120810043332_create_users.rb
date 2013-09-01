@@ -14,9 +14,10 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean :confirmed
       t.boolean :password_reset_active
       t.boolean :admin
-      t.boolean :facebook, :default => false
       t.timestamp :time_created
       t.timestamp :time_confirmed
+      t.string :fbid, default: 0
+      t.string :fbtoken
     end
     if Rails.env != "development" then
       execute "ALTER TABLE users ADD PRIMARY KEY (id);"

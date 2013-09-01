@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
   <head>
     <title>RideGrouped</title>
     <%= favicon_link_tag "/images/favicon.ico" %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <%= javascript_include_tag "application" %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Inder" rel="stylesheet" type="text/css">
@@ -22,30 +22,15 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
+
     <noscript>
       <meta http-equiv="refresh" content="0;url=<%= ENV['SERVER_HOSTNAME'] %>/nojs.html">
     </noscript>
     <%= csrf_meta_tags %>
   </head>
-  <body onkeydown="body_onkeydown()">
+  <body>
       <div id="fb-root"></div>
 
-
-<div id="facebook_overlay">
-  <div id="facebook_modal">
-    <div id="top_row">
-      <img src="/images/rg_logo_white.png" />
-      <h1 class="name">RideGrouped</h1>
-    </div>
-    <div id="bottom_row">
-      <img id="facebook_login_button" src="/images/facebook_login.png" style="cursor:pointer"/>
-      <br />
-      Allows you to meet your fellow passengers
-    </div>
-    <%= form_for :user, :method => :put, url: '/users/facebook', :remote => true, :html => {:id => "update_fb"} do |f| %>
-    <% end %>
-  </div>
-</div>
       <!--
       <div id="header_content">
         <div id="header_icon"></div>
@@ -112,15 +97,7 @@
       xfbml      : true  // parse XFBML
     });
 
-    FB.Event.subscribe('auth.authResponseChange', function(response) {
-      if (response.status === 'connected') {
-        //testAPI();
-      } else if (response.status === 'connected') {
-        FB.login();
-      } else {
-        FB.login();
-      }
-    });
+    $(document).trigger('fbload');
   };
 
   // Load the SDK asynchronously
@@ -132,25 +109,7 @@
      ref.parentNode.insertBefore(js, ref);
    }(document));
 
-  $('#facebook_link').click(function() {
-    $('#facebook_overlay').show();
-  });
-
-      $('#facebook_login_button').click(function() {
-        FB.login(function(response) {
-          if(response.status === 'connected') {
-            $('#update_fb').submit();
-            $('#facebook_overlay').hide();
-            $('#facebook_link').hide();
-          }
-        });
-      });
-
-      function body_onkeydown() {
-        if(event.keyCode == 13 || event.keyCode == 27) {
-          $('#facebook_overlay').hide();
-        }
-      }
+  
   </script>
   </body>
 </html>
